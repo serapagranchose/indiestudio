@@ -1,0 +1,1 @@
+/usr/bin/c++  -O2 -DNDEBUG   CMakeFiles/bootstrap.dir/src/main.cpp.o  -o bootstrap 
