@@ -1,23 +1,16 @@
 cmake_minimum_required(VERSION 3.17)
-set(CMAKE_BUILD_TYPE Release)
 project(bomberman)
 
-find_package(raylib QUIET)
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-if (NOT raylib_FOUND)
-    include(FetchContent)
-    FetchContent_Declare(raylib URL https://github.com/raysan5/raylib/archive/master.tar.gz)
-    FetchContent_GetProperties(raylib)
+find_package(raylib)
 
-    if (NOT raylib_POPULATED)
-        set(FETCHCONTENT_QUIET NO)
-        FetchContent_Populate(raylib)
+include_directories(include)
 
-        set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_executable(bomberman
+                include/indiestudio.hpp
+                src/main.cpp
+)
 
-        add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
-    endif()
-endif()
-
-add_executable(bomberman src/main.cpp)
 target_link_libraries(bomberman raylib)
