@@ -30,8 +30,6 @@ Game::Game()
 
 Game::~Game()
 {
-    UnloadTexture(this->map.flat_map);
-
     while (!this->players.empty())
         this->players.pop_back();
     while (!this->map.blocks.empty())
@@ -50,10 +48,10 @@ void Game::input()
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
-        if (IsKeyDown(KEY_P)){
+        if (IsKeyPressed(KEY_P)){
             Player onch;
             this->players.push_back(onch);
-        } else if (IsKeyDown(KEY_B)){
+        } else if (IsKeyPressed(KEY_B)){
             Block brick;
             this->map.blocks.push_back(brick);
         }
