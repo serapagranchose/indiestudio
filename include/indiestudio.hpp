@@ -44,6 +44,7 @@ class Player{
     public:
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 size = {1.0f, 4.0f, 1.0f};
+        int bomb_nb;
         Color color = RED;
 
         Model model;
@@ -51,7 +52,9 @@ class Player{
 
 class Button{
     public:
-        int status;
+        int status = 0;
+        bool action = false;
+        float frame_height;
         Texture2D texture;
         Rectangle size;
         Rectangle bounds;

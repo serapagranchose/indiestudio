@@ -10,8 +10,6 @@
 int setdown(Game *bomberman)
 {
     UnloadTexture(bomberman->map.flat_map);
-    //UnloadTexture(bomberman->map.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture);
-    //UnloadModel(bomberman->map.model);
 
     printf("player nb:%ld\n", bomberman->players.size());
     printf("game_status:%d\n", bomberman->status);
@@ -23,6 +21,8 @@ int setdown(Game *bomberman)
 
     while (!bomberman->players.empty())
         bomberman->players.pop_back();
+    while (!bomberman->map.blocks.empty())
+        bomberman->map.blocks.pop_back();
 
     CloseWindow();
 
@@ -55,21 +55,11 @@ int setup(Game *bomberman)
     InitWindow(bomberman->window.screen_width, bomberman->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
 
-/*
-    Image image = LoadImage("../map/switch.png");
-    bomberman->map.flat_map = LoadTextureFromImage(image);
-    Mesh mesh = GenMeshCubicmap(image, (Vector3){1.0f, 1.0f, 1.0f});
-    UnloadImage(image);
-    bomberman->map.model = LoadModelFromMesh(mesh);
-    Texture2D texture = LoadTexture("../texture/playfield.png");
-    bomberman->map.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    bomberman->map.position = {0.0f, 0.0f, 0.0f};
-*/
     Button play;
-    play.status = 0;
-    play.texture = LoadTexture("../button/play.png");
-    float frameHeight = (float)play.texture.height / 3;
-    play.bounds = {0, 0, (float)play.texture.width, frameHeight};
+    play.texture = LoadTexture("../graphic/button/play.png");
+    play.frame_height = (float)play.texture.height / 3;
+    play.size = {0, 0, (float)play.texture.width, play.frame_height};
+    play.bounds = {bomberman->window.screen_width / 2.0f - play.texture.width / 2.0f, bomberman->window.screen_height / 2.0f - play.texture.height / 3 / 2.0f, (float)play.texture.width, play.frame_height};
     bomberman->buttons.push_back(play);
 
     bomberman->camera.position = (Vector3){0.0f, 10.0f, 10.0f};
