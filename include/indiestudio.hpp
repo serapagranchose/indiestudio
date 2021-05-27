@@ -19,13 +19,6 @@ extern "C" {
 
 class Game;
 
-class Window{
-    public:
-        int status = 0;
-        int screen_width = 1920;
-        int screen_height = 1080;
-};
-
 class Block{
     public:
         Block();
@@ -33,20 +26,11 @@ class Block{
 
         void draw(Game *bomberman);
 
+        int place = 1;
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 size = {1.0f, 1.0f, 1.0f};
-        int place = 1;
         Color color = GREEN;
         int destructible;
-};
-
-class Map{
-    public:
-        Vector3 position;
-
-        Texture2D flat_map;
-        Model model;
-        std::vector<Block> blocks;
 };
 
 class Player{
@@ -56,13 +40,17 @@ class Player{
 
         void draw(Game *bomberman);
 
+        int place = 1;
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 size = {1.0f, 4.0f, 1.0f};
-        int place = 1;
-        int bomb_nb;
         Color color = RED;
+        char *name;
+        int bomb_nb;
+};
 
-        Model model;
+class Map{
+public:
+    std::vector<Block> blocks;
 };
 
 class Button{
@@ -73,15 +61,21 @@ class Button{
         void draw(Game *bomberman);
         void input(Game *bomberman, Vector2 mouse);
 
-        int status = 0;
         int place = 0;
-        bool action = false;
         float frame_height;
         Texture2D texture;
         Rectangle size;
         Rectangle bounds;
+        int status = 0;
+        bool action = false;
 
         Model model;
+};
+
+class Window{
+    public:
+        int screen_width = 1920;
+        int screen_height = 1080;
 };
 
 class Game{
@@ -95,18 +89,13 @@ class Game{
         void draw_debug();
         void game_loop();
 
-        int status = 0;
-        bool debug = false;
         Window window;
         Camera camera;
+        std::vector<Button> buttons;
         Map map;
         std::vector<Player> players;
-        std::vector<Button> buttons;
+        bool debug = false;
+        int status = 0;
 };
 
-
-int input(Game *bomberman);
-
-void draw(Game *bomberman);
-
-#endif /* !__TEKSPICE_HPP__ */
+#endif /* !__INDIESTUDIO_HPP__ */
