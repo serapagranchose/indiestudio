@@ -13,8 +13,11 @@ extern "C" {
 }
 
 #include <iostream>
+#include <cstring>
 #include <vector>
 #include <time.h>
+
+class Game;
 
 class Window{
     public:
@@ -25,8 +28,14 @@ class Window{
 
 class Block{
     public:
+        Block();
+        ~Block();
+
+        void draw(Game *bomberman);
+
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 size = {1.0f, 1.0f, 1.0f};
+        int place = 1;
         Color color = GREEN;
         int destructible;
 };
@@ -42,8 +51,14 @@ class Map{
 
 class Player{
     public:
+        Player();
+        ~Player();
+
+        void draw(Game *bomberman);
+
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 size = {1.0f, 4.0f, 1.0f};
+        int place = 1;
         int bomb_nb;
         Color color = RED;
 
@@ -52,7 +67,14 @@ class Player{
 
 class Button{
     public:
+        Button();
+        ~Button();
+
+        void draw(Game *bomberman);
+        void input(Game *bomberman, Vector2 mouse);
+
         int status = 0;
+        int place = 0;
         bool action = false;
         float frame_height;
         Texture2D texture;
@@ -64,7 +86,17 @@ class Button{
 
 class Game{
     public:
+        Game();
+        ~Game();
+
+        void input();
+        void input_debug();
+        void draw();
+        void draw_debug();
+        void game_loop();
+
         int status = 0;
+        bool debug = false;
         Window window;
         Camera camera;
         Map map;
@@ -72,14 +104,9 @@ class Game{
         std::vector<Button> buttons;
 };
 
-int setup(Game *bomberman);
-int game_loop(Game *bomberman);
-int setdown(Game *bomberman);
 
-int game_input(Game *bomberman);
+int input(Game *bomberman);
 
-int draw(Game *bomberman);
-int draw2d(Game *bomberman);
-int draw3d(Game *bomberman);
+void draw(Game *bomberman);
 
 #endif /* !__TEKSPICE_HPP__ */

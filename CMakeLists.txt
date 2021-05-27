@@ -10,10 +10,11 @@ include_directories(include)
 
 add_executable(bomberman
                 include/indiestudio.hpp
-                src/draw.cpp
-                src/game.cpp
-                src/input.cpp
+                src/Block.cpp
+                src/Button.cpp
+                src/Game.cpp
                 src/main.cpp
+                src/Player.cpp
 )
 
 target_link_libraries(bomberman raylib)

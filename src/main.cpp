@@ -16,10 +16,14 @@ void print_usage(void)
 
 int input_checker(int ac, char **av)
 {
-    if (ac == 2 && (av[1] == "-h")){
-        print_usage();
-        return(1);
+    if (ac == 2){
+        if (!strcmp(av[1], "-h")){
+            print_usage();
+            return(1);
+        } else if (!strcmp(av[1],"-d"))
+            return(2);
     }
+
     if (ac != 3)
         return(84);
 
@@ -32,12 +36,10 @@ int main(int ac, char **av)
 
     if (input_checker(ac, av) == 1)
         return (0);
-    if (setup(&bomberman) == 84){
-        setdown(&bomberman);
-        return (84);
-    }
-    game_loop(&bomberman);
-    setdown(&bomberman);
+    else if (input_checker(ac, av) == 2)
+        bomberman.debug = true;
+
+    bomberman.game_loop();
 
     return (0);
 }
