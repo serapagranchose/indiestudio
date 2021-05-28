@@ -13,8 +13,11 @@ extern "C" {
 }
 
 #include <iostream>
+#include <typeinfo>
 #include <cstring>
 #include <vector>
+#include <stdio.h>
+#include <math.h>
 #include <time.h>
 
 class Game;
@@ -27,8 +30,9 @@ class Block{
         void draw(Game *bomberman);
 
         int place = 1;
-        Vector3 position = {0.0f, 0.0f, 0.0f};
+        Vector3 position = {-4.0f, 0.0f, -4.0f};
         Vector3 size = {1.0f, 1.0f, 1.0f};
+
         Color color = GREEN;
         int destructible;
 };
@@ -36,16 +40,25 @@ class Block{
 class Player{
     public:
         Player();
+        Player(std::string name, int key_right, int key_up, int key_left, int key_down);
         ~Player();
 
+        void update(Game *bomberman);
         void draw(Game *bomberman);
 
         int place = 1;
         Vector3 position = {0.0f, 0.0f, 0.0f};
-        Vector3 size = {1.0f, 4.0f, 1.0f};
+        Vector3 size = {1.0f, 1.0f, 1.0f};
+        bool collision = false;
+        int right = KEY_D;
+        int up = KEY_W;
+        int left = KEY_A;
+        int down = KEY_S;
+
         Color color = RED;
-        char *name;
-        int bomb_nb;
+        std::string name = "adrien karpapov";;
+        Vector2 header = {0.0f, 0.0f};
+        int bomb_nb = 0;
 };
 
 class Map{
@@ -62,7 +75,6 @@ class Button{
         void input(Game *bomberman, Vector2 mouse);
 
         int place = 0;
-        float frame_height;
         Texture2D texture;
         Rectangle size;
         Rectangle bounds;
@@ -83,11 +95,12 @@ class Game{
         Game();
         ~Game();
 
+        void game_loop();
+        void update();
         void input();
         void input_debug();
         void draw();
         void draw_debug();
-        void game_loop();
 
         Window window;
         Camera camera;

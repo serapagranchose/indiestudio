@@ -15,6 +15,7 @@ add_executable(bomberman
                 src/Game.cpp
                 src/main.cpp
                 src/Player.cpp
+                src/str_to_word_array.cpp
 )
 
 target_link_libraries(bomberman raylib)

@@ -25,19 +25,21 @@ void Button::draw(Game *bomberman)
 
 void Button::input(Game *bomberman, Vector2 mouse)
 {
-    if (CheckCollisionPointRec(mouse, this->bounds)){
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            this->status = 2;
-        else
-            this->status = 1;
+    if (bomberman->status == this->place){
+        if (CheckCollisionPointRec(mouse, this->bounds)){
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                this->status = 2;
+            else
+                this->status = 1;
 
-        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-            this->action = true;
-    } else
-        this->status = 0;
+            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+                this->action = true;
+        } else
+            this->status = 0;
 
-    if (this->action)
-        bomberman->status = 1;
+        if (this->action)
+            bomberman->status = 1;
 
-    this->size.y = bomberman->status * this->frame_height;
+        this->size.y = bomberman->status * (float)this->texture.height;
+    }
 }
