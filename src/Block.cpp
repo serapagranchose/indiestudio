@@ -12,6 +12,12 @@ Block::Block()
 
 }
 
+Block::Block(Vector3 position, bool destructible)
+{
+    this->position = position;
+    this->destructible = destructible;
+}
+
 Block::~Block()
 {
 

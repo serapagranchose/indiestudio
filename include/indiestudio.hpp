@@ -25,30 +25,33 @@ class Game;
 class Block{
     public:
         Block();
+        Block(Vector3 position, bool destructible);
         ~Block();
 
         void draw(Game *bomberman);
 
         int place = 1;
-        Vector3 position = {-4.0f, 0.0f, -4.0f};
+        Vector3 position = {-1.0f, 0.0f, -1.0f};
         Vector3 size = {1.0f, 1.0f, 1.0f};
 
         Color color = GREEN;
-        int destructible;
+        bool destructible = false;
 };
 
 class Player{
     public:
         Player();
-        Player(std::string name, int key_right, int key_up, int key_left, int key_down);
+        Player(char *name, int key_right, int key_up, int key_left, int key_down);
         ~Player();
 
         void update(Game *bomberman);
-        void draw(Game *bomberman);
+        void draw_3d(Game *bomberman);
+        void draw_2d(Game *bomberman);
 
         int place = 1;
         Vector3 position = {0.0f, 0.0f, 0.0f};
-        Vector3 size = {1.0f, 1.0f, 1.0f};
+        Vector3 past_position;
+        Vector3 size = {0.99f, 0.99f, 0.99f};
         bool collision = false;
         int right = KEY_D;
         int up = KEY_W;
@@ -56,7 +59,7 @@ class Player{
         int down = KEY_S;
 
         Color color = RED;
-        std::string name = "adrien karpapov";;
+        char const *name = "adrien karpapov";
         Vector2 header = {0.0f, 0.0f};
         int bomb_nb = 0;
 };

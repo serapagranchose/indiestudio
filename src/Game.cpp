@@ -52,7 +52,7 @@ void Game::draw_debug()
     DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
     DrawText(TextFormat("block_nb:\t%d", this->map.blocks.size()), 10, 190, 20, GRAY);
     for (int i = 0; i < this->players.size(); i++)
-        DrawText(TextFormat("%s: x:%0.2f y:%0.2f z:%0.2f bomb_nb:%d collision:%d", this->players[i].name.c_str(), this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].bomb_nb, this->players[i].collision), 10, 210 + (i * 20), 20, GRAY);
+        DrawText(TextFormat("%s: x:%0.2f y:%0.2f z:%0.2f bomb_nb:%d collision:%d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].bomb_nb, this->players[i].collision), 10, 210 + (i * 20), 20, GRAY);
 }
 
 void Game::draw()
@@ -63,12 +63,14 @@ void Game::draw()
     if (this->status == 1)
     DrawGrid(10, 1.0f);
     for (int i = 0; i < this->players.size(); i++)
-        this->players[i].draw(this);
+        this->players[i].draw_3d(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
         this->map.blocks[i].draw(this);
     EndMode3D();
     if (this->debug == true)
         this->draw_debug();
+    for (int i = 0; i < this->players.size(); i++)
+        this->players[i].draw_2d(this);
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].draw(this);
     EndDrawing();
@@ -101,21 +103,25 @@ void Game::input()
             if (!this->players[i].collision){
                 int target;
                 if (IsKeyDown(this->players[i].right)){
+                    this->players[i].past_position = this->players[i].position;
                     target = round(this->players[i].position.x) + 1;
                     //while(this->players[i].position.x != target)
-                        this->players[i].position.x += 0.2f;
+                        this->players[i].position.x += 0.1f;
                 } else if (IsKeyDown(this->players[i].up)){
+                    this->players[i].past_position = this->players[i].position;
                     target = round(this->players[i].position.z) - 1;
                     //while(this->players[i].position.z != target)
-                        this->players[i].position.z -= 0.2f;
+                        this->players[i].position.z -= 0.1f;
                 } else if (IsKeyDown(this->players[i].left)){
+                    this->players[i].past_position = this->players[i].position;
                     target = round(this->players[i].position.x) - 1;
                     //while(this->players[i].position.x != target)
-                        this->players[i].position.x -= 0.2f;
+                        this->players[i].position.x -= 0.1f;
                 } else if (IsKeyDown(this->players[i].down)){
+                    this->players[i].past_position = this->players[i].position;
                     target = round(this->players[i].position.z) + 1;
                     //while(this->players[i].position.z != target)
-                        this->players[i].position.z += 0.2f;
+                        this->players[i].position.z += 0.1f;
                 }
             }
         }
