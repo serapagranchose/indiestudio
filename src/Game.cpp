@@ -99,18 +99,18 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            if (this->players[i].position.x == this->players[i].next_position.x){
+            //if (this->players[i].position.x == this->players[i].next_position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
-                if (IsKeyDown(this->players[i].left))
+                else if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            }
-            if (this->players[i].position.z == this->players[i].next_position.z){
+            //}
+            //if (this->players[i].position.z == this->players[i].next_position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
-                if (IsKeyDown(this->players[i].down))
+                else if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            }
+            //}
         }
     }
 }
