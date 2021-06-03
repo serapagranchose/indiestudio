@@ -45,14 +45,14 @@ class Player{
         ~Player();
 
         void update(Game *bomberman);
-        void draw_3d(Game *bomberman);
-        void draw_2d(Game *bomberman);
+        void draw(Game *bomberman);
 
         int place = 1;
         Vector3 position = {0.0f, 0.0f, 0.0f};
         Vector3 past_position;
+        Vector3 next_position = position;
         Vector3 size = {0.99f, 0.99f, 0.99f};
-        bool collision = false;
+        //bool collision = false;
         int right = KEY_D;
         int up = KEY_W;
         int left = KEY_A;
@@ -101,9 +101,8 @@ class Game{
         void game_loop();
         void update();
         void input();
-        void input_debug();
         void draw();
-        void draw_debug();
+        void draw_text();
 
         Window window;
         Camera camera;

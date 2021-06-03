@@ -38,23 +38,6 @@ Game::~Game()
     CloseWindow();
 }
 
-void Game::draw_debug()
-{
-    DrawText(TextFormat("game_status: %d", this->status), 10, 10, 20, GRAY);
-    DrawFPS(200, 10);
-
-    DrawText(TextFormat("camera_position: x:%.2f y:%.2f z:%.2f", this->camera.position.x, this->camera.position.y, this->camera.position.z), 10, 50, 20, GRAY);
-    DrawText(TextFormat("camera_target: x:%.2f y:%.2f z:%.2f", this->camera.target.x, this->camera.target.y, this->camera.target.z), 10, 70, 20, GRAY);
-    DrawText(TextFormat("camera_up: x:%.2f y:%.2f z:%.2f", this->camera.up.x, this->camera.up.y, this->camera.up.z), 10, 90, 20, GRAY);
-    DrawText(TextFormat("camera_fovy: %.2f", this->camera.fovy), 10, 110, 20, GRAY);
-    DrawText(TextFormat("camera_type: %d", this->camera.projection), 10, 130, 20, GRAY);
-
-    DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
-    DrawText(TextFormat("block_nb:\t%d", this->map.blocks.size()), 10, 190, 20, GRAY);
-    for (int i = 0; i < this->players.size(); i++)
-        DrawText(TextFormat("%s: x:%0.2f y:%0.2f z:%0.2f bomb_nb:%d collision:%d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].bomb_nb, this->players[i].collision), 10, 210 + (i * 20), 20, GRAY);
-}
-
 void Game::draw()
 {
     BeginDrawing();
@@ -63,29 +46,45 @@ void Game::draw()
     if (this->status == 1)
     DrawGrid(10, 1.0f);
     for (int i = 0; i < this->players.size(); i++)
-        this->players[i].draw_3d(this);
+        this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
         this->map.blocks[i].draw(this);
     EndMode3D();
-    if (this->debug == true)
-        this->draw_debug();
-    for (int i = 0; i < this->players.size(); i++)
-        this->players[i].draw_2d(this);
+    draw_text();
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].draw(this);
     EndDrawing();
 }
 
-void Game::input_debug()
+
+void Game::draw_text()
 {
-    SetCameraMode(this->camera, CAMERA_FREE);
+    if (this->debug == true){
+        DrawText(TextFormat("game_status: %d", this->status), 10, 10, 20, GRAY);
+        DrawFPS(200, 10);
+
+        DrawText(TextFormat("camera_position: x:%.2f y:%.2f z:%.2f", this->camera.position.x, this->camera.position.y, this->camera.position.z), 10, 50, 20, GRAY);
+        DrawText(TextFormat("camera_target: x:%.2f y:%.2f z:%.2f", this->camera.target.x, this->camera.target.y, this->camera.target.z), 10, 70, 20, GRAY);
+        DrawText(TextFormat("camera_up: x:%.2f y:%.2f z:%.2f", this->camera.up.x, this->camera.up.y, this->camera.up.z), 10, 90, 20, GRAY);
+        DrawText(TextFormat("camera_fovy: %.2f", this->camera.fovy), 10, 110, 20, GRAY);
+        DrawText(TextFormat("camera_type: %d", this->camera.projection), 10, 130, 20, GRAY);
+
+        DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
+        DrawText(TextFormat("block_nb:\t%d", this->map.blocks.size()), 10, 190, 20, GRAY);
+        for (int i = 0; i < this->players.size(); i++)
+            DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].next_position.x, this->players[i].next_position.y, this->players[i].next_position.z, this->players[i].bomb_nb), 10, 230 + (i * 120), 20, GRAY);
+    }
+    for (int i = 0; i < this->players.size(); i++)
+        if (this->status == this->players[i].place)
+            DrawText(TextFormat("%s", this->players[i].name), (int)this->players[i].header.x - MeasureText(TextFormat("%s", this->players[i].name), 20) / 2, (int)this->players[i].header.y, 20, BLACK);
 }
 
 void Game::input()
 {
     Vector2 mouse = GetMousePosition();
+
     if (this->debug == true)
-        this->input_debug();
+        SetCameraMode(this->camera, CAMERA_FREE);
 
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].input(this, mouse);
@@ -100,29 +99,17 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            if (!this->players[i].collision){
-                int target;
-                if (IsKeyDown(this->players[i].right)){
-                    this->players[i].past_position = this->players[i].position;
-                    target = round(this->players[i].position.x) + 1;
-                    //while(this->players[i].position.x != target)
-                        this->players[i].position.x += 0.1f;
-                } else if (IsKeyDown(this->players[i].up)){
-                    this->players[i].past_position = this->players[i].position;
-                    target = round(this->players[i].position.z) - 1;
-                    //while(this->players[i].position.z != target)
-                        this->players[i].position.z -= 0.1f;
-                } else if (IsKeyDown(this->players[i].left)){
-                    this->players[i].past_position = this->players[i].position;
-                    target = round(this->players[i].position.x) - 1;
-                    //while(this->players[i].position.x != target)
-                        this->players[i].position.x -= 0.1f;
-                } else if (IsKeyDown(this->players[i].down)){
-                    this->players[i].past_position = this->players[i].position;
-                    target = round(this->players[i].position.z) + 1;
-                    //while(this->players[i].position.z != target)
-                        this->players[i].position.z += 0.1f;
-                }
+            if (this->players[i].position.x == this->players[i].next_position.x){
+                if (IsKeyDown(this->players[i].right))
+                    this->players[i].next_position.x += 1;
+                if (IsKeyDown(this->players[i].left))
+                    this->players[i].next_position.x -= 1;
+            }
+            if (this->players[i].position.z == this->players[i].next_position.z){
+                if (IsKeyDown(this->players[i].up))
+                    this->players[i].next_position.z -= 1;
+                if (IsKeyDown(this->players[i].down))
+                    this->players[i].next_position.z += 1;
             }
         }
     }
