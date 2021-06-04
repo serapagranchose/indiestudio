@@ -54,16 +54,24 @@ void Player::update(Game *bomberman)
             }
 
         if (round(this->position.x * 10) < round(this->next_position.x * 10))
-            while(round(this->position.x * 10) != round(this->next_position.x * 10))
+            while(round(this->position.x * 10) != round(this->next_position.x * 10)){
+                this->past_position = this->position;
                 this->position.x += 0.1f;
+            }
         if (round(this->position.z * 10) < round(this->next_position.z * 10))
-            while(round(this->position.z * 10) != round(this->next_position.z * 10))
+            while(round(this->position.z * 10) != round(this->next_position.z * 10)){
+                this->past_position = this->position;
                 this->position.z += 0.1f;
+            }
         if (round(this->position.x * 10) > round(this->next_position.x * 10))
-            while(round(this->position.x * 10) != round(this->next_position.x * 10))
+            while(round(this->position.x * 10) != round(this->next_position.x * 10)){
+                this->past_position = this->position;
                 this->position.x -= 0.1f;
+            }
         if (round(this->position.z * 10) > round(this->next_position.z * 10))
-            while(round(this->position.z * 10) != round(this->next_position.z * 10))
+            while(round(this->position.z * 10) != round(this->next_position.z * 10)){
+                this->past_position = this->position;
                 this->position.z -= 0.1f;
+            }
     }
 }
