@@ -25,7 +25,7 @@ class Game;
 class Block{
     public:
         Block();
-        Block(Vector3 position, bool destructible);
+        Block(Vector3 position, bool destructible, Color couleur);
         ~Block();
 
         void draw(Game *bomberman);
@@ -102,6 +102,7 @@ class Game{
         void update();
         void input();
         void draw();
+        void basic_map();
         void draw_text();
 
         Window window;

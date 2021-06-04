@@ -12,8 +12,9 @@ Block::Block()
 
 }
 
-Block::Block(Vector3 position, bool destructible)
+Block::Block(Vector3 position, bool destructible, Color couleur)
 {
+    this->color = couleur;
     this->position = position;
     this->destructible = destructible;
 }

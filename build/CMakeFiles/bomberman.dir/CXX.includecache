@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/indiestudio.hpp
+raylib.h
+-
+iostream
+-
+typeinfo
+-
+cstring
+-
+vector
+-
+stdio.h
+-
+math.h
+-
+time.h
+-
+
+/home/adecovemacker/tek2/B-YEP-400-LIL-4-1-indiestudio-marc.berthelin/src/Game.cpp
+indiestudio.hpp
+/home/adecovemacker/tek2/B-YEP-400-LIL-4-1-indiestudio-marc.berthelin/src/indiestudio.hpp
+
+_deps/raylib-src/src/raylib.h
+stdarg.h
+-
+stdbool.h
+-
+
