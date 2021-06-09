@@ -49,7 +49,7 @@ void Game::draw()
         this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
         this->map.blocks[i].draw(this);
-    //basic_map();
+    basic_map();
     EndMode3D();
     draw_text();
     for (int i = 0; i < this->buttons.size(); i++)
@@ -62,15 +62,25 @@ void Game::basic_map()
     int i = 0;
     float x = -5.0f;
     float y = 0.0f;
-    float z = 5.7f;
+    float z = 6.0f;
     while(x != 6.0f){
         Block mur({z, y, x},1, DARKBLUE);
         this->map.blocks.push_back(mur);
         x += 1;
     }
     x -= 1;
-    while(z > -5.7f){
+    while(z > -6.0f){
         z -= 1;
+        Block mur({z, y, x},1, DARKBLUE);
+        this->map.blocks.push_back(mur);
+    }
+    while(x > -6.0f){
+        x -= 1;
+        Block mur({z, y, x},1, DARKBLUE);
+        this->map.blocks.push_back(mur);
+    }
+    while(z < 6.0f){
+        z += 1;
         Block mur({z, y, x},1, DARKBLUE);
         this->map.blocks.push_back(mur);
     }
