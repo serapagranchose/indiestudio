@@ -29,6 +29,7 @@ class Button{
         bool action = false;
         int i = 0;
         std::string name;
+        float frameHeight;
 
         Model model;
 };

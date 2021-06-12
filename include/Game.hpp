@@ -12,6 +12,8 @@ extern "C" {
     #include <raylib.h>
 }
 
+#define NUM_FRAMES 3
+
 #include <iostream>
 #include <typeinfo>
 #include <cstring>

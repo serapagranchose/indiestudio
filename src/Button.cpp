@@ -34,6 +34,7 @@ void Button::start(Game *bomberman)
 
 void Button::settings(Game *bomberman)
 {
+    bomberman->status = 2;
 }
 
 void Button::quit(Game * bomberman)
@@ -49,16 +50,16 @@ void Button::input(Game *bomberman, Vector2 mouse)
                 this->status = 2;
             else
                 this->status = 1;
-
             if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
                 this->action = true;
         } else
             this->status = 0;
-
         if (this->action && this->name == "Play")
            start(bomberman);
         else if (this->action && this->name == "Quit")
             quit(bomberman);
-        this->size.y = bomberman->status * (float)this->texture.height;
+        else if (this->action && this->name == "Settings")
+            settings(bomberman);
+        this->size.y = this->status * (float)this->frameHeight  ;
     }
 }

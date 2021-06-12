@@ -20,22 +20,27 @@ Game::Game()
     play.place = 0;
     play.texture = LoadTexture("../graphic/button/play.png");
     play.name = "Play";
-    play.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 3.0f - play.texture.height / 4.5f, (float)play.texture.width, (float)play.texture.height};
+    play.frameHeight = (float)play.texture.height / NUM_FRAMES;
+    play.size = {0, 0, (float)play.texture.width, (float)play.frameHeight};
+    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 3.0f - play.texture.height/NUM_FRAMES/4.5f, (float)play.texture.width, (float)play.frameHeight};
     this->buttons.push_back(play);
+
     Button settings;
     settings.place = 0;
     settings.texture = LoadTexture("../graphic/button/settings.png");
     settings.name = "Settings";
-    settings.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.0f - settings.texture.height / 3.5f, (float)settings.texture.width, (float)settings.texture.height};
+    settings.frameHeight = (float)settings.texture.height / NUM_FRAMES;
+    settings.size = {0, 0, (float)settings.texture.width, (float)settings.frameHeight};
+    settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.0f - settings.texture.height/NUM_FRAMES/3.5f, (float)settings.texture.width, (float)settings.frameHeight};
     this->buttons.push_back(settings);
+
     Button quit;
     quit.place = 0;
     quit.texture = LoadTexture("../graphic/button/quit.png");
     quit.name = "Quit";
-    quit.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    quit.bounds = {this->window.screen_width / 2.0f - quit.texture.width / 2.0f, this->window.screen_height / 1.5f - quit.texture.height / 3.5f, (float)quit.texture.width, (float)quit.texture.height};
+    quit.frameHeight = (float)quit.texture.height / NUM_FRAMES;
+    quit.size = {0, 0, (float)quit.texture.width, (float)quit.frameHeight};
+    quit.bounds = {this->window.screen_width / 2.0f - quit.texture.width / 2.0f, this->window.screen_height / 1.5f - quit.texture.height/NUM_FRAMES/3.5f, (float)quit.texture.width, (float)quit.frameHeight};
     this->buttons.push_back(quit);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
