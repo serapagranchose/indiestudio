@@ -13,15 +13,21 @@ Game::Game()
 {
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
-    InitAudioDevice();
     SetTargetFPS(60);
 
+    this->audio = new AllMusic();
     Button play;
     play.place = 0;
     play.texture = LoadTexture("../graphic/button/play.png");
     play.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.0f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.5f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
     this->buttons.push_back(play);
+    //Button settings;
+    //settings.place = 0;
+    //settings.texture = LoadTexture("../graphic/button/settings.png");
+    //settings.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
+    //settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.5f - settings.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    // this->buttons.push_back(settings);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -46,7 +52,7 @@ void Game::draw()
     ClearBackground(RAYWHITE);
     BeginMode3D(this->camera);
     if (this->status == 1)
-    DrawGrid(10, 1.0f);
+        DrawGrid(10, 1.0f);
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
@@ -178,10 +184,15 @@ void Game::update()
 
 void Game::game_loop()
 {
+    audio->init();
+    audio->setMusic("../audio/menu.mp3");
+    audio->playMusic();
     while (!WindowShouldClose())
     {
+        audio->update();
         this->update();
 
         this->draw();
     }
+    audio->endMusic();
 }
