@@ -23,6 +23,18 @@ void Button::draw(Game *bomberman)
         DrawTextureRec(this->texture, this->size, Vector2{this->bounds.x, this->bounds.y}, WHITE);
 }
 
+void Button::start()
+{
+}
+
+void Button::settings()
+{
+}
+
+void Button::quit()
+{
+}
+
 void Button::input(Game *bomberman, Vector2 mouse)
 {
     if (bomberman->status == this->place){
@@ -44,7 +56,6 @@ void Button::input(Game *bomberman, Vector2 mouse)
                 bomberman->random_map();
             }
         }
-
         this->size.y = bomberman->status * (float)this->texture.height;
     }
 }
