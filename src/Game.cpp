@@ -51,7 +51,6 @@ void Game::draw()
         this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
         this->map.blocks[i].draw(this);
-    basic_map();
     EndMode3D();
     draw_text();
     for (int i = 0; i < this->buttons.size(); i++)
@@ -86,6 +85,7 @@ void Game::basic_map()
         Block mur({z, y, x},1, DARKBLUE);
         this->map.blocks.push_back(mur);
     }
+    this->map_generated = 1;
 }
 
 void Game::draw_text()
@@ -121,6 +121,8 @@ void Game::input()
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
+        if (this->map_generated == 0)
+            this->basic_map();
         if (IsKeyPressed(KEY_P)){
             Player onch;
             this->players.push_back(onch);
@@ -130,16 +132,16 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            //if (this->players[i].position.x == this->players[i].next_position.x){
+            //if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
-                else if (IsKeyDown(this->players[i].left))
+                if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
             //}
-            //if (this->players[i].position.z == this->players[i].next_position.z){
+            //if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
-                else if (IsKeyDown(this->players[i].down))
+                if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
             //}
         }
@@ -148,11 +150,12 @@ void Game::input()
 
 void Game::update()
 {
+    this->input();
+
     UpdateCamera(&this->camera);
+
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].update(this);
-
-    this->input();
 }
 
 void Game::game_loop()

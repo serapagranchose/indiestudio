@@ -54,6 +54,7 @@ class Game{
         std::vector<Player> players;
         bool debug = false;
         int status = 0;
+        int map_generated = 0;
 };
 
 #include "Button.hpp"
