@@ -5,7 +5,9 @@
 ** game
 */
 
-#include "indiestudio.hpp"
+#include "Game.hpp"
+#include "Block.hpp"
+#include "Player.hpp"
 
 Game::Game()
 {

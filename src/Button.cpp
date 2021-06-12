@@ -5,7 +5,7 @@
 ** game
 */
 
-#include "indiestudio.hpp"
+#include "Button.hpp"
 
 Button::Button()
 {

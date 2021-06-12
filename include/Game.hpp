@@ -1,0 +1,63 @@
+/*
+** EPITECH PROJECT, 2021
+** Indie Studio
+** File description:
+** File for game class
+*/
+
+#ifndef GAME_HPP_
+#define GAME_HPP_
+
+extern "C" {
+    #include <raylib.h>
+}
+
+#include <iostream>
+#include <typeinfo>
+#include <cstring>
+#include <vector>
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+
+class Player;
+class Button;
+class Block;
+
+class Window{
+    public:
+        int screen_width = 1920;
+        int screen_height = 1080;
+};
+
+class Map{
+public:
+    std::vector<Block> blocks;
+};
+
+class Game{
+    public:
+        Game();
+        ~Game();
+
+        void game_loop();
+        void update();
+        void input();
+        void draw();
+        void basic_map();
+        void draw_text();
+
+        Window window;
+        Camera camera;
+        std::vector<Button> buttons;
+        Map map;
+        std::vector<Player> players;
+        bool debug = false;
+        int status = 0;
+};
+
+#include "Button.hpp"
+#include "Block.hpp"
+#include "Player.hpp"
+
+#endif

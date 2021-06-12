@@ -9,7 +9,10 @@ find_package(raylib)
 include_directories(include)
 
 add_executable(bomberman
-                include/indiestudio.hpp
+                include/Block.hpp
+                include/Button.hpp
+                include/Game.hpp
+                include/Player.hpp
                 src/Block.cpp
                 src/Button.cpp
                 src/Game.cpp

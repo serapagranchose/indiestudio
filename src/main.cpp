@@ -5,7 +5,7 @@
 ** main
 */
 
-#include "indiestudio.hpp"
+#include "Game.hpp"
 
 void print_usage(void)
 {

@@ -5,7 +5,7 @@
 ** game
 */
 
-#include "indiestudio.hpp"
+#include "Player.hpp"
 
 Player::Player()
 {
