@@ -13,9 +13,9 @@ Game::Game()
 {
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
-    InitAudioDevice();
     SetTargetFPS(60);
 
+    this->audio = new AllMusic();
     Button play;
     play.place = 0;
     play.texture = LoadTexture("../graphic/button/play.png");
@@ -46,7 +46,7 @@ void Game::draw()
     ClearBackground(RAYWHITE);
     BeginMode3D(this->camera);
     if (this->status == 1)
-    DrawGrid(10, 1.0f);
+        DrawGrid(10, 1.0f);
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
@@ -157,10 +157,15 @@ void Game::update()
 
 void Game::game_loop()
 {
+    audio->init();
+    audio->setMusic("../audio/menu.mp3");
+    audio->playMusic();
     while (!WindowShouldClose())
     {
+        audio->update();
         this->update();
 
         this->draw();
     }
+    audio->endMusic();
 }

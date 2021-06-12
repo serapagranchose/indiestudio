@@ -13,12 +13,14 @@ add_executable(bomberman
                 include/Button.hpp
                 include/Game.hpp
                 include/Player.hpp
+                include/Music.hpp
                 src/Block.cpp
                 src/Button.cpp
                 src/Game.cpp
                 src/main.cpp
                 src/Player.cpp
                 src/str_to_word_array.cpp
+                src/Music.cpp
 )
 
 target_link_libraries(bomberman raylib)
