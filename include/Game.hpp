@@ -20,9 +20,12 @@ extern "C" {
 #include <math.h>
 #include <time.h>
 
+#include "Music.hpp"
+
 class Player;
 class Button;
 class Block;
+class AllMusic;
 
 class Window{
     public:
@@ -31,8 +34,8 @@ class Window{
 };
 
 class Map{
-public:
-    std::vector<Block> blocks;
+    public:
+        std::vector<Block> blocks;
 };
 
 class Game{
@@ -50,6 +53,7 @@ class Game{
 
         Window window;
         Camera camera;
+        AllMusic *audio;
         std::vector<Button> buttons;
         Map map;
         std::vector<Player> players;

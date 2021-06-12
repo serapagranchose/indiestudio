@@ -13,15 +13,21 @@ Game::Game()
 {
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
-    InitAudioDevice();
     SetTargetFPS(60);
 
+    this->audio = new AllMusic();
     Button play;
     play.place = 0;
     play.texture = LoadTexture("../graphic/button/play.png");
     play.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.0f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.5f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
     this->buttons.push_back(play);
+    //Button settings;
+    //settings.place = 0;
+    //settings.texture = LoadTexture("../graphic/button/settings.png");
+    //settings.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
+    //settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.5f - settings.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    // this->buttons.push_back(settings);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -46,7 +52,7 @@ void Game::draw()
     ClearBackground(RAYWHITE);
     BeginMode3D(this->camera);
     if (this->status == 1)
-    DrawGrid(10, 1.0f);
+        DrawGrid(10, 1.0f);
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].draw(this);
     for (int i = 0; i < this->map.blocks.size(); i++)
@@ -136,17 +142,10 @@ void Game::input()
 {
     Vector2 mouse = GetMousePosition();
 
-    if (this->debug == true)
-        SetCameraMode(this->camera, CAMERA_FREE);
-
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
-        if (this->map_generated == 0){
-            this->basic_map();
-            this->random_map();
-        }
         if (IsKeyPressed(KEY_P)){
             Player onch;
             this->players.push_back(onch);
@@ -156,18 +155,18 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            //if (this->players[i].next_position.x == this->players[i].position.x){
+            if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
                 if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            //}
-            //if (this->players[i].next_position.z == this->players[i].position.z){
+            }
+            if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
                 if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            //}
+            }
         }
     }
 }
@@ -177,17 +176,23 @@ void Game::update()
     this->input();
 
     UpdateCamera(&this->camera);
-
+    if (this->debug == true)
+        SetCameraMode(this->camera, CAMERA_FREE);
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].update(this);
 }
 
 void Game::game_loop()
 {
+    audio->init();
+    audio->setMusic("../audio/menu.mp3");
+    audio->playMusic();
     while (!WindowShouldClose())
     {
+        audio->update();
         this->update();
 
         this->draw();
     }
+    audio->endMusic();
 }
