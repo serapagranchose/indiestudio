@@ -17,6 +17,9 @@ class Button{
 
         void draw(Game *bomberman);
         void input(Game *bomberman, Vector2 mouse);
+        void quit();
+        void settings();
+        void start();
 
         int place = 0;
         Texture2D texture;
@@ -24,6 +27,8 @@ class Button{
         Rectangle bounds;
         int status = 0;
         bool action = false;
+        int i = 0;
+        std::string name;
 
         Model model;
 };
