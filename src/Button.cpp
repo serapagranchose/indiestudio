@@ -20,7 +20,7 @@ Button::~Button()
 void Button::draw(Game *bomberman)
 {
     if (bomberman->status == this->place)
-        DrawTextureRec(this->texture, this->size, (Vector2){this->bounds.x, this->bounds.y}, WHITE);
+        DrawTextureRec(this->texture, this->size, Vector2{this->bounds.x, this->bounds.y}, WHITE);
 }
 
 void Button::input(Game *bomberman, Vector2 mouse)
