@@ -20,8 +20,14 @@ Game::Game()
     play.place = 0;
     play.texture = LoadTexture("../graphic/button/play.png");
     play.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.0f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.5f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
     this->buttons.push_back(play);
+    //Button settings;
+    //settings.place = 0;
+    //settings.texture = LoadTexture("../graphic/button/settings.png");
+    //settings.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
+    //settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.5f - settings.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
+    // this->buttons.push_back(settings);
 
     this->camera.position = (Vector3){0.0f, 10.0f, 10.0f};
     this->camera.target = (Vector3){0.0f, 0.0f, 0.0f};
