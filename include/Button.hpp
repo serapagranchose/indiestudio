@@ -17,9 +17,9 @@ class Button{
 
         void draw(Game *bomberman);
         void input(Game *bomberman, Vector2 mouse);
-        void quit();
-        void settings();
-        void start();
+        void quit(Game *bomberman);
+        void settings(Game *bomberman);
+        void start(Game *bomberman);
 
         int place = 0;
         Texture2D texture;

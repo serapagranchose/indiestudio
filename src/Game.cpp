@@ -196,7 +196,7 @@ void Game::game_loop()
     audio->init();
     audio->setMusic("../audio/menu.mp3");
     audio->playMusic();
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && this->status != -1)
     {
         audio->update();
         this->update();
