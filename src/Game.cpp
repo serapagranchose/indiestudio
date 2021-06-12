@@ -136,17 +136,10 @@ void Game::input()
 {
     Vector2 mouse = GetMousePosition();
 
-    if (this->debug == true)
-        SetCameraMode(this->camera, CAMERA_FREE);
-
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
-        if (this->map_generated == 0){
-            this->basic_map();
-            this->random_map();
-        }
         if (IsKeyPressed(KEY_P)){
             Player onch;
             this->players.push_back(onch);
@@ -156,18 +149,18 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            //if (this->players[i].next_position.x == this->players[i].position.x){
+            if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
                 if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            //}
-            //if (this->players[i].next_position.z == this->players[i].position.z){
+            }
+            if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
                 if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            //}
+            }
         }
     }
 }
@@ -177,7 +170,8 @@ void Game::update()
     this->input();
 
     UpdateCamera(&this->camera);
-
+    if (this->debug == true)
+        SetCameraMode(this->camera, CAMERA_FREE);
     for (int i = 0; i < this->players.size(); i++)
         this->players[i].update(this);
 }

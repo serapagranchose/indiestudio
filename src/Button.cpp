@@ -37,8 +37,13 @@ void Button::input(Game *bomberman, Vector2 mouse)
         } else
             this->status = 0;
 
-        if (this->action)
+        if (this->action){
             bomberman->status = 1;
+            if (bomberman->map_generated == 0){
+                bomberman->basic_map();
+                bomberman->random_map();
+            }
+        }
 
         this->size.y = bomberman->status * (float)this->texture.height;
     }
