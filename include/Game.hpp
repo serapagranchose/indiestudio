@@ -44,6 +44,7 @@ class Game{
         void update();
         void input();
         void draw();
+        void random_map();
         void basic_map();
         void draw_text();
 

@@ -88,6 +88,28 @@ void Game::basic_map()
     this->map_generated = 1;
 }
 
+void Game::random_map()
+{
+    FILE* fichier = NULL;
+    int caractereActuel = 0;
+    fichier = fopen("../graphic/map/map.txt", "r+");
+
+    if (fichier != NULL)
+    {
+        do
+        {
+            printf("%c", caractereActuel);
+            caractereActuel = fgetc(fichier);
+        } while (caractereActuel != 'k');
+        std::cout<<'\n';
+    }
+    else
+    {
+        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
+    }
+    fclose(fichier);
+}
+
 void Game::draw_text()
 {
     if (this->debug == true){
@@ -121,8 +143,10 @@ void Game::input()
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
-        if (this->map_generated == 0)
+        if (this->map_generated == 0){
             this->basic_map();
+            this->random_map();
+        }
         if (IsKeyPressed(KEY_P)){
             Player onch;
             this->players.push_back(onch);
