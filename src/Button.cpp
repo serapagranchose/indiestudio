@@ -12,6 +12,16 @@ Button::Button()
 
 }
 
+Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
+{
+    this->place = 0;
+    this->texture = LoadTexture(path);
+    this->name = name;
+    this->frameHeight = (float)this->texture.height / NUM_FRAMES;
+    this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
+    this->bounds = {window->screen_width / 2.0f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
+}
+
 Button::~Button()
 {
 

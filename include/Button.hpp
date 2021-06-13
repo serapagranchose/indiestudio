@@ -13,6 +13,7 @@
 class Button{
     public:
         Button();
+        Button(Window *window, float heightScreen, float heightButton,std::string name, const char* path);
         ~Button();
 
         void draw(Game *bomberman);

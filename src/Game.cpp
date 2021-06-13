@@ -14,40 +14,24 @@ Game::Game()
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
-
     this->audio = new AllMusic();
-    Button play;
-    play.place = 0;
-    play.texture = LoadTexture("../graphic/button/play.png");
-    play.name = "Play";
-    play.frameHeight = (float)play.texture.height / NUM_FRAMES;
-    play.size = {0, 0, (float)play.texture.width, (float)play.frameHeight};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 3.0f - play.texture.height/NUM_FRAMES/4.5f, (float)play.texture.width, (float)play.frameHeight};
-    this->buttons.push_back(play);
 
-    Button settings;
-    settings.place = 0;
-    settings.texture = LoadTexture("../graphic/button/settings.png");
-    settings.name = "Settings";
-    settings.frameHeight = (float)settings.texture.height / NUM_FRAMES;
-    settings.size = {0, 0, (float)settings.texture.width, (float)settings.frameHeight};
-    settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.0f - settings.texture.height/NUM_FRAMES/3.5f, (float)settings.texture.width, (float)settings.frameHeight};
-    this->buttons.push_back(settings);
-
-    Button quit;
-    quit.place = 0;
-    quit.texture = LoadTexture("../graphic/button/quit.png");
-    quit.name = "Quit";
-    quit.frameHeight = (float)quit.texture.height / NUM_FRAMES;
-    quit.size = {0, 0, (float)quit.texture.width, (float)quit.frameHeight};
-    quit.bounds = {this->window.screen_width / 2.0f - quit.texture.width / 2.0f, this->window.screen_height / 1.5f - quit.texture.height/NUM_FRAMES/3.5f, (float)quit.texture.width, (float)quit.frameHeight};
-    this->buttons.push_back(quit);
+    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
+    Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
+    Button *quit = new Button(&this->window, 1.5f, 3.5f, "Quit", "../graphic/button/quit.png");
+    this->buttons.push_back(*play);
+    this->buttons.push_back(*settings);
+    this->buttons.push_back(*quit);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
     this->camera.up = Vector3{0.0f, 1.0f, 0.0f};
     this->camera.fovy = 45.0f;
     this->camera.projection = CAMERA_PERSPECTIVE;
+
+    this->framesAnim = 0;
+    this->imageAnim = LoadImageAnim("../graphic/menu/menu.gif", &this->framesAnim);
+    this->menu = LoadTextureFromImage(this->imageAnim);
 }
 
 Game::~Game()
@@ -56,25 +40,33 @@ Game::~Game()
         this->players.pop_back();
     while (!this->map.blocks.empty())
         this->map.blocks.pop_back();
-
     CloseWindow();
 }
 
 void Game::draw()
 {
+    this->framesAnimCount++;
+    if (this->framesAnimCount >= framesAnim) 
+        this->framesAnimCount = 0;
+    unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
+    UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
     BeginDrawing();
     BeginMode3D(this->camera);
     ClearBackground(RAYWHITE);
-    if (this->status == 1)
+    if (this->status == 1) {
         DrawGrid(10, 1.0f);
-    for (int i = 0; i < this->players.size(); i++)
-        this->players[i].draw(this);
-    for (int i = 0; i < this->map.blocks.size(); i++)
-        this->map.blocks[i].draw(this);
+        for (int i = 0; i < this->players.size(); i++)
+            this->players[i].draw(this);
+        for (int i = 0; i < this->map.blocks.size(); i++)
+            this->map.blocks[i].draw(this);
+    }
     EndMode3D();
     draw_text();
-    for (int i = 0; i < this->buttons.size(); i++)
-        this->buttons[i].draw(this);
+    if (this->status == 0) {
+        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
+        for (int i = 0; i < this->buttons.size(); i++)
+            this->buttons[i].draw(this);
+    }
     EndDrawing();
 }
 
@@ -84,6 +76,7 @@ void Game::basic_map()
     float x = -5.0f;
     float y = 0.0f;
     float z = 6.0f;
+
     while(x != 6.0f){
         Block mur({z, y, x},1, DARKBLUE);
         this->map.blocks.push_back(mur);
@@ -208,5 +201,6 @@ void Game::game_loop()
 
         this->draw();
     }
+    UnloadTexture(this->menu);
     audio->endMusic();
 }
