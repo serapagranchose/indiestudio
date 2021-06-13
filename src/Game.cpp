@@ -14,26 +14,27 @@ Game::Game()
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
-
     this->audio = new AllMusic();
-    Button play;
-    play.place = 0;
-    play.texture = LoadTexture("../graphic/button/play.png");
-    play.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    play.bounds = {this->window.screen_width / 2.0f - play.texture.width / 2.0f, this->window.screen_height / 2.5f - play.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
-    this->buttons.push_back(play);
-    //Button settings;
-    //settings.place = 0;
-    //settings.texture = LoadTexture("../graphic/button/settings.png");
-    //settings.size = {0, 0, (float)play.texture.width, (float)play.texture.height};
-    //settings.bounds = {this->window.screen_width / 2.0f - settings.texture.width / 2.0f, this->window.screen_height / 2.5f - settings.texture.height / 2.0f, (float)play.texture.width, (float)play.texture.height};
-    // this->buttons.push_back(settings);
+
+    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
+    Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
+    Button *quit = new Button(&this->window, 1.5f, 3.5f, "Quit", "../graphic/button/quit.png");
+    this->buttons.push_back(*play);
+    this->buttons.push_back(*settings);
+    this->buttons.push_back(*quit);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
     this->camera.up = Vector3{0.0f, 1.0f, 0.0f};
     this->camera.fovy = 45.0f;
     this->camera.projection = CAMERA_PERSPECTIVE;
+
+    this->framesAnim = 0;
+    this->imageAnim = LoadImageAnim("../graphic/menu/menu.gif", &this->framesAnim);
+    this->menu = LoadTextureFromImage(this->imageAnim);
+
+    this->lastGifTime = GetTime();
+    this->gifFrameRate = 1 / 20.0f;
 }
 
 Game::~Game()
@@ -42,25 +43,38 @@ Game::~Game()
         this->players.pop_back();
     while (!this->map.blocks.empty())
         this->map.blocks.pop_back();
-
     CloseWindow();
 }
 
 void Game::draw()
 {
+    this->framesCount++;
+    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
+        this->framesAnimCount++;
+        if (this->framesAnimCount >= framesAnim) 
+            this->framesAnimCount = 0;
+        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
+        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
+        this->lastGifTime = GetTime();
+    }
     BeginDrawing();
-    ClearBackground(RAYWHITE);
     BeginMode3D(this->camera);
-    if (this->status == 1)
+    ClearBackground(RAYWHITE);
+    if (this->status == 1) {
         DrawGrid(10, 1.0f);
-    for (int i = 0; i < this->players.size(); i++)
-        this->players[i].draw(this);
-    for (int i = 0; i < this->map.blocks.size(); i++)
-        this->map.blocks[i].draw(this);
+        for (int i = 0; i < this->players.size(); i++)
+            this->players[i].draw(this);
+        for (int i = 0; i < this->map.blocks.size(); i++)
+            this->map.blocks[i].draw(this);
+    }
     EndMode3D();
     draw_text();
-    for (int i = 0; i < this->buttons.size(); i++)
-        this->buttons[i].draw(this);
+    if (this->status == 0) {
+        DrawText(TextSubtext(this->text, 0, this->framesCount/12), 785, 160, 50, MAROON);
+        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
+        for (int i = 0; i < this->buttons.size(); i++)
+            this->buttons[i].draw(this);
+    }
     EndDrawing();
 }
 
@@ -70,6 +84,7 @@ void Game::basic_map()
     float x = -5.0f;
     float y = 0.0f;
     float z = 6.0f;
+
     while(x != 6.0f){
         Block mur({z, y, x},1, DARKBLUE);
         this->map.blocks.push_back(mur);
@@ -187,12 +202,13 @@ void Game::game_loop()
     audio->init();
     audio->setMusic("../audio/menu.mp3");
     audio->playMusic();
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && this->status != -1)
     {
         audio->update();
         this->update();
 
         this->draw();
     }
+    UnloadTexture(this->menu);
     audio->endMusic();
 }

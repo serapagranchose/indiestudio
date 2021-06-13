@@ -18,7 +18,6 @@ AllMusic::~AllMusic()
 void AllMusic::init()
 {
     InitAudioDevice();
-    std::cout << IsAudioDeviceReady() << std::endl;
     SetMasterVolume(0.1);
 }
 
