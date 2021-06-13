@@ -37,7 +37,6 @@ void Button::start(Game *bomberman)
     PlaySound(this->sound);
     bomberman->status = 1;
         if (bomberman->map_generated == 0) {
-            bomberman->basic_map();
             bomberman->random_map();
         }
 }
@@ -81,7 +80,7 @@ void Button::input(Game *bomberman, Vector2 mouse)
         } else
             this->status = 0;
         if (this->action && this->name == "Play")
-           start(bomberman);
+            start(bomberman);
         else if (this->action && this->name == "Quit")
             quit(bomberman);
         else if (this->action && this->name == "Settings")

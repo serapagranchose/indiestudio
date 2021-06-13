@@ -84,37 +84,6 @@ void Game::draw()
     EndDrawing();
 }
 
-void Game::basic_map()
-{
-    int i = 0;
-    float x = -5.0f;
-    float y = 0.0f;
-    float z = 6.0f;
-
-    while(x != 6.0f){
-        Block mur({z, y, x},0, DARKBLUE);
-        this->map.blocks.push_back(mur);
-        x += 1;
-    }
-    x -= 1;
-    while(z > -6.0f){
-        z -= 1;
-        Block mur({z, y, x},0, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    while(x > -6.0f){
-        x -= 1;
-        Block mur({z, y, x},0, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    while(z < 6.0f){
-        z += 1;
-        Block mur({z, y, x},0, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    this->map_generated = 1;
-}
-
 void Game::random_map()
 {
     FILE* fichier = NULL;
@@ -134,10 +103,14 @@ void Game::random_map()
                 i = 0;
             }
             if(caractereActuel == 'H'){
-                Block mur({z + i, 0.0f, x + L},1, BLACK);
-                this->map.blocks.push_back(mur);
+                Block mousse({z + i, 0.0f, x + L},1, BLACK);
+                this->map.blocks.push_back(mousse);
                 std::cout<<"\n"<<i<<'\n';
                 std::cout<<"\n"<<L<<'\n';
+            }
+            if(caractereActuel == 'o'){
+                Block mur({z + i-1, 0.0f, x + L-1},0, DARKBLUE);
+                this->map.blocks.push_back(mur);
             }
             i ++;
             printf("%c", caractereActuel);
@@ -189,18 +162,18 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            if (this->players[i].next_position.x == this->players[i].position.x){
+            //if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
                 if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            }
-            if (this->players[i].next_position.z == this->players[i].position.z){
+            //}
+            //if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
                 if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            }
+            //}
         }
     }
 }
