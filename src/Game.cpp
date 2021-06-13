@@ -32,6 +32,9 @@ Game::Game()
     this->framesAnim = 0;
     this->imageAnim = LoadImageAnim("../graphic/menu/menu.gif", &this->framesAnim);
     this->menu = LoadTextureFromImage(this->imageAnim);
+
+    this->lastGifTime = GetTime();
+    this->gifFrameRate = 1 / 20.0f;
 }
 
 Game::~Game()
@@ -45,11 +48,15 @@ Game::~Game()
 
 void Game::draw()
 {
-    this->framesAnimCount++;
-    if (this->framesAnimCount >= framesAnim) 
-        this->framesAnimCount = 0;
-    unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
-    UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
+    this->framesCount++;
+    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
+        this->framesAnimCount++;
+        if (this->framesAnimCount >= framesAnim) 
+            this->framesAnimCount = 0;
+        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
+        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
+        this->lastGifTime = GetTime();
+    }
     BeginDrawing();
     BeginMode3D(this->camera);
     ClearBackground(RAYWHITE);
@@ -63,6 +70,7 @@ void Game::draw()
     EndMode3D();
     draw_text();
     if (this->status == 0) {
+        DrawText(TextSubtext(this->text, 0, this->framesCount/12), 785, 160, 50, MAROON);
         DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
         for (int i = 0; i < this->buttons.size(); i++)
             this->buttons[i].draw(this);

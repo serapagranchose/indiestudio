@@ -65,7 +65,12 @@ class Game{
         int map_generated = 0;
         int framesAnim = 0;
         int framesAnimCount = 0;
+        double lastGifTime;
+        double gifFrameRate;
         Image imageAnim;
+        Font font;
+        int framesCount = 0;
+        char const *text = "INDIE STUDIO";
 };
 
 #include "Button.hpp"
