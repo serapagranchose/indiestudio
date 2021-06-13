@@ -44,6 +44,7 @@ void Button::start(Game *bomberman)
 
 void Button::settings(Game *bomberman)
 {
+    this->check = 1;
     PlaySound(this->sound);
     bomberman->status = 2;
 }
@@ -52,6 +53,13 @@ void Button::quit(Game *bomberman)
 {
     PlaySound(this->sound);
     bomberman->status = -1;
+}
+
+void Button::credits(Game *bomberman)
+{
+    this->check = 1;
+    PlaySound(this->sound);
+    bomberman->status = 3;
 }
 
 void Button::home(Game *bomberman)
@@ -78,10 +86,12 @@ void Button::input(Game *bomberman, Vector2 mouse)
             quit(bomberman);
         else if (this->action && this->name == "Settings")
             settings(bomberman);
+        else if (this->action && this->name == "Credits")
+            credits(bomberman);
         this->action = false;
         this->size.y = this->status * (float)this->frameHeight;
     }
-    if (bomberman->status == 2) {
+    if (bomberman->status == 2 || bomberman->status == 3) {
         if (CheckCollisionPointRec(mouse, this->bounds)) {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
                 this->status = 2;
