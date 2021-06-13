@@ -21,8 +21,8 @@ class Button{
         void quit(Game *bomberman);
         void settings(Game *bomberman);
         void start(Game *bomberman);
+        void home(Game *bomberman);
 
-        int place = 0;
         Texture2D texture;
         Rectangle size;
         Rectangle bounds;
@@ -31,6 +31,7 @@ class Button{
         int i = 0;
         std::string name;
         float frameHeight;
+        Sound sound;
 
         Model model;
 };

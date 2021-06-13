@@ -15,13 +15,16 @@ Game::Game()
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
     this->audio = new AllMusic();
+    audio->init();
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
     Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
     Button *quit = new Button(&this->window, 1.5f, 3.5f, "Quit", "../graphic/button/quit.png");
+    Button *home = new Button(&this->window, 1.5f, 3.5f, "Home", "../graphic/button/home.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
+    this->buttons.push_back(*home);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -48,15 +51,6 @@ Game::~Game()
 
 void Game::draw()
 {
-    this->framesCount++;
-    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
-        this->framesAnimCount++;
-        if (this->framesAnimCount >= framesAnim) 
-            this->framesAnimCount = 0;
-        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
-        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
-        this->lastGifTime = GetTime();
-    }
     BeginDrawing();
     BeginMode3D(this->camera);
     ClearBackground(RAYWHITE);
@@ -70,10 +64,15 @@ void Game::draw()
     EndMode3D();
     draw_text();
     if (this->status == 0) {
-        DrawText(TextSubtext(this->text, 0, this->framesCount/12), 785, 160, 50, MAROON);
+        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 780, 160, 50, MAROON);
         DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
-        for (int i = 0; i < this->buttons.size(); i++)
+        for (int i = 0; i < 3; i++)
             this->buttons[i].draw(this);
+    }
+    if (this->status == 2) {
+        DrawText("SETTINGS", 820, 160, 50, MAROON);
+        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
+        this->buttons[3].draw(this);
     }
     EndDrawing();
 }
@@ -122,11 +121,11 @@ void Game::random_map()
             printf("%c", caractereActuel);
             caractereActuel = fgetc(fichier);
         } while (caractereActuel != 'k');
-        std::cout<<'\n';
+        std::cout << '\n';
     }
     else
     {
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
+        std::cout << "Impossible d'ouvrir le fichier map.txt\n";
     }
     fclose(fichier);
 }
@@ -188,8 +187,17 @@ void Game::input()
 
 void Game::update()
 {
+    audio->update();
+    this->framesCount++;
+    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
+        this->framesAnimCount++;
+        if (this->framesAnimCount >= framesAnim) 
+            this->framesAnimCount = 0;
+        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
+        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
+        this->lastGifTime = GetTime();
+    }
     this->input();
-
     UpdateCamera(&this->camera);
     if (this->debug == true)
         SetCameraMode(this->camera, CAMERA_FREE);
@@ -199,14 +207,11 @@ void Game::update()
 
 void Game::game_loop()
 {
-    audio->init();
     audio->setMusic("../audio/menu.mp3");
     audio->playMusic();
     while (!WindowShouldClose() && this->status != -1)
     {
-        audio->update();
         this->update();
-
         this->draw();
     }
     UnloadTexture(this->menu);

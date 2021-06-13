@@ -70,7 +70,6 @@ class Game{
         Image imageAnim;
         Font font;
         int framesCount = 0;
-        char const *text = "INDIE STUDIO";
 };
 
 #include "Button.hpp"
