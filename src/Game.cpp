@@ -92,24 +92,24 @@ void Game::basic_map()
     float z = 6.0f;
 
     while(x != 6.0f){
-        Block mur({z, y, x},1, DARKBLUE);
+        Block mur({z, y, x},0, DARKBLUE);
         this->map.blocks.push_back(mur);
         x += 1;
     }
     x -= 1;
     while(z > -6.0f){
         z -= 1;
-        Block mur({z, y, x},1, DARKBLUE);
+        Block mur({z, y, x},0, DARKBLUE);
         this->map.blocks.push_back(mur);
     }
     while(x > -6.0f){
         x -= 1;
-        Block mur({z, y, x},1, DARKBLUE);
+        Block mur({z, y, x},0, DARKBLUE);
         this->map.blocks.push_back(mur);
     }
     while(z < 6.0f){
         z += 1;
-        Block mur({z, y, x},1, DARKBLUE);
+        Block mur({z, y, x},0, DARKBLUE);
         this->map.blocks.push_back(mur);
     }
     this->map_generated = 1;
@@ -120,28 +120,25 @@ void Game::random_map()
     FILE* fichier = NULL;
     int i = 0;
     int L= 0;
+    float x = -5.0f;
+    float z = -6.0f;
     int caractereActuel = 0;
     fichier = fopen("../graphic/map/map.txt", "r+");
 
-            Block mur({5.0f, 0.0f, -5.0f},1, BLACK);
-        this->map.blocks.push_back(mur);
     if (fichier != NULL)
     {
         do
         {
-
-
             if(caractereActuel == '\n'){
                 L++;
                 i = 0;
             }
             if(caractereActuel == 'H'){
+                Block mur({z + i, 0.0f, x + L},1, BLACK);
+                this->map.blocks.push_back(mur);
                 std::cout<<"\n"<<i<<'\n';
                 std::cout<<"\n"<<L<<'\n';
             }
-
-
-
             i ++;
             printf("%c", caractereActuel);
             caractereActuel = fgetc(fichier);
