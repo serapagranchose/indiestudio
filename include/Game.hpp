@@ -12,6 +12,8 @@ extern "C" {
     #include <raylib.h>
 }
 
+#define NUM_FRAMES 3
+
 #include <iostream>
 #include <typeinfo>
 #include <cstring>
@@ -57,9 +59,13 @@ class Game{
         std::vector<Button> buttons;
         Map map;
         std::vector<Player> players;
+        Texture2D menu;
         bool debug = false;
         int status = 0;
         int map_generated = 0;
+        int framesAnim = 0;
+        int framesAnimCount = 0;
+        Image imageAnim;
 };
 
 #include "Button.hpp"

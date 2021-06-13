@@ -28,9 +28,8 @@ Player::~Player()
 
 void Player::draw(Game *bomberman)
 {
-    if (bomberman->status == this->place){
+    if (bomberman->status == this->place)
         DrawCubeV(this->position, this->size, this->color);
-    }
 }
 
 void Player::update(Game *bomberman)

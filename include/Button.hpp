@@ -13,10 +13,14 @@
 class Button{
     public:
         Button();
+        Button(Window *window, float heightScreen, float heightButton,std::string name, const char* path);
         ~Button();
 
         void draw(Game *bomberman);
         void input(Game *bomberman, Vector2 mouse);
+        void quit(Game *bomberman);
+        void settings(Game *bomberman);
+        void start(Game *bomberman);
 
         int place = 0;
         Texture2D texture;
@@ -24,6 +28,9 @@ class Button{
         Rectangle bounds;
         int status = 0;
         bool action = false;
+        int i = 0;
+        std::string name;
+        float frameHeight;
 
         Model model;
 };
