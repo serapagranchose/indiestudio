@@ -21,6 +21,7 @@ class Button{
         void quit(Game *bomberman);
         void settings(Game *bomberman);
         void start(Game *bomberman);
+        void credits(Game *bomberman);
         void home(Game *bomberman);
 
         Texture2D texture;
@@ -32,6 +33,7 @@ class Button{
         std::string name;
         float frameHeight;
         Sound sound;
+        int check = 0;
 
         Model model;
 };

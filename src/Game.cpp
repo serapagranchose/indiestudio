@@ -19,11 +19,13 @@ Game::Game()
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
     Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
-    Button *quit = new Button(&this->window, 1.5f, 3.5f, "Quit", "../graphic/button/quit.png");
-    Button *home = new Button(&this->window, 1.5f, 3.5f, "Home", "../graphic/button/home.png");
+    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
+    Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
+    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
+    this->buttons.push_back(*credits);
     this->buttons.push_back(*home);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
@@ -64,15 +66,20 @@ void Game::draw()
     EndMode3D();
     draw_text();
     if (this->status == 0) {
-        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 780, 160, 50, MAROON);
-        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
-        for (int i = 0; i < 3; i++)
+        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 630, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        for (int i = 0; i < 4; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 2) {
-        DrawText("SETTINGS", 820, 160, 50, MAROON);
-        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
-        this->buttons[3].draw(this);
+        DrawText("SETTINGS", 690, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        this->buttons[4].draw(this);
+    }
+    if (this->status == 3) {
+        DrawText("CREDITS", 730, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        this->buttons[4].draw(this);
     }
     EndDrawing();
 }
