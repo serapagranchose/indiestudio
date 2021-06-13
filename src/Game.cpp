@@ -111,21 +111,37 @@ void Game::basic_map()
 void Game::random_map()
 {
     FILE* fichier = NULL;
+    int i = 0;
+    int L= 0;
     int caractereActuel = 0;
     fichier = fopen("../graphic/map/map.txt", "r+");
 
+            Block mur({5.0f, 0.0f, -5.0f},1, BLACK);
+        this->map.blocks.push_back(mur);
     if (fichier != NULL)
     {
         do
         {
+
+
+            if(caractereActuel == '\n'){
+                L++;
+                i = 0;
+            }
+            if(caractereActuel == 'H'){
+                std::cout<<"\n"<<i<<'\n';
+                std::cout<<"\n"<<L<<'\n';
+            }
+
+
+
+            i ++;
             printf("%c", caractereActuel);
             caractereActuel = fgetc(fichier);
         } while (caractereActuel != 'k');
-        std::cout << '\n';
-    }
-    else
-    {
-        std::cout << "Impossible d'ouvrir le fichier map.txt\n";
+        std::cout<<'\n';
+    }else{
+        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
     }
     fclose(fichier);
 }
