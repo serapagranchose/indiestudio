@@ -73,12 +73,12 @@ void Game::draw()
     }
     if (this->status == 2) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
-        DrawText("SETTINGS", 690, 160, 100, MAROON);
+        DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
         this->buttons[4].draw(this);
     }
     if (this->status == 3) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
-        DrawText("CREDITS", 730, 160, 100, MAROON);
+        DrawText("CREDITS", 170, 160, 100, DARKBLUE);
         this->buttons[4].draw(this);
     }
     EndDrawing();
