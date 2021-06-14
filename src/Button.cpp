@@ -14,12 +14,39 @@ Button::Button()
 
 Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
 {
-    this->texture = LoadTexture(path);
-    this->name = name;
-    this->frameHeight = (float)this->texture.height / NUM_FRAMES;
-    this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
-    this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-    this->sound = LoadSound("../audio/button.wav");
+    if (name != "Sound" && name != "Plus" && name != "Minus") {
+        this->texture = LoadTexture(path);
+        this->name = name;
+        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
+        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
+        this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
+        this->sound = LoadSound("../audio/button.wav");
+    }
+    else if (name == "Sound") {
+        std::cout << "Yo" << std::endl;
+        this->texture = LoadTexture(path);
+        this->name = name;
+        this->frameHeight = (float)this->texture.height / NUM_SOUND;
+        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
+        this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
+        this->sound = LoadSound("../audio/button.wav");
+    }
+    else if (name == "Plus") {
+        this->texture = LoadTexture(path);
+        this->name = name;
+        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
+        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
+        this->bounds = {window->screen_width / 3.1f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
+        this->sound = LoadSound("../audio/button.wav");
+    }
+    else if (name == "Minus") {
+        this->texture = LoadTexture(path);
+        this->name = name;
+        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
+        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
+        this->bounds = {window->screen_width / 8.4f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
+        this->sound = LoadSound("../audio/button.wav");
+    }
 }
 
 Button::~Button()
@@ -68,6 +95,25 @@ void Button::home(Game *bomberman)
     bomberman->status = 0;
 }
 
+void Button::plus(Game *bomberman)
+{
+    if (bomberman->volume < 9) {
+        bomberman->volume += 1;
+        SetMasterVolume(bomberman->volume);
+    }
+    std::cout << bomberman->volume << std::endl;
+    PlaySound(this->sound);
+}
+
+void Button::minus(Game *bomberman)
+{
+    if (bomberman->volume > 0) {
+        bomberman->volume -= 1;
+        SetMasterVolume(bomberman->volume);
+    }
+    PlaySound(this->sound);
+}
+
 void Button::input(Game *bomberman, Vector2 mouse)
 {
     if (bomberman->status == 0) {
@@ -103,7 +149,12 @@ void Button::input(Game *bomberman, Vector2 mouse)
             this->status = 0;
         if (this->action && this->name == "Home")
             home(bomberman);
+        else if (this->action && this->name == "Plus")
+            plus(bomberman);
+        else if (this->action && this->name == "Minus")
+            minus(bomberman);
+        if (this->name != "Sound")
+            this->size.y = this->status * (float)this->frameHeight;
         this->action = false;
-        this->size.y = this->status * (float)this->frameHeight;
     }
 }

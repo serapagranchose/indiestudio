@@ -13,6 +13,7 @@ extern "C" {
 }
 
 #define NUM_FRAMES 3
+#define NUM_SOUND 11
 
 #include <iostream>
 #include <typeinfo>
@@ -27,7 +28,6 @@ extern "C" {
 class Player;
 class Button;
 class Block;
-class AllMusic;
 
 class Window{
     public:
@@ -70,6 +70,7 @@ class Game{
         Image imageAnim;
         Font font;
         int framesCount = 0;
+        float volume = 5;
 };
 
 #include "Button.hpp"

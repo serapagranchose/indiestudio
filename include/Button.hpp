@@ -23,6 +23,8 @@ class Button{
         void start(Game *bomberman);
         void credits(Game *bomberman);
         void home(Game *bomberman);
+        void plus(Game *bomberman);
+        void minus(Game *bomberman);
 
         Texture2D texture;
         Rectangle size;

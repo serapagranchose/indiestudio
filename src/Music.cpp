@@ -15,10 +15,10 @@ AllMusic::~AllMusic()
 {
 }
 
-void AllMusic::init()
+void AllMusic::init(Game *bomberman)
 {
     InitAudioDevice();
-    SetMasterVolume(0.1);
+    SetMasterVolume(bomberman->volume);
 }
 
 void AllMusic::setMusic(std::string path)

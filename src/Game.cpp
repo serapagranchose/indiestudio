@@ -15,18 +15,24 @@ Game::Game()
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
     this->audio = new AllMusic();
-    audio->init();
+    audio->init(this);
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
     Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
     Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
     Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
     Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
+    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "../graphic/button/sound.png");
+    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "../graphic/button/plus.png");
+    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "../graphic/button/minus.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
     this->buttons.push_back(*credits);
     this->buttons.push_back(*home);
+    this->buttons.push_back(*sound);
+    this->buttons.push_back(*plus);
+    this->buttons.push_back(*minus);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -74,7 +80,8 @@ void Game::draw()
     if (this->status == 2) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
-        this->buttons[4].draw(this);
+        for (int i = 4; i != 8; i++)
+            this->buttons[i].draw(this);
     }
     if (this->status == 3) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
@@ -207,6 +214,7 @@ void Game::update()
 {
     audio->update();
     this->framesCount++;
+    this->buttons[5].size.y = (this->volume - 1) * (float)this->buttons[5].frameHeight;
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
         if (this->framesAnimCount >= framesAnim) 
