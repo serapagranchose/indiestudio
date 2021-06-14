@@ -66,19 +66,19 @@ void Game::draw()
     EndMode3D();
     draw_text();
     if (this->status == 0) {
-        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 630, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 100, 160, 100, DARKBLUE);
         for (int i = 0; i < 4; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 2) {
-        DrawText("SETTINGS", 690, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText("SETTINGS", 690, 160, 100, MAROON);
         this->buttons[4].draw(this);
     }
     if (this->status == 3) {
-        DrawText("CREDITS", 730, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText("CREDITS", 730, 160, 100, MAROON);
         this->buttons[4].draw(this);
     }
     EndDrawing();
