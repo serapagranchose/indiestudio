@@ -50,7 +50,7 @@ class Game{
         void input();
         void draw();
         void random_map();
-        void basic_map();
+        void create_random_map();
         void draw_text();
 
         Window window;
@@ -70,7 +70,6 @@ class Game{
         Image imageAnim;
         Font font;
         int framesCount = 0;
-        char const *text = "INDIE STUDIO";
 };
 
 #include "Button.hpp"

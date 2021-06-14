@@ -15,13 +15,18 @@ Game::Game()
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
     this->audio = new AllMusic();
+    audio->init();
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
     Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
-    Button *quit = new Button(&this->window, 1.5f, 3.5f, "Quit", "../graphic/button/quit.png");
+    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
+    Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
+    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
+    this->buttons.push_back(*credits);
+    this->buttons.push_back(*home);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -48,15 +53,6 @@ Game::~Game()
 
 void Game::draw()
 {
-    this->framesCount++;
-    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
-        this->framesAnimCount++;
-        if (this->framesAnimCount >= framesAnim) 
-            this->framesAnimCount = 0;
-        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
-        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
-        this->lastGifTime = GetTime();
-    }
     BeginDrawing();
     BeginMode3D(this->camera);
     ClearBackground(RAYWHITE);
@@ -70,62 +66,83 @@ void Game::draw()
     EndMode3D();
     draw_text();
     if (this->status == 0) {
-        DrawText(TextSubtext(this->text, 0, this->framesCount/12), 785, 160, 50, MAROON);
-        DrawTexture(this->menu, GetScreenWidth()/2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height/2, WHITE);
-        for (int i = 0; i < this->buttons.size(); i++)
+        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 630, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        for (int i = 0; i < 4; i++)
             this->buttons[i].draw(this);
+    }
+    if (this->status == 2) {
+        DrawText("SETTINGS", 690, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        this->buttons[4].draw(this);
+    }
+    if (this->status == 3) {
+        DrawText("CREDITS", 730, 160, 100, MAROON);
+        DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        this->buttons[4].draw(this);
     }
     EndDrawing();
 }
 
-void Game::basic_map()
+void Game::create_random_map()
 {
+    FILE* fichier = NULL;
     int i = 0;
-    float x = -5.0f;
-    float y = 0.0f;
-    float z = 6.0f;
+    int pos_H = 0;
+    int caractereActuel;
 
-    while(x != 6.0f){
-        Block mur({z, y, x},1, DARKBLUE);
-        this->map.blocks.push_back(mur);
-        x += 1;
+    fichier = fopen("../graphic/map/map.txt", "r+");
+    if (fichier != NULL)
+    {
+        while(i < 61){
+            do
+            {
+                pos_H = rand() % 140 ;//le probléme est la !!
+                fseek(fichier, pos_H, SEEK_SET);//le probléme est la !!
+                caractereActuel = fgetc(fichier);//le probléme est la !!
+            } while (caractereActuel != 'x');
+            if(caractereActuel == 'x'){
+                fputc('H', fichier);
+                i++;
+            }
+        }
+    }else{
+        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
     }
-    x -= 1;
-    while(z > -6.0f){
-        z -= 1;
-        Block mur({z, y, x},1, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    while(x > -6.0f){
-        x -= 1;
-        Block mur({z, y, x},1, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    while(z < 6.0f){
-        z += 1;
-        Block mur({z, y, x},1, DARKBLUE);
-        this->map.blocks.push_back(mur);
-    }
-    this->map_generated = 1;
+    fclose(fichier);
 }
 
 void Game::random_map()
 {
     FILE* fichier = NULL;
+    int i = 0;
+    int L= 0;
+    float x = -6.0f;
+    float z = -7.0f;
     int caractereActuel = 0;
-    fichier = fopen("../graphic/map/map.txt", "r+");
 
+    fichier = fopen("../graphic/map/map.txt", "r+");
     if (fichier != NULL)
     {
         do
         {
-            printf("%c", caractereActuel);
+            if(caractereActuel == '\n'){
+                L++;
+                i = 0;
+            }
+            if(caractereActuel == 'H'){
+                Block mousse({z + i, 0.0f, x + L},1, BLACK);
+                this->map.blocks.push_back(mousse);
+            }
+            if(caractereActuel == 'O'){
+                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
+                this->map.blocks.push_back(mur);
+            }
+            i ++;
             caractereActuel = fgetc(fichier);
-        } while (caractereActuel != 'k');
+        } while (caractereActuel != 'k'|| caractereActuel == EOF);
         std::cout<<'\n';
-    }
-    else
-    {
+    }else{
         std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
     }
     fclose(fichier);
@@ -170,26 +187,35 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            if (this->players[i].next_position.x == this->players[i].position.x){
+            //if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
                 if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            }
-            if (this->players[i].next_position.z == this->players[i].position.z){
+            //}
+            //if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
                 if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            }
+            //}
         }
     }
 }
 
 void Game::update()
 {
+    audio->update();
+    this->framesCount++;
+    if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
+        this->framesAnimCount++;
+        if (this->framesAnimCount >= framesAnim) 
+            this->framesAnimCount = 0;
+        unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
+        UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
+        this->lastGifTime = GetTime();
+    }
     this->input();
-
     UpdateCamera(&this->camera);
     if (this->debug == true)
         SetCameraMode(this->camera, CAMERA_FREE);
@@ -199,14 +225,11 @@ void Game::update()
 
 void Game::game_loop()
 {
-    audio->init();
     audio->setMusic("../audio/menu.mp3");
     audio->playMusic();
     while (!WindowShouldClose() && this->status != -1)
     {
-        audio->update();
         this->update();
-
         this->draw();
     }
     UnloadTexture(this->menu);
