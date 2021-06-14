@@ -37,6 +37,7 @@ void Button::start(Game *bomberman)
     PlaySound(this->sound);
     bomberman->status = 1;
         if (bomberman->map_generated == 0) {
+            bomberman->create_random_map();
             bomberman->random_map();
         }
 }

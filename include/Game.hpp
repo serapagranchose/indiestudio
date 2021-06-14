@@ -50,7 +50,7 @@ class Game{
         void input();
         void draw();
         void random_map();
-        void basic_map();
+        void create_random_map();
         void draw_text();
 
         Window window;

@@ -84,16 +84,44 @@ void Game::draw()
     EndDrawing();
 }
 
+void Game::create_random_map()
+{
+    FILE* fichier = NULL;
+    int i = 0;
+    int pos_H = 0;
+    int caractereActuel;
+
+    fichier = fopen("../graphic/map/map.txt", "r+");
+    if (fichier != NULL)
+    {
+        while(i < 61){
+            do
+            {
+                pos_H = rand() % 140 ;//le probléme est la !!
+                fseek(fichier, pos_H, SEEK_SET);//le probléme est la !!
+                caractereActuel = fgetc(fichier);//le probléme est la !!
+            } while (caractereActuel != 'x');
+            if(caractereActuel == 'x'){
+                fputc('H', fichier);
+                i++;
+            }
+        }
+    }else{
+        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
+    }
+    fclose(fichier);
+}
+
 void Game::random_map()
 {
     FILE* fichier = NULL;
     int i = 0;
     int L= 0;
-    float x = -5.0f;
-    float z = -6.0f;
+    float x = -6.0f;
+    float z = -7.0f;
     int caractereActuel = 0;
-    fichier = fopen("../graphic/map/map.txt", "r+");
 
+    fichier = fopen("../graphic/map/map.txt", "r+");
     if (fichier != NULL)
     {
         do
@@ -105,17 +133,14 @@ void Game::random_map()
             if(caractereActuel == 'H'){
                 Block mousse({z + i, 0.0f, x + L},1, BLACK);
                 this->map.blocks.push_back(mousse);
-                std::cout<<"\n"<<i<<'\n';
-                std::cout<<"\n"<<L<<'\n';
             }
-            if(caractereActuel == 'o'){
-                Block mur({z + i-1, 0.0f, x + L-1},0, DARKBLUE);
+            if(caractereActuel == 'O'){
+                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
                 this->map.blocks.push_back(mur);
             }
             i ++;
-            printf("%c", caractereActuel);
             caractereActuel = fgetc(fichier);
-        } while (caractereActuel != 'k');
+        } while (caractereActuel != 'k'|| caractereActuel == EOF);
         std::cout<<'\n';
     }else{
         std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
