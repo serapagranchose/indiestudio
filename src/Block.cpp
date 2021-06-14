@@ -9,7 +9,6 @@
 
 Block::Block()
 {
-
 }
 
 Block::Block(Vector3 position, bool destructible, Color couleur)
@@ -26,6 +25,5 @@ Block::~Block()
 
 void Block::draw(Game *bomberman)
 {
-    if (bomberman->status == this->place)
-        DrawCubeV(this->position, this->size, this->color);
+    DrawCubeV(this->position, this->size, this->color);
 }

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <iterator>
+#include "Game.hpp"
 
 std::vector<std::string> str_to_word_array(std::string string)
 {

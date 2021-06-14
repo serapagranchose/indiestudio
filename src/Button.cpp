@@ -23,7 +23,6 @@ Button::Button(Window *window, float heightScreen, float heightButton, std::stri
         this->sound = LoadSound("../audio/button.wav");
     }
     else if (name == "Sound") {
-        std::cout << "Yo" << std::endl;
         this->texture = LoadTexture(path);
         this->name = name;
         this->frameHeight = (float)this->texture.height / NUM_SOUND;
@@ -64,8 +63,7 @@ void Button::start(Game *bomberman)
     PlaySound(this->sound);
     bomberman->status = 1;
         if (bomberman->map_generated == 0) {
-            bomberman->create_random_map();
-            bomberman->random_map();
+            bomberman->map->random_map();
         }
 }
 

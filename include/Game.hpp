@@ -22,8 +22,10 @@ extern "C" {
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <fstream>
 
 #include "Music.hpp"
+#include "Map.hpp"
 
 class Player;
 class Button;
@@ -35,11 +37,6 @@ class Window{
         int screen_height = 1080;
 };
 
-class Map{
-    public:
-        std::vector<Block> blocks;
-};
-
 class Game{
     public:
         Game();
@@ -49,15 +46,13 @@ class Game{
         void update();
         void input();
         void draw();
-        void random_map();
-        void create_random_map();
         void draw_text();
 
         Window window;
         Camera camera;
         AllMusic *audio;
         std::vector<Button> buttons;
-        Map map;
+        Map *map;
         std::vector<Player> players;
         Texture2D menu;
         bool debug = false;
@@ -72,6 +67,8 @@ class Game{
         int framesCount = 0;
         float volume = 5;
 };
+
+std::vector<std::string> str_to_word_array(std::string string);
 
 #include "Button.hpp"
 #include "Block.hpp"

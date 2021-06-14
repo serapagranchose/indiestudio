@@ -38,14 +38,14 @@ void Player::update(Game *bomberman)
         this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->camera);
 
 
-        for (int i = 0; i < bomberman->map.blocks.size(); i++)
+        for (int i = 0; i < bomberman->map->blocks.size(); i++)
             if (CheckCollisionBoxes(
                 BoundingBox{
                     Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
                     Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->map.blocks[i].position.x - bomberman->map.blocks[i].size.x / 2, bomberman->map.blocks[i].position.y - bomberman->map.blocks[i].size.y / 2, bomberman->map.blocks[i].position.z - bomberman->map.blocks[i].size.z / 2 },
-                    Vector3{bomberman->map.blocks[i].position.x + bomberman->map.blocks[i].size.x / 2, bomberman->map.blocks[i].position.y + bomberman->map.blocks[i].size.y / 2, bomberman->map.blocks[i].position.z + bomberman->map.blocks[i].size.z / 2 }}
+                    Vector3{bomberman->map->blocks[i].position.x - bomberman->map->blocks[i].size.x / 2, bomberman->map->blocks[i].position.y - bomberman->map->blocks[i].size.y / 2, bomberman->map->blocks[i].position.z - bomberman->map->   blocks[i].size.z / 2 },
+                    Vector3{bomberman->map->blocks[i].position.x + bomberman->map->blocks[i].size.x / 2, bomberman->map->blocks[i].position.y + bomberman->map->blocks[i].size.y / 2, bomberman->map->blocks[i].position.z + bomberman->map->blocks[i].size.z / 2 }}
                 )
             ){
                 this->position = this->past_position;

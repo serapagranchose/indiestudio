@@ -15,6 +15,7 @@ Game::Game()
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
     this->audio = new AllMusic();
+    this->map = new Map();
     audio->init(this);
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
@@ -52,8 +53,8 @@ Game::~Game()
 {
     while (!this->players.empty())
         this->players.pop_back();
-    while (!this->map.blocks.empty())
-        this->map.blocks.pop_back();
+    while (!this->map->blocks.empty())
+        this->map->blocks.pop_back();
     CloseWindow();
 }
 
@@ -66,8 +67,8 @@ void Game::draw()
         DrawGrid(10, 1.0f);
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
-        for (int i = 0; i < this->map.blocks.size(); i++)
-            this->map.blocks[i].draw(this);
+        for (int i = 0; i < this->map->blocks.size(); i++)
+            this->map->blocks[i].draw(this);
     }
     EndMode3D();
     draw_text();
@@ -91,70 +92,6 @@ void Game::draw()
     EndDrawing();
 }
 
-void Game::create_random_map()
-{
-    FILE* fichier = NULL;
-    int i = 0;
-    int pos_H = 0;
-    int caractereActuel;
-
-    fichier = fopen("../graphic/map/map.txt", "r+");
-    if (fichier != NULL)
-    {
-        while(i < 61){
-            do
-            {
-                pos_H = rand() % 140 ;//le probléme est la !!
-                fseek(fichier, pos_H, SEEK_SET);//le probléme est la !!
-                caractereActuel = fgetc(fichier);//le probléme est la !!
-            } while (caractereActuel != 'x');
-            if(caractereActuel == 'x'){
-                fputc('H', fichier);
-                i++;
-            }
-        }
-    }else{
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
-    }
-    fclose(fichier);
-}
-
-void Game::random_map()
-{
-    FILE* fichier = NULL;
-    int i = 0;
-    int L= 0;
-    float x = -6.0f;
-    float z = -7.0f;
-    int caractereActuel = 0;
-
-    fichier = fopen("../graphic/map/map.txt", "r+");
-    if (fichier != NULL)
-    {
-        do
-        {
-            if(caractereActuel == '\n'){
-                L++;
-                i = 0;
-            }
-            if(caractereActuel == 'H'){
-                Block mousse({z + i, 0.0f, x + L},1, BLACK);
-                this->map.blocks.push_back(mousse);
-            }
-            if(caractereActuel == 'O'){
-                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
-                this->map.blocks.push_back(mur);
-            }
-            i ++;
-            caractereActuel = fgetc(fichier);
-        } while (caractereActuel != 'k'|| caractereActuel == EOF);
-        std::cout<<'\n';
-    }else{
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
-    }
-    fclose(fichier);
-}
-
 void Game::draw_text()
 {
     if (this->debug == true){
@@ -168,7 +105,7 @@ void Game::draw_text()
         DrawText(TextFormat("camera_type: %d", this->camera.projection), 10, 130, 20, GRAY);
 
         DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
-        DrawText(TextFormat("block_nb:\t%d", this->map.blocks.size()), 10, 190, 20, GRAY);
+        DrawText(TextFormat("block_nb:\t%d", this->map->blocks.size()), 10, 190, 20, GRAY);
         for (int i = 0; i < this->players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].next_position.x, this->players[i].next_position.y, this->players[i].next_position.z, this->players[i].bomb_nb), 10, 230 + (i * 120), 20, GRAY);
     }
@@ -190,7 +127,7 @@ void Game::input()
             this->players.push_back(onch);
         } else if (IsKeyPressed(KEY_B)){
             Block brick;
-            this->map.blocks.push_back(brick);
+            this->map->blocks.push_back(brick);
         }
 
         for (int i = 0; i < this->players.size(); i++){

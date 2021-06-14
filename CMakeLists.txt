@@ -14,6 +14,7 @@ add_executable(bomberman
                 include/Game.hpp
                 include/Player.hpp
                 include/Music.hpp
+                include/Map.hpp
                 src/Block.cpp
                 src/Button.cpp
                 src/Game.cpp
@@ -21,6 +22,7 @@ add_executable(bomberman
                 src/Player.cpp
                 src/str_to_word_array.cpp
                 src/Music.cpp
+                src/Map.cpp
 )
 
 target_link_libraries(bomberman raylib)
