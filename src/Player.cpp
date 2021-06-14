@@ -51,30 +51,50 @@ void Player::update(Game *bomberman)
                 this->position = this->past_position;
                 this->next_position = this->position;
             }
+        /*
+        for (int i = 0; i < bomberman->players.size(); i++)
+            if (CheckCollisionBoxes(
+                BoundingBox{
+                    Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
+                    Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
+                BoundingBox{
+                    Vector3{bomberman->players[i].position.x - bomberman->players[i].size.x / 2, bomberman->players[i].position.y - bomberman->players[i].size.y / 2, bomberman->players[i].position.z - bomberman->players[i].size.z / 2 },
+                    Vector3{bomberman->players[i].position.x + bomberman->players[i].size.x / 2, bomberman->players[i].position.y + bomberman->players[i].size.y / 2, bomberman->players[i].position.z + bomberman->players[i].size.z / 2 }}
+                )
+            ){
+                this->position = this->past_position;
+                this->next_position = this->position;
+            }
+        */
+
 
         if (round(this->position.x * 10) < round(this->next_position.x * 10)){
             while(round(this->position.x * 10) != round(this->next_position.x * 10)){
                 this->past_position = this->position;
                 this->position.x += 0.1f;
             }
+            this->next_position = this->position;
         }
         if (round(this->position.z * 10) < round(this->next_position.z * 10)){
             while(round(this->position.z * 10) != round(this->next_position.z * 10)){
                 this->past_position = this->position;
                 this->position.z += 0.1f;
             }
+            this->next_position = this->position;
         }
         if (round(this->position.x * 10) > round(this->next_position.x * 10)){
             while(round(this->position.x * 10) != round(this->next_position.x * 10)){
                 this->past_position = this->position;
                 this->position.x -= 0.1f;
             }
+            this->next_position = this->position;
         }
         if (round(this->position.z * 10) > round(this->next_position.z * 10)){
             while(round(this->position.z * 10) != round(this->next_position.z * 10)){
                 this->past_position = this->position;
                 this->position.z -= 0.1f;
             }
+            this->next_position = this->position;
         }
     }
 }

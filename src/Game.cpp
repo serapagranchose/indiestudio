@@ -86,30 +86,39 @@ void Game::draw()
 
 void Game::create_random_map()
 {
-    FILE* fichier = NULL;
-    int i = 0;
-    int pos_H = 0;
-    int caractereActuel;
+    char character;
+    char character_to_replace;
+    int characters_number = 0;
+    int x_number = 0;
+    int h_number = 0;
+    int h_needed;
+    int infill_pourcent = 75;
+    FILE* file = NULL;
 
-    fichier = fopen("../graphic/map/map.txt", "r+");
-    if (fichier != NULL)
-    {
-        while(i < 61){
-            do
-            {
-                pos_H = rand() % 140 ;//le probléme est la !!
-                fseek(fichier, pos_H, SEEK_SET);//le probléme est la !!
-                caractereActuel = fgetc(fichier);//le probléme est la !!
-            } while (caractereActuel != 'x');
-            if(caractereActuel == 'x'){
-                fputc('H', fichier);
-                i++;
+    file = fopen("../graphic/map/map.txt", "r+");
+    if (file == NULL)
+        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
+    else {
+        while ((character = fgetc(file)) != EOF){
+            printf("%c\n", character);
+            if (character == 'x')
+                x_number++;
+            characters_number++;
+        }
+
+        h_needed = (x_number * infill_pourcent) / 100;
+
+        while (h_number != h_needed){
+            fseek(file, rand() % characters_number, SEEK_SET);
+            character_to_replace = fgetc(file);
+            if (character_to_replace == 'x'){
+                fputc('H', file);
+                h_number++;
             }
         }
-    }else{
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
     }
-    fclose(fichier);
+
+    fclose(file);
 }
 
 void Game::random_map()
@@ -187,18 +196,18 @@ void Game::input()
         }
 
         for (int i = 0; i < this->players.size(); i++){
-            //if (this->players[i].next_position.x == this->players[i].position.x){
+            if (this->players[i].next_position.x == this->players[i].position.x){
                 if (IsKeyDown(this->players[i].right))
                     this->players[i].next_position.x += 1;
                 if (IsKeyDown(this->players[i].left))
                     this->players[i].next_position.x -= 1;
-            //}
-            //if (this->players[i].next_position.z == this->players[i].position.z){
+            }
+            if (this->players[i].next_position.z == this->players[i].position.z){
                 if (IsKeyDown(this->players[i].up))
                     this->players[i].next_position.z -= 1;
                 if (IsKeyDown(this->players[i].down))
                     this->players[i].next_position.z += 1;
-            //}
+            }
         }
     }
 }
@@ -209,7 +218,7 @@ void Game::update()
     this->framesCount++;
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
-        if (this->framesAnimCount >= framesAnim) 
+        if (this->framesAnimCount >= framesAnim)
             this->framesAnimCount = 0;
         unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
         UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);
