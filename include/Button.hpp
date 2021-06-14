@@ -34,8 +34,6 @@ class Button{
         float frameHeight;
         Sound sound;
         int check = 0;
-
-        Model model;
 };
 
 #endif
