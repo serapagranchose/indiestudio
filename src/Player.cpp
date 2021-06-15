@@ -29,8 +29,6 @@ Player::~Player()
 
 Color Player::getColor(void) const
 {
-    if (bomberman->getStatus() == this->place)
-        DrawCubeV(this->position, this->size, this->color);
     return (this->color);
 }
 
@@ -223,6 +221,6 @@ void Player::update(Game *bomberman)
 
 void Player::draw(Game *bomberman)
 {
-    if (bomberman->status == this->place)
+    if (bomberman->getStatus() == this->place)
         DrawCubeV(this->position, this->size, this->color);
 }
