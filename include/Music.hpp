@@ -30,9 +30,9 @@ class AllMusic {
         float getVolume();
         void setVolume(float _volume);
 
+    private:
         float timePlayed = 0.0f;
         bool pause = false;
-    private:
         Music track;
         float volume = 5;
 };
