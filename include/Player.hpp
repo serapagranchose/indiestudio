@@ -16,9 +16,6 @@ class Player{
         Player(char *name, int key_right, int key_up, int key_left, int key_down, int key_space);
         ~Player();
 
-        Color getColor(void) const;
-        void setColor(const Color color);
-
         Vector3 getPosition(void) const;
         void setPosition(const Vector3 position);
 
@@ -29,11 +26,7 @@ class Player{
         void setNextPositionX(const float next_positionx);
         void setNextPositionZ(const float next_positionz);
 
-        Vector3 getSize(void) const;
-        void setSize(const Vector3 size);
-
         Vector2 getHeader(void) const;
-        void setHeader(const Vector2 header);
 
         int getPlace(void) const;
         void setPlace(const int place);
@@ -48,7 +41,9 @@ class Player{
         void setBombNB(const int bomb_nb);
 
         const char *getName(void) const;
-        void setName(const char *name);
+
+        int getUpdate() const;
+        void setUpdate(const int);
 
         void update(Game *bomberman);
         void draw(Game *bomberman);
@@ -67,6 +62,7 @@ class Player{
         int down = KEY_S;
         int bomb = KEY_SPACE;
         int bomb_nb = 0;
+        int _update = 0;
         const char *name = "adrien karpapov";
 };
 

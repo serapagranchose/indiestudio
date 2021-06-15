@@ -121,19 +121,23 @@ void Game::input()
     for (int i = 0; i < this->buttons.size(); i++)
         this->buttons[i].input(this, mouse);
 
-    if (this->status == 1){
+    if (this->status == 1) {
         if (IsKeyPressed(KEY_P)) {
             Player onch;
             this->players.push_back(onch);
         }
         for (int i = 0; i < this->players.size(); i++) {
             if (this->players[i].getNextPosition().x == this->players[i].getPosition().x) {
-                if (IsKeyDown(this->players[i].getRight()))
+                if (IsKeyDown(this->players[i].getRight())) {
+                    this->players[i].setUpdate(1);
                     this->players[i].setNextPositionX(this->players[i].getNextPosition().x + 1);
-                if (IsKeyDown(this->players[i].getLeft()))
+                }
+                if (IsKeyDown(this->players[i].getLeft())) {
+                    this->players[i].setUpdate(1);
                     this->players[i].setNextPositionX(this->players[i].getNextPosition().x - 1);
+                }
             }
-            if (this->players[i].getNextPosition().z == this->players[i].getPosition().z) {
+            if (this->players[i].getNextPosition().z == this->players[i].getPosition().z && this->players[i].getUpdate() != 1) {
                 if (IsKeyDown(this->players[i].getUp()))
                     this->players[i].setNextPositionZ(this->players[i].getNextPosition().z - 1);
                 if (IsKeyDown(this->players[i].getDown()))

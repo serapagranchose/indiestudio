@@ -25,16 +25,6 @@ Player::~Player()
 {
 }
 
-Color Player::getColor(void) const
-{
-    return (this->color);
-}
-
-void Player::setColor(const Color color)
-{
-    this->color = color;
-}
-
 Vector3 Player::getPosition(void) const
 {
     return (this->position);
@@ -70,24 +60,9 @@ void Player::setNextPositionZ(const float next_positionz)
     this->next_position.z = next_positionz;
 }
 
-Vector3 Player::getSize(void) const
-{
-    return (this->size);
-}
-
-void Player::setSize(const Vector3 size)
-{
-    this->size = size;
-}
-
 Vector2 Player::getHeader(void) const
 {
     return (this->header);
-}
-
-void Player::setHeader(const Vector2 header)
-{
-    this->header = header;
 }
 
 int Player::getPlace(void) const
@@ -140,9 +115,14 @@ const char *Player::getName(void) const
     return (this->name);
 }
 
-void Player::setName(const char *name)
+int Player::getUpdate(void) const
 {
-    this->name = name;
+    return (this->_update);
+}
+
+void Player::setUpdate(const int update)
+{
+    this->_update = update;
 }
 
 void Player::update(Game *bomberman)
@@ -197,6 +177,7 @@ void Player::update(Game *bomberman)
         }
         this->next_position = this->position;
     }
+    this->_update = 0;
 }
 
 void Player::draw(Game *bomberman)
