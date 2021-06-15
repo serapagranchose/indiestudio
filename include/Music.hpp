@@ -27,9 +27,9 @@ class AllMusic {
         void update();
         void playMusic();
 
+    private:
         float timePlayed = 0.0f;
         bool pause = false;
-    private:
         Music track;
 };
 

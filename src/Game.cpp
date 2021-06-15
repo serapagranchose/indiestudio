@@ -107,11 +107,11 @@ void Game::draw_text()
         DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
         DrawText(TextFormat("block_nb:\t%d", this->map->blocks.size()), 10, 190, 20, GRAY);
         for (int i = 0; i < this->players.size(); i++)
-            DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].next_position.x, this->players[i].next_position.y, this->players[i].next_position.z, this->players[i].bomb_nb), 10, 230 + (i * 120), 20, GRAY);
+            DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].getName(), this->players[i].getPosition().x, this->players[i].getPosition().y, this->players[i].getPosition().z, this->players[i].getNextPosition().x, this->players[i].getNextPosition().y, this->players[i].getNextPosition().z, this->players[i].getBombNB()), 10, 230 + (i * 120), 20, GRAY);
     }
     for (int i = 0; i < this->players.size(); i++)
-        if (this->status == this->players[i].place)
-            DrawText(TextFormat("%s", this->players[i].name), (int)this->players[i].header.x - MeasureText(TextFormat("%s", this->players[i].name), 20) / 2, (int)this->players[i].header.y, 20, BLACK);
+        if (this->status == this->players[i].getPlace())
+            DrawText(TextFormat("%s", this->players[i].getName()), (int)this->players[i].getHeader().x - MeasureText(TextFormat("%s", this->players[i].getName()), 20) / 2, (int)this->players[i].getHeader().y, 20, BLACK);
 }
 
 void Game::input()
@@ -132,16 +132,16 @@ void Game::input()
 
         for (int i = 0; i < this->players.size(); i++){
             //if (this->players[i].next_position.x == this->players[i].position.x){
-                if (IsKeyDown(this->players[i].right))
-                    this->players[i].next_position.x += 1;
-                if (IsKeyDown(this->players[i].left))
-                    this->players[i].next_position.x -= 1;
+                if (IsKeyDown(this->players[i].getRight()))
+                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x + 1);
+                if (IsKeyDown(this->players[i].getLeft()))
+                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x - 1);
             //}
             //if (this->players[i].next_position.z == this->players[i].position.z){
-                if (IsKeyDown(this->players[i].up))
-                    this->players[i].next_position.z -= 1;
-                if (IsKeyDown(this->players[i].down))
-                    this->players[i].next_position.z += 1;
+                if (IsKeyDown(this->players[i].getUp()))
+                    this->players[i].setNextPositionZ(this->players[i].getNextPosition().z - 1);
+                if (IsKeyDown(this->players[i].getDown()))
+                    this->players[i].setNextPositionZ(this->players[i].getPosition().z + 1);
             //}
         }
     }
