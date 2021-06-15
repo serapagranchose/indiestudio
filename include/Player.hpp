@@ -13,7 +13,7 @@
 class Player{
     public:
         Player();
-        Player(char *name, int key_right, int key_up, int key_left, int key_down);
+        Player(char *name, int key_right, int key_up, int key_left, int key_down, int key_space);
         ~Player();
 
         void update(Game *bomberman);
@@ -24,12 +24,11 @@ class Player{
         Vector3 past_position;
         Vector3 next_position = position;
         Vector3 size = {0.99f, 0.99f, 0.99f};
-        //bool collision = false;
         int right = KEY_D;
         int up = KEY_W;
         int left = KEY_A;
         int down = KEY_S;
-
+        int bomb = KEY_SPACE;
         Color color = RED;
         char const *name = "adrien karpapov";
         Vector2 header = {0.0f, 0.0f};

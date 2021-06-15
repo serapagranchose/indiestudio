@@ -12,13 +12,14 @@ Player::Player()
 
 }
 
-Player::Player(char *name, int key_right, int key_up, int key_left, int key_down)
+Player::Player(char *name, int key_right, int key_up, int key_left, int key_down, int key_space)
 {
     this->name = name;
     this->right = key_right;
     this->up = key_up;
     this->left = key_left;
     this->down = key_down;
+    this->bomb = key_space;
 }
 
 Player::~Player()

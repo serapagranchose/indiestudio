@@ -64,7 +64,7 @@ void Game::draw()
     BeginMode3D(this->camera);
     ClearBackground(RAYWHITE);
     if (this->status == 1) {
-        DrawGrid(10, 1.0f);
+        DrawGrid(13, 1.0f);
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
         for (int i = 0; i < this->map->blocks.size(); i++)

@@ -73,7 +73,7 @@ void Map::random_map()
     }
     map = str_to_word_array(getMap);
     for (unsigned int i = 0; i < map.size(); i++) {
-        for (unsigned int j = 0; j < 13; j++) {
+        for (unsigned int j = 0; j < map[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
             if (map[i][j] == 'x' && (randomNumber % 2) == 0) {
                 map[i][j] = 'H';
