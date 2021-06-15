@@ -105,19 +105,9 @@ int Player::getRight(void) const
     return (this->right);
 }
 
-void Player::setRight(const int right)
-{
-    this->right = right;
-}
-
 int Player::getUp(void) const
 {
     return (this->up);
-}
-
-void Player::setUp(const int up)
-{
-    this->up = up;
 }
 
 int Player::getLeft(void) const
@@ -125,29 +115,14 @@ int Player::getLeft(void) const
     return (this->left);
 }
 
-void Player::setLeft(const int left)
-{
-    this->left = left;
-}
-
 int Player::getDown(void) const
 {
     return (this->down);
 }
 
-void Player::setDown(const int down)
-{
-    this->down = down;
-}
-
 int Player::getBomb(void) const
 {
     return (this->bomb);
-}
-
-void Player::setBomb(const int bomb)
-{
-    this->bomb = bomb;
 }
 
 int Player::getBombNB(void) const
@@ -188,26 +163,38 @@ void Player::update(Game *bomberman)
         }
     if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) < round(this->next_position.x * 10))
+        while (round(this->position.x * 10) < round(this->next_position.x * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.x += 0.1f;
+        }
         this->next_position = this->position;
     }
     if (round(this->position.z * 10) < round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) < round(this->next_position.z * 10))
+        while (round(this->position.z * 10) < round(this->next_position.z * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.z += 0.1f;
+        }
         this->next_position = this->position;
     }
     if (round(this->position.x * 10) > round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) > round(this->next_position.x * 10))
+        while (round(this->position.x * 10) > round(this->next_position.x * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.x -= 0.1f;
+        }
         this->next_position = this->position;
     }
     if (round(this->position.z * 10) > round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) > round(this->next_position.z * 10))
+        while (round(this->position.z * 10) > round(this->next_position.z * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.z -= 0.1f;
+        }
         this->next_position = this->position;
     }
 }

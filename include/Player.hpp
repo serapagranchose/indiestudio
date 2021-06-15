@@ -39,19 +39,10 @@ class Player{
         void setPlace(const int place);
 
         int getRight(void) const;
-        void setRight(const int right);
-
         int getUp(void) const;
-        void setUp(const int up);
-
         int getLeft(void) const;
-        void setLeft(const int left);
-
         int getDown(void) const;
-        void setDown(const int down);
-
         int getBomb(void) const;
-        void setBomb(const int bomb);
 
         int getBombNB(void) const;
         void setBombNB(const int bomb_nb);

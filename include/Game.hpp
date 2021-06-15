@@ -23,6 +23,8 @@ extern "C" {
 #include <math.h>
 #include <time.h>
 #include <fstream>
+#include <thread>
+#include <chrono>
 
 #include "Music.hpp"
 #include "Map.hpp"
