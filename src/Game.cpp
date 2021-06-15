@@ -53,7 +53,7 @@ Game::~Game()
 {
     while (!this->players.empty())
         this->players.pop_back();
-    while (!this->map->blocks.empty())
+    while (!this->map->getBlock().empty())
         this->map->blocks.pop_back();
     CloseWindow();
 }
@@ -67,8 +67,8 @@ void Game::draw()
         DrawGrid(13, 1.0f);
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
-        for (int i = 0; i < this->map->blocks.size(); i++)
-            this->map->blocks[i].draw(this);
+        for (int i = 0; i < this->map->getBlock().size(); i++)
+            this->map->getBlock()[i].draw(this);
     }
     EndMode3D();
     draw_text();
@@ -105,7 +105,7 @@ void Game::draw_text()
         DrawText(TextFormat("camera_type: %d", this->camera.projection), 10, 130, 20, GRAY);
 
         DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
-        DrawText(TextFormat("block_nb:\t%d", this->map->blocks.size()), 10, 190, 20, GRAY);
+        DrawText(TextFormat("block_nb:\t%d", this->map->getBlock().size()), 10, 190, 20, GRAY);
         for (int i = 0; i < this->players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].getName(), this->players[i].getPosition().x, this->players[i].getPosition().y, this->players[i].getPosition().z, this->players[i].getNextPosition().x, this->players[i].getNextPosition().y, this->players[i].getNextPosition().z, this->players[i].getBombNB()), 10, 230 + (i * 120), 20, GRAY);
     }
@@ -122,27 +122,23 @@ void Game::input()
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1){
-        if (IsKeyPressed(KEY_P)){
+        if (IsKeyPressed(KEY_P)) {
             Player onch;
             this->players.push_back(onch);
-        } else if (IsKeyPressed(KEY_B)){
-            Block brick;
-            this->map->blocks.push_back(brick);
         }
-
-        for (int i = 0; i < this->players.size(); i++){
-            //if (this->players[i].next_position.x == this->players[i].position.x){
+        for (int i = 0; i < this->players.size(); i++) {
+            if (this->players[i].getNextPosition().x == this->players[i].getPosition().x) {
                 if (IsKeyDown(this->players[i].getRight()))
                     this->players[i].setNextPositionX(this->players[i].getNextPosition().x + 1);
                 if (IsKeyDown(this->players[i].getLeft()))
                     this->players[i].setNextPositionX(this->players[i].getNextPosition().x - 1);
-            //}
-            //if (this->players[i].next_position.z == this->players[i].position.z){
+            }
+            if (this->players[i].getNextPosition().z == this->players[i].getPosition().z) {
                 if (IsKeyDown(this->players[i].getUp()))
                     this->players[i].setNextPositionZ(this->players[i].getNextPosition().z - 1);
                 if (IsKeyDown(this->players[i].getDown()))
                     this->players[i].setNextPositionZ(this->players[i].getPosition().z + 1);
-            //}
+            }
         }
     }
 }
@@ -164,8 +160,10 @@ void Game::update()
     UpdateCamera(&this->camera);
     if (this->debug == true)
         SetCameraMode(this->camera, CAMERA_FREE);
-    for (int i = 0; i < this->players.size(); i++)
-        this->players[i].update(this);
+    if (this->status == 1) {
+        for (int i = 0; i < this->players.size(); i++)
+            this->players[i].update(this);
+    }
 }
 
 void Game::game_loop()

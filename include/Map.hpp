@@ -32,8 +32,11 @@ class Map {
         void draw_map();
         void add_block(Game *bomberman);
 
-        std::vector<std::string> map;
+        std::vector<Block> getBlock() const;
+
         std::vector<Block> blocks;
+    private:
+        std::vector<std::string> map;
 };
 
 #include "Block.hpp"
