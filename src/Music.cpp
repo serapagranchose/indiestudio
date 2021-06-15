@@ -42,12 +42,12 @@ void AllMusic::update()
     UpdateMusicStream(this->track);
 }
 
-float AllMusic::getVolume()
+float AllMusic::getVolume() const
 {
     return (this->volume);
 }
 
-void AllMusic::setVolume(float _volume)
+void AllMusic::setVolume(const float _volume)
 {
     this->volume = _volume;
 }

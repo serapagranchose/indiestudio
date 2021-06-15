@@ -27,8 +27,8 @@ class AllMusic {
         void update();
         void playMusic();
 
-        float getVolume();
-        void setVolume(float _volume);
+        float getVolume() const;
+        void setVolume(const float _volume);
 
         float timePlayed = 0.0f;
         bool pause = false;
