@@ -64,6 +64,7 @@ void Button::start(Game *bomberman)
     bomberman->status = 1;
         if (bomberman->map_generated == 0) {
             bomberman->map->random_map();
+            bomberman->map->add_block(bomberman);
         }
 }
 

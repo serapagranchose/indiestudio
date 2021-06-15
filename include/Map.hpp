@@ -16,8 +16,11 @@
 #include <math.h>
 #include <time.h>
 #include <fstream>
+#include <random>
+#include <ctime>
 
 class Block;
+class Game;
 
 class Map {
     public:
@@ -26,7 +29,7 @@ class Map {
 
         void random_map();
         void draw_map();
-        void add_block();
+        void add_block(Game *bomberman);
 
         std::vector<std::string> map;
         std::vector<Block> blocks;
