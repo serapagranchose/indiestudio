@@ -40,7 +40,7 @@ void Map::add_block(Game *bomberman)
             }
             if (map[j][k] == 'P') {
                 Player onch;
-                bomberman->players.push_back(onch);
+                bomberman->getPlayer().push_back(onch);
             }
             i++;
         }

@@ -26,8 +26,11 @@ class Button{
         void plus(Game *bomberman);
         void minus(Game *bomberman);
 
-        Texture2D texture;
+        float getFrameHeight(void) const;
+
         Rectangle size;
+    private:
+        Texture2D texture;
         Rectangle bounds;
         int status = 0;
         bool action = false;

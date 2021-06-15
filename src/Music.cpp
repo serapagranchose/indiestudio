@@ -18,7 +18,7 @@ AllMusic::~AllMusic()
 void AllMusic::init(Game *bomberman)
 {
     InitAudioDevice();
-    SetMasterVolume(bomberman->volume);
+    SetMasterVolume(this->volume);
 }
 
 void AllMusic::setMusic(std::string path)
@@ -40,4 +40,14 @@ void AllMusic::endMusic()
 void AllMusic::update()
 {
     UpdateMusicStream(this->track);
+}
+
+float AllMusic::getVolume()
+{
+    return (this->volume);
+}
+
+void AllMusic::setVolume(float _volume)
+{
+    this->volume = _volume;
 }

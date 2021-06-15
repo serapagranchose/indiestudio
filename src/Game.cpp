@@ -151,7 +151,7 @@ void Game::update()
 {
     audio->update();
     this->framesCount++;
-    this->buttons[5].size.y = (this->volume - 1) * (float)this->buttons[5].frameHeight;
+    this->buttons[5].size.y = (audio->getVolume() - 1) * this->buttons[5].getFrameHeight();
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
         if (this->framesAnimCount >= framesAnim) 
@@ -179,4 +179,44 @@ void Game::game_loop()
     }
     UnloadTexture(this->menu);
     audio->endMusic();
+}
+
+int Game::getStatus() const
+{
+    return (this->status);
+}
+
+void Game::setStatus(const int _status)
+{
+    this->status = _status;
+}
+
+Map* Game::getMap() const
+{
+    return (this->map);
+}
+
+AllMusic* Game::getMusic() const
+{
+    return (this->audio);
+}
+
+std::vector<Player> Game::getPlayer() const
+{
+    return (this->players);
+}
+
+Camera Game::getCamera() const
+{
+    return (this->camera);
+}
+
+int Game::getGenerated() const
+{
+    return (this->map_generated);
+}
+
+void Game::setDebug(const bool _bool)
+{
+    this->debug = _bool;
 }

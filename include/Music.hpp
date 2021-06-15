@@ -27,10 +27,14 @@ class AllMusic {
         void update();
         void playMusic();
 
+        float getVolume();
+        void setVolume(float _volume);
+
         float timePlayed = 0.0f;
         bool pause = false;
     private:
         Music track;
+        float volume = 5;
 };
 
 #include "Game.hpp"

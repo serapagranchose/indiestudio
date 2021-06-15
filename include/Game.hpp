@@ -48,6 +48,16 @@ class Game{
         void draw();
         void draw_text();
 
+        int getStatus() const;
+        void setStatus(const int status);
+        Map* getMap() const;
+        AllMusic *getMusic() const;
+        std::vector<Player> getPlayer() const;
+        Camera getCamera() const;
+        int getGenerated() const;
+        void setDebug(const bool);
+
+    private:
         Window window;
         Camera camera;
         AllMusic *audio;
@@ -65,7 +75,6 @@ class Game{
         Image imageAnim;
         Font font;
         int framesCount = 0;
-        float volume = 5;
 };
 
 std::vector<std::string> str_to_word_array(std::string string);
