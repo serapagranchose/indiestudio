@@ -11,6 +11,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <cstring>
+#include <string>
 #include <vector>
 #include <stdio.h>
 #include <math.h>

@@ -1,6 +1,6 @@
 OOOOOOOOOOOOO
-OPxxxxxxxxxxO
-OxOxOxOxOxOxO
+OPXxxxxxxxXXO
+OXOxOxOxOxOXO
 OxxxxxxxxxxxO
 OxOxOxOxOxOxO
 OxxxxxxxxxxxO
@@ -8,6 +8,6 @@ OxOxOxOxOxOxO
 OxxxxxxxxxxxO
 OxOxOxOxOxOxO
 OxxxxxxxxxxxO
-OxOxOxOxOxOxO
-OxxxxxxxxxxxO
+OXOxOxOxOxOXO
+OXXxxxxxxxXXO
 OOOOOOOOOOOOO
