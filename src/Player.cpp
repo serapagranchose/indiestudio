@@ -27,10 +27,149 @@ Player::~Player()
 
 }
 
-void Player::draw(Game *bomberman)
+Color Player::getColor(void) const
 {
-    if (bomberman->getStatus() == this->place)
-        DrawCubeV(this->position, this->size, this->color);
+    return (this->color);
+}
+
+void Player::setColor(const Color color)
+{
+    this->color = color;
+}
+
+Vector3 Player::getPosition(void) const
+{
+    return (this->position);
+}
+
+void Player::setPosition(const Vector3 position)
+{
+    this->position = position;
+}
+
+Vector3 Player::getPastPosition(void) const
+{
+    return (this->past_position);
+}
+
+void Player::setPastPosition(const Vector3 past_position)
+{
+    this->past_position = past_position;
+}
+
+Vector3 Player::getNextPosition(void) const
+{
+    return (this->next_position);
+}
+
+void Player::setNextPositionX(const float next_positionx)
+{
+    this->next_position.x = next_positionx;
+}
+
+void Player::setNextPositionZ(const float next_positionz)
+{
+    this->next_position.z = next_positionz;
+}
+
+Vector3 Player::getSize(void) const
+{
+    return (this->size);
+}
+
+void Player::setSize(const Vector3 size)
+{
+    this->size = size;
+}
+
+Vector2 Player::getHeader(void) const
+{
+    return (this->header);
+}
+
+void Player::setHeader(const Vector2 header)
+{
+    this->header = header;
+}
+
+int Player::getPlace(void) const
+{
+    return (this->place);
+}
+
+void Player::setPlace(const int place)
+{
+    this->place = place;
+}
+
+int Player::getRight(void) const
+{
+    return (this->right);
+}
+
+void Player::setRight(const int right)
+{
+    this->right = right;
+}
+
+int Player::getUp(void) const
+{
+    return (this->up);
+}
+
+void Player::setUp(const int up)
+{
+    this->up = up;
+}
+
+int Player::getLeft(void) const
+{
+    return (this->left);
+}
+
+void Player::setLeft(const int left)
+{
+    this->left = left;
+}
+
+int Player::getDown(void) const
+{
+    return (this->down);
+}
+
+void Player::setDown(const int down)
+{
+    this->down = down;
+}
+
+int Player::getBomb(void) const
+{
+    return (this->bomb);
+}
+
+void Player::setBomb(const int bomb)
+{
+    this->bomb = bomb;
+}
+
+int Player::getBombNB(void) const
+{
+    return (this->bomb_nb);
+}
+
+void Player::setBombNB(const int bomb_nb)
+{
+    this->bomb_nb = bomb_nb;
+}
+
+const char *Player::getName(void) const
+{
+    return (this->name);
+}
+
+void Player::setName(const char *name)
+{
+    this->name = name;
 }
 
 void Player::update(Game *bomberman)
@@ -78,4 +217,10 @@ void Player::update(Game *bomberman)
             }
         }
     }
+}
+
+void Player::draw(Game *bomberman)
+{
+    if (bomberman->getStatus() == this->place)
+        DrawCubeV(this->position, this->size, this->color);
 }
