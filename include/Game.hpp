@@ -13,6 +13,7 @@ extern "C" {
 }
 
 #define NUM_FRAMES 3
+#define NUM_SOUND 11
 
 #include <iostream>
 #include <typeinfo>
@@ -21,23 +22,19 @@ extern "C" {
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <fstream>
 
 #include "Music.hpp"
+#include "Map.hpp"
 
 class Player;
 class Button;
 class Block;
-class AllMusic;
 
 class Window{
     public:
         int screen_width = 1920;
         int screen_height = 1080;
-};
-
-class Map{
-    public:
-        std::vector<Block> blocks;
 };
 
 class Game{
@@ -49,15 +46,13 @@ class Game{
         void update();
         void input();
         void draw();
-        void random_map();
-        void create_random_map();
         void draw_text();
 
         Window window;
         Camera camera;
         AllMusic *audio;
         std::vector<Button> buttons;
-        Map map;
+        Map *map;
         std::vector<Player> players;
         Texture2D menu;
         bool debug = false;
@@ -70,7 +65,10 @@ class Game{
         Image imageAnim;
         Font font;
         int framesCount = 0;
+        float volume = 5;
 };
+
+std::vector<std::string> str_to_word_array(std::string string);
 
 #include "Button.hpp"
 #include "Block.hpp"

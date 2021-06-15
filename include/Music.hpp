@@ -14,12 +14,14 @@ extern "C" {
 
 #include <iostream>
 
+class Game;
+
 class AllMusic {
     public:
         AllMusic();
         ~AllMusic();
 
-        void init();
+        void init(Game *bomberman);
         void setMusic(std::string path);
         void endMusic();
         void update();
@@ -30,5 +32,7 @@ class AllMusic {
     private:
         Music track;
 };
+
+#include "Game.hpp"
 
 #endif

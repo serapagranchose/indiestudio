@@ -15,18 +15,25 @@ Game::Game()
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
     this->audio = new AllMusic();
-    audio->init();
+    this->map = new Map();
+    audio->init(this);
 
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
     Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
     Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
     Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
     Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
+    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "../graphic/button/sound.png");
+    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "../graphic/button/plus.png");
+    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "../graphic/button/minus.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
     this->buttons.push_back(*credits);
     this->buttons.push_back(*home);
+    this->buttons.push_back(*sound);
+    this->buttons.push_back(*plus);
+    this->buttons.push_back(*minus);
 
     this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
@@ -46,8 +53,8 @@ Game::~Game()
 {
     while (!this->players.empty())
         this->players.pop_back();
-    while (!this->map.blocks.empty())
-        this->map.blocks.pop_back();
+    while (!this->map->blocks.empty())
+        this->map->blocks.pop_back();
     CloseWindow();
 }
 
@@ -60,101 +67,29 @@ void Game::draw()
         DrawGrid(10, 1.0f);
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
-        for (int i = 0; i < this->map.blocks.size(); i++)
-            this->map.blocks[i].draw(this);
+        for (int i = 0; i < this->map->blocks.size(); i++)
+            this->map->blocks[i].draw(this);
     }
     EndMode3D();
     draw_text();
     if (this->status == 0) {
-        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 630, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 100, 160, 100, DARKBLUE);
         for (int i = 0; i < 4; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 2) {
-        DrawText("SETTINGS", 690, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
-        this->buttons[4].draw(this);
+        DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
+        for (int i = 4; i != 8; i++)
+            this->buttons[i].draw(this);
     }
     if (this->status == 3) {
-        DrawText("CREDITS", 730, 160, 100, MAROON);
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText("CREDITS", 170, 160, 100, DARKBLUE);
         this->buttons[4].draw(this);
     }
     EndDrawing();
-}
-
-void Game::create_random_map()
-{
-    char character;
-    char character_to_replace;
-    int characters_number = 0;
-    int x_number = 0;
-    int h_number = 0;
-    int h_needed;
-    int infill_pourcent = 75;
-    FILE* file = NULL;
-
-    file = fopen("../graphic/map/map.txt", "r+");
-    if (file == NULL)
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
-    else {
-        while ((character = fgetc(file)) != EOF){
-            printf("%c\n", character);
-            if (character == 'x')
-                x_number++;
-            characters_number++;
-        }
-
-        h_needed = (x_number * infill_pourcent) / 100;
-
-        while (h_number != h_needed){
-            fseek(file, rand() % characters_number, SEEK_SET);
-            character_to_replace = fgetc(file);
-            if (character_to_replace == 'x'){
-                fputc('H', file);
-                h_number++;
-            }
-        }
-    }
-
-    fclose(file);
-}
-
-void Game::random_map()
-{
-    FILE* fichier = NULL;
-    int i = 0;
-    int L= 0;
-    float x = -6.0f;
-    float z = -7.0f;
-    int caractereActuel = 0;
-
-    fichier = fopen("../graphic/map/map.txt", "r+");
-    if (fichier != NULL)
-    {
-        do
-        {
-            if(caractereActuel == '\n'){
-                L++;
-                i = 0;
-            }
-            if(caractereActuel == 'H'){
-                Block mousse({z + i, 0.0f, x + L},1, BLACK);
-                this->map.blocks.push_back(mousse);
-            }
-            if(caractereActuel == 'O'){
-                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
-                this->map.blocks.push_back(mur);
-            }
-            i ++;
-            caractereActuel = fgetc(fichier);
-        } while (caractereActuel != 'k'|| caractereActuel == EOF);
-        std::cout<<'\n';
-    }else{
-        std::cout<<"Impossible d'ouvrir le fichier map.txt\n";
-    }
-    fclose(fichier);
 }
 
 void Game::draw_text()
@@ -170,7 +105,7 @@ void Game::draw_text()
         DrawText(TextFormat("camera_type: %d", this->camera.projection), 10, 130, 20, GRAY);
 
         DrawText(TextFormat("player_nb:\t%d", this->players.size()), 10, 170, 20, GRAY);
-        DrawText(TextFormat("block_nb:\t%d", this->map.blocks.size()), 10, 190, 20, GRAY);
+        DrawText(TextFormat("block_nb:\t%d", this->map->blocks.size()), 10, 190, 20, GRAY);
         for (int i = 0; i < this->players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].name, this->players[i].position.x, this->players[i].position.y, this->players[i].position.z, this->players[i].next_position.x, this->players[i].next_position.y, this->players[i].next_position.z, this->players[i].bomb_nb), 10, 230 + (i * 120), 20, GRAY);
     }
@@ -192,7 +127,7 @@ void Game::input()
             this->players.push_back(onch);
         } else if (IsKeyPressed(KEY_B)){
             Block brick;
-            this->map.blocks.push_back(brick);
+            this->map->blocks.push_back(brick);
         }
 
         for (int i = 0; i < this->players.size(); i++){
@@ -216,6 +151,7 @@ void Game::update()
 {
     audio->update();
     this->framesCount++;
+    this->buttons[5].size.y = (this->volume - 1) * (float)this->buttons[5].frameHeight;
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
         if (this->framesAnimCount >= framesAnim)
