@@ -48,16 +48,34 @@ void Map::add_block(Game *bomberman)
     }
 }
 
+// RENDRE PLUS CLEAN PARCE QUE LA MÊME MOI J'AI MAL ALORS QUE C'EST MOI QUI L'AI FAIT
+
 void Map::initStart()
 {
-    map[1][2] = 'x';
-    map[2][1] = 'x';
-    map[1][10] = 'x';
-    map[2][11] = 'x';
-    map[10][1] = 'x';
-    map[11][2] = 'x';
-    map[10][11] = 'x';
-    map[11][10] = 'x';
+    if (map[1][2] == 'H')
+        map[1][2] = ' ';
+    if (map[2][1] == 'H')
+        map[2][1] = ' ';
+    if (map[1][10] == 'H')
+        map[1][10] = ' ';
+    if (map[2][11] == 'H')
+        map[2][11] = ' ';
+    if (map[10][1] == 'H')
+        map[10][1] = ' ';
+    if (map[11][2] == 'H')
+        map[11][2] = ' ';
+    if (map[10][11] == 'H')
+        map[10][11] = ' ';
+    if (map[11][10] == 'H')
+        map[11][10] = ' ';
+    if (map[1][1] == 'H')
+        map[1][1] = ' ';
+    if (map[1][11] == 'H')
+        map[1][11] = ' ';
+    if (map[11][1] == 'H')
+        map[11][1] = ' ';
+    if (map[11][11] == 'H')
+        map[11][11] = ' ';
 }
 
 void Map::random_map()
@@ -76,7 +94,7 @@ void Map::random_map()
     for (unsigned int i = 0; i < map.size(); i++) {
         for (unsigned int j = 0; j < map[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
-            if (map[i][j] == 'x' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0))
+            if (map[i][j] == ' ' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0))
                 map[i][j] = 'H';
         }
     }
@@ -86,12 +104,25 @@ void Map::random_map()
 void Map::saveMap(Game *bomberman)
 {
     std::ofstream save;
+    int x = 0;
+    int z = 0;
 
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3' || map[i][j] == '4')
+                map[i][j] = ' ';
+            for (int k = 0; k < bomberman->getPlayer().size(); k++) {
+                if (i == round(bomberman->getPlayer()[k].getPosition().x + 6) && j == round(bomberman->getPlayer()[k].getPosition().z + 6)) {
+                    map[i][j] = k;
+                }
+            }
+        }               
+    }
     save.open("../graphic/map/save.txt", std::ofstream::out | std::ofstream::trunc);
     if (save) {
         for (int i = 0; i < map.size(); i++) {
             for (int j = 0; j < map[i].size(); j++)
-                    save << map[i][j];
+                save << map[i][j];
             save << '\n';
         }
     }

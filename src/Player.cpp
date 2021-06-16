@@ -32,9 +32,9 @@ Vector3 Player::getPosition(void) const
     return (this->position);
 }
 
-void Player::setPosition(const Vector3 position)
+void Player::setPosition(const Vector3 _position)
 {
-    this->position = position;
+    this->position = _position;
 }
 
 Vector3 Player::getPastPosition(void) const
@@ -42,9 +42,9 @@ Vector3 Player::getPastPosition(void) const
     return (this->past_position);
 }
 
-void Player::setPastPosition(const Vector3 past_position)
+void Player::setPastPosition(const Vector3 _past_position)
 {
-    this->past_position = past_position;
+    this->past_position = _past_position;
 }
 
 Vector3 Player::getNextPosition(void) const

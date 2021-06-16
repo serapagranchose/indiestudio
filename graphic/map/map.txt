@@ -1,13 +1,13 @@
 OOOOOOOOOOOOO
-O1xxxxxxxxx2O
-OxOxOxOxOxOxO
-OxxxxxxxxxxxO
-OxOxOxOxOxOxO
-OxxxxxxxxxxxO
-OxOxOxOxOxOxO
-OxxxxxxxxxxxO
-OxOxOxOxOxOxO
-OxxxxxxxxxxxO
-OxOxOxOxOxOxO
-O3xxxxxxxxx4O
+O           O
+O1O O O O O2O
+O           O
+O O O O O O O
+O           O
+O O O O O O O
+O           O
+O O O O O O O
+O           O
+O O O O O O O
+O           O
 OOOOOOOOOOOOO

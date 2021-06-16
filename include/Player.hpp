@@ -53,7 +53,7 @@ class Player{
         Vector3 position;
         Vector3 past_position;
         Vector3 next_position;
-        Vector3 size = {0.8f, 0.8f, 0.8f};
+        Vector3 size = {0.5f, 0.8f, 0.5f};
         Vector2 header = {0.0f, 0.0f};
         int place = 1;
         int right;
