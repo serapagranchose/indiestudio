@@ -38,10 +38,6 @@ void Map::add_block(Game *bomberman)
                 Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
                 this->blocks.push_back(mur);
             }
-            if (map[j][k] == 'P')
-                bomberman->getPlayer()[0].setPosition({z + i, 0.0f, x + L});
-            if (map[j][k] == 'M')
-                bomberman->getPlayer()[1].setPosition({z + i, 0.0f, x + L});
             i++;
         }
     }
