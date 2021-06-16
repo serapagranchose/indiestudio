@@ -20,26 +20,29 @@ void Map::draw_map()
 }
 
 void Map::add_block(Game *bomberman)
-{    
+{
     int i = 0;
-    int L= 0;
+    int l = 0;
     float x = -7.0f;
     float z = -6.0f;
 
     for (int j = 0; j < map.size(); j++) {
-        L++;
+        l++;
         i = 0;
         for (int k = 0; k < map[j].size(); k++) {
             if (map[j][k] == 'H') {
-                Block mousse({z + i, 0.0f, x + L},1, BLACK);
+                Block mousse({z + i, 0.0f, x + l},1, BLACK);
+                mousse.load_mouse();
                 this->blocks.push_back(mousse);
             }
             if (map[j][k] == 'O') {
-                Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
+                Block mur({z + i, 0.0f, x + l}, 0, DARKBLUE);
+                mur.load_holy_block();
                 this->blocks.push_back(mur);
             }
-            if (map[j][k] == '1')
-                bomberman->getPlayer()[0].setPosition({z + i, 0.0f, x + L});
+            Block ground({z + i, -1.25f, x + l}, 0, BLUE);
+            ground.load_ground();
+            this->blocks.push_back(ground);
             i++;
         }
     }

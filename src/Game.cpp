@@ -79,7 +79,7 @@ void Game::draw()
 {
     BeginDrawing();
     BeginMode3D(this->camera);
-    ClearBackground(RAYWHITE);
+    ClearBackground(DARKGRAY);
     if (this->status == 1) {
         DrawGrid(13, 1.0f);
         for (int i = 0; i < this->players.size(); i++)
@@ -170,7 +170,7 @@ void Game::update()
     this->buttons[5].size.y = ((audio->getVolume() - 0.1) * 10)* this->buttons[5].getFrameHeight();
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
-        if (this->framesAnimCount >= framesAnim) 
+        if (this->framesAnimCount >= framesAnim)
             this->framesAnimCount = 0;
         unsigned int nextFrameDataOffset = this->menu.width * this->menu.height * 4 * this->framesAnimCount;
         UpdateTexture(this->menu, ((unsigned char *)this->imageAnim.data) + nextFrameDataOffset);

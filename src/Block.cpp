@@ -23,6 +23,36 @@ Block::~Block()
 
 }
 
+void Block::load_mouse()
+{
+    Texture2D texture = LoadTexture("../graphic/texture/Brick_Block.png");
+    Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
+    this->one_model = LoadModelFromMesh(mesh);
+    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+}
+
+void Block::load_holy_block()
+{
+    Texture2D texture = LoadTexture("../graphic/texture/Bloc_vide.png");
+    Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
+    this->one_model = LoadModelFromMesh(mesh);
+    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+}
+
+void Block::load_ground()
+{
+    Texture2D texture = LoadTexture("../graphic/texture/grass.png");
+    Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
+    this->one_model = LoadModelFromMesh(mesh);
+    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+}
+
+void Block::draw_Block_wtexture()
+{
+
+    DrawModel(this->one_model, position, 1.0f, WHITE);
+}
+
 void Block::draw()
 {
     DrawCubeV(this->position, this->size, this->color);
