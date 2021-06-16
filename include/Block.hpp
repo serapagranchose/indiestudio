@@ -29,9 +29,14 @@ class Block{
         ~Block();
 
         void draw();
+        void draw_holy_block();
+        void draw_mousse();
+        void load_mouse();
+        void load_holy_block();
 
         int place = 1;
         Vector3 position = {-1.0f, 0.0f, -1.0f};
+        Model one_model;
         Vector3 size = {1.0f, 1.0f, 1.0f};
 
         Color color = GREEN;

@@ -32,10 +32,12 @@ void Map::add_block(Game *bomberman)
         for (int k = 0; k < map[j].size(); k++) {
             if (map[j][k] == 'H') {
                 Block mousse({z + i, 0.0f, x + L},1, BLACK);
+                mousse.load_mouse();
                 this->blocks.push_back(mousse);
             }
             if (map[j][k] == 'O') {
                 Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
+                mur.load_holy_block();
                 this->blocks.push_back(mur);
             }
             i++;

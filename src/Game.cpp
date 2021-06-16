@@ -79,14 +79,14 @@ void Game::draw()
 {
     BeginDrawing();
     BeginMode3D(this->camera);
-    ClearBackground(RAYWHITE);
+    ClearBackground(DARKGRAY);
     if (this->status == 1) {
         DrawGrid(13, 1.0f);
         for (int i = 0; i < this->players.size(); i++) {
             this->players[i].draw(this);
         }
         for (int i = 0; i < this->map->getBlock().size(); i++) {
-            this->map->getBlock()[i].draw();
+            this->map->getBlock()[i].draw_mousse();
         }
     }
     EndMode3D();
