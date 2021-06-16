@@ -19,7 +19,7 @@ Player::Player(const char * _name, int key_right, int key_up, int key_left, int 
     this->left = key_left;
     this->down = key_down;
     this->bomb = key_space;
-    this->position =  _position;
+    this->position = _position;
     this->next_position = _position;
 }
 

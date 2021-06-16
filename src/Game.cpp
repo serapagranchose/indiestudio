@@ -82,12 +82,10 @@ void Game::draw()
     ClearBackground(RAYWHITE);
     if (this->status == 1) {
         DrawGrid(13, 1.0f);
-        for (int i = 0; i < this->players.size(); i++) {
+        for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
-        }
-        for (int i = 0; i < this->map->getBlock().size(); i++) {
+        for (int i = 0; i < this->map->getBlock().size(); i++)
             this->map->getBlock()[i].draw();
-        }
     }
     EndMode3D();
     draw_text();
