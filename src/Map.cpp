@@ -32,20 +32,32 @@ void Map::add_block(Game *bomberman)
         for (int k = 0; k < map[j].size(); k++) {
             if (map[j][k] == 'H') {
                 Block mousse({z + i, 0.0f, x + l},1, BLACK);
-                mousse.load_mouse();
+                mousse.loadMousse();
                 this->blocks.push_back(mousse);
             }
             if (map[j][k] == 'O') {
                 Block mur({z + i, 0.0f, x + l}, 0, DARKBLUE);
-                mur.load_holy_block();
+                mur.loadHolyBlock();
                 this->blocks.push_back(mur);
             }
             Block ground({z + i, -1.25f, x + l}, 0, BLUE);
-            ground.load_ground();
+            ground.loadGround();
             this->blocks.push_back(ground);
             i++;
         }
     }
+}
+
+void Map::initStart()
+{
+    map[1][2] = 'x';
+    map[2][1] = 'x';
+    map[1][10] = 'x';
+    map[2][11] = 'x';
+    map[10][1] = 'x';
+    map[11][2] = 'x';
+    map[10][11] = 'x';
+    map[11][10] = 'x';
 }
 
 void Map::random_map()
@@ -54,34 +66,21 @@ void Map::random_map()
     std::string str;
     std::string getMap;
     srand((unsigned) time(0));
-    int infill_pourcent = 75;
-    int x_num = 0;
-    int h_num = 0;
-    int h_need = 75;
-    int i = 0;
-    int L= 0;
-    float x = -6.0f;
-    float z = -7.0f;
     int randomNumber;
 
     while (std::getline(file, str)) {
         getMap.append(str);
         getMap.append("\n");
-        for (unsigned int i = 0; i < str.size(); i++) {
-            if (str[i] == 'x')
-                x_num++;
-        }
     }
     map = str_to_word_array(getMap);
     for (unsigned int i = 0; i < map.size(); i++) {
         for (unsigned int j = 0; j < map[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
-            if (map[i][j] == 'x' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0)) {
+            if (map[i][j] == 'x' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0))
                 map[i][j] = 'H';
-                h_num++;
-            }
         }
     }
+    initStart();
 }
 
 void Map::saveMap(Game *bomberman)

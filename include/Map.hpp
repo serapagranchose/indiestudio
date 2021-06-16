@@ -32,6 +32,7 @@ class Map {
         void draw_map();
         void add_block(Game *bomberman);
         void saveMap(Game *bomberman);
+        void initStart();
 
         std::vector<Block> getBlock() const;
 

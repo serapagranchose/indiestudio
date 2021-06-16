@@ -146,38 +146,26 @@ void Player::update(Game *bomberman)
     }
     if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
-            this->draw(bomberman);
-            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+        while (round(this->position.x * 10) < round(this->next_position.x * 10))
             this->position.x += 0.1f;
-        }
         this->next_position = this->position;
     }
     if (round(this->position.z * 10) < round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
-            this->draw(bomberman);
-            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+        while (round(this->position.z * 10) < round(this->next_position.z * 10))
             this->position.z += 0.1f;
-        }
         this->next_position = this->position;
     }
     if (round(this->position.x * 10) > round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
-            this->draw(bomberman);
-            std::this_thread::sleep_for(std::chrono::milliseconds(6));
-            this->position.x -= 0.1f;
-        }
+        while (round(this->position.x * 10) > round(this->next_position.x * 10))
+            this->position.x -= 0.1;
         this->next_position = this->position;
     }
     if (round(this->position.z * 10) > round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
-            this->draw(bomberman);
-            std::this_thread::sleep_for(std::chrono::milliseconds(6));
-            this->position.z -= 0.1f;
-        }
+        while (round(this->position.z * 10) > round(this->next_position.z * 10))
+            this->position.z -= 0.1;
         this->next_position = this->position;
     }
     this->_update = 0;

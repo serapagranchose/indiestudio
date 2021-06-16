@@ -29,10 +29,10 @@ class Block{
         ~Block();
 
         void draw();
-        void draw_Block_wtexture();
-        void load_mouse();
-        void load_holy_block();
-        void load_ground();
+        void drawBlockTexture();
+        void loadMousse();
+        void loadHolyBlock();
+        void loadGround();
 
         int place = 1;
         Vector3 position = {-1.0f, 0.0f, -1.0f};

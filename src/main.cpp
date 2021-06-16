@@ -16,8 +16,8 @@ void print_usage(void)
 
 int input_checker(int ac, char **av)
 {
-    if (ac == 2){
-        if (!strcmp(av[1], "-h")){
+    if (ac == 2) {
+        if (!strcmp(av[1], "-h")) {
             print_usage();
             return(1);
         } else if (!strcmp(av[1],"-d"))
@@ -38,8 +38,6 @@ int main(int ac, char **av)
         return (0);
     else if (input_checker(ac, av) == 2)
         bomberman.setDebug(true);
-
     bomberman.game_loop();
-
     return (0);
 }

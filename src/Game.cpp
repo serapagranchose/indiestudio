@@ -85,7 +85,7 @@ void Game::draw()
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
         for (int i = 0; i < this->map->getBlock().size(); i++)
-            this->map->getBlock()[i].draw();
+            this->map->getBlock()[i].drawBlockTexture();
     }
     EndMode3D();
     draw_text();
@@ -146,18 +146,18 @@ void Game::input()
             if (this->players[i].getNextPosition().x == this->players[i].getPosition().x) {
                 if (IsKeyDown(this->players[i].getRight())) {
                     this->players[i].setUpdate(1);
-                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x + 1);
+                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x + 0.1f);
                 }
                 if (IsKeyDown(this->players[i].getLeft())) {
                     this->players[i].setUpdate(1);
-                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x - 1);
+                    this->players[i].setNextPositionX(this->players[i].getNextPosition().x - 0.1f);
                 }
             }
             if (this->players[i].getNextPosition().z == this->players[i].getPosition().z && this->players[i].getUpdate() != 1) {
                 if (IsKeyDown(this->players[i].getUp()))
-                    this->players[i].setNextPositionZ(this->players[i].getNextPosition().z - 1);
+                    this->players[i].setNextPositionZ(this->players[i].getNextPosition().z - 0.1f);
                 if (IsKeyDown(this->players[i].getDown()))
-                    this->players[i].setNextPositionZ(this->players[i].getPosition().z + 1);
+                    this->players[i].setNextPositionZ(this->players[i].getPosition().z + 0.1f);
             }
         }
     }
