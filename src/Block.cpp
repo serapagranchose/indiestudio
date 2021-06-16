@@ -39,6 +39,14 @@ void Block::load_holy_block()
     this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
 }
 
+void Block::load_ground()
+{
+    Texture2D texture = LoadTexture("../graphic/texture/Brick_vide.png");
+    Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
+    this->one_model = LoadModelFromMesh(mesh);
+    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+}
+
 void Block::draw_mousse()
 {
 

@@ -202,8 +202,6 @@ void Game::game_loop()
     UnloadTexture(this->menu);
     audio->endMusic();
 }
-<<<<<<< HEAD
-=======
 
 int Game::getStatus() const
 {
@@ -244,4 +242,3 @@ void Game::setDebug(const bool _bool)
 {
     this->debug = _bool;
 }
->>>>>>> master
