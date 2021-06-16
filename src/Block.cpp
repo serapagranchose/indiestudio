@@ -23,7 +23,7 @@ Block::~Block()
 
 }
 
-void Block::draw(Game *bomberman)
+void Block::draw()
 {
     DrawCubeV(this->position, this->size, this->color);
 }

@@ -28,7 +28,7 @@ class Block{
         Block(Vector3 position, bool destructible, Color couleur);
         ~Block();
 
-        void draw(Game *bomberman);
+        void draw();
 
         int place = 1;
         Vector3 position = {-1.0f, 0.0f, -1.0f};

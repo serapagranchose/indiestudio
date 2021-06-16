@@ -11,14 +11,16 @@ Player::Player()
 {
 }
 
-Player::Player(char *name, int key_right, int key_up, int key_left, int key_down, int key_space)
+Player::Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position)
 {
-    this->name = name;
+    this->name = _name;
+    std::cout << this->name;
     this->right = key_right;
     this->up = key_up;
     this->left = key_left;
     this->down = key_down;
     this->bomb = key_space;
+    this->position =  _position;
 }
 
 Player::~Player()
@@ -110,7 +112,7 @@ void Player::setBombNB(const int bomb_nb)
     this->bomb_nb = bomb_nb;
 }
 
-const char *Player::getName(void) const
+const char * Player::getName(void) const
 {
     return (this->name);
 }
@@ -182,6 +184,5 @@ void Player::update(Game *bomberman)
 
 void Player::draw(Game *bomberman)
 {
-    if (bomberman->getStatus() == this->place)
-        DrawCubeV(this->position, this->size, this->color);
+    DrawCubeV(this->position, this->size, this->color);
 }

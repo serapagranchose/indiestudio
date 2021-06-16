@@ -23,24 +23,20 @@ void Map::add_block(Game *bomberman)
 {    
     int i = 0;
     int L= 0;
-    float x = -8.0f;
-    float z = -7.0f;
+    float x = -7.0f;
+    float z = -6.0f;
 
     for (int j = 0; j < map.size(); j++) {
         L++;
         i = 0;
         for (int k = 0; k < map[j].size(); k++) {
-            /*if (map[j][k] == 'H') {
+            if (map[j][k] == 'H') {
                 Block mousse({z + i, 0.0f, x + L},1, BLACK);
                 this->blocks.push_back(mousse);
-            }*/
-            if (map[j][k] == 'O') {
-                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
-                this->blocks.push_back(mur);
             }
-            if (map[j][k] == 'P') {
-                Player onch;
-                bomberman->getPlayer().push_back(onch);
+            if (map[j][k] == 'O') {
+                Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
+                this->blocks.push_back(mur);
             }
             i++;
         }
@@ -75,7 +71,7 @@ void Map::random_map()
     for (unsigned int i = 0; i < map.size(); i++) {
         for (unsigned int j = 0; j < map[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
-            if (map[i][j] == 'x' && (randomNumber % 2) == 0) {
+            if (map[i][j] == 'x' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0)) {
                 map[i][j] = 'H';
                 h_num++;
             }

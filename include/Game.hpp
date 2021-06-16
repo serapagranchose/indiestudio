@@ -49,6 +49,8 @@ class Game{
         void input();
         void draw();
         void draw_text();
+        void initButton();
+        void initPlayer();
 
         int getStatus() const;
         void setStatus(const int status);

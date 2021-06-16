@@ -17,25 +17,10 @@ Game::Game()
     this->audio = new AllMusic();
     this->map = new Map();
     audio->init(this);
+    this->initButton();
+    this->initPlayer();
 
-    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
-    Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
-    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
-    Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
-    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
-    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "../graphic/button/sound.png");
-    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "../graphic/button/plus.png");
-    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "../graphic/button/minus.png");
-    this->buttons.push_back(*play);
-    this->buttons.push_back(*settings);
-    this->buttons.push_back(*quit);
-    this->buttons.push_back(*credits);
-    this->buttons.push_back(*home);
-    this->buttons.push_back(*sound);
-    this->buttons.push_back(*plus);
-    this->buttons.push_back(*minus);
-
-    this->camera.position = Vector3{0.0f, 10.0f, 10.0f};
+    this->camera.position = Vector3{0.0f, 15.0f, 10.0f};
     this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
     this->camera.up = Vector3{0.0f, 1.0f, 0.0f};
     this->camera.fovy = 45.0f;
@@ -58,6 +43,38 @@ Game::~Game()
     CloseWindow();
 }
 
+void Game::initButton()
+{
+    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
+    Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
+    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
+    Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
+    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
+    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "../graphic/button/sound.png");
+    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "../graphic/button/plus.png");
+    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "../graphic/button/minus.png");
+    this->buttons.push_back(*play);
+    this->buttons.push_back(*settings);
+    this->buttons.push_back(*quit);
+    this->buttons.push_back(*credits);
+    this->buttons.push_back(*home);
+    this->buttons.push_back(*sound);
+    this->buttons.push_back(*plus);
+    this->buttons.push_back(*minus);
+}
+
+void Game::initPlayer()
+{
+    Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+    Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+    //Player *playerThree = new Player("Player 3" ,KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
+    //Player *playerFour = new Player("Player 4" ,KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
+    this->players.push_back(*playerOne);
+    this->players.push_back(*playerTwo);
+    //this->players.push_back(*playerThree);
+    //this->players.push_back(*playerFour);
+}
+
 void Game::draw()
 {
     BeginDrawing();
@@ -68,7 +85,7 @@ void Game::draw()
         for (int i = 0; i < this->players.size(); i++)
             this->players[i].draw(this);
         for (int i = 0; i < this->map->getBlock().size(); i++)
-            this->map->getBlock()[i].draw(this);
+            this->map->getBlock()[i].draw();
     }
     EndMode3D();
     draw_text();
@@ -122,10 +139,6 @@ void Game::input()
         this->buttons[i].input(this, mouse);
 
     if (this->status == 1) {
-        if (IsKeyPressed(KEY_P)) {
-            Player onch;
-            this->players.push_back(onch);
-        }
         for (int i = 0; i < this->players.size(); i++) {
             if (this->players[i].getNextPosition().x == this->players[i].getPosition().x) {
                 if (IsKeyDown(this->players[i].getRight())) {

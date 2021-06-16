@@ -13,7 +13,7 @@
 class Player{
     public:
         Player();
-        Player(char *name, int key_right, int key_up, int key_left, int key_down, int key_space);
+        Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position);
         ~Player();
 
         Vector3 getPosition(void) const;
@@ -40,7 +40,7 @@ class Player{
         int getBombNB(void) const;
         void setBombNB(const int bomb_nb);
 
-        const char *getName(void) const;
+        const char * getName(void) const;
 
         int getUpdate() const;
         void setUpdate(const int);
@@ -50,20 +50,20 @@ class Player{
 
     private:
         Color color = RED;
-        Vector3 position = {0.0f, 0.0f, 0.0f};
+        Vector3 position;
         Vector3 past_position;
         Vector3 next_position = position;
         Vector3 size = {0.99f, 0.99f, 0.99f};
         Vector2 header = {0.0f, 0.0f};
         int place = 1;
-        int right = KEY_D;
-        int up = KEY_W;
-        int left = KEY_A;
-        int down = KEY_S;
-        int bomb = KEY_SPACE;
+        int right;
+        int up;
+        int left;
+        int down;
+        int bomb;
         int bomb_nb = 0;
         int _update = 0;
-        const char *name = "adrien karpapov";
+        const char * name;
 };
 
 #endif
