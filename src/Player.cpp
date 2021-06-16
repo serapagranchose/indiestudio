@@ -14,13 +14,13 @@ Player::Player()
 Player::Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position)
 {
     this->name = _name;
-    std::cout << this->name;
     this->right = key_right;
     this->up = key_up;
     this->left = key_left;
     this->down = key_down;
     this->bomb = key_space;
     this->position =  _position;
+    this->next_position = _position;
 }
 
 Player::~Player()
@@ -146,7 +146,7 @@ void Player::update(Game *bomberman)
     }
     if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) < round(this->next_position.x * 10)) {
+        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
             this->draw(bomberman);
             std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.x += 0.1f;
@@ -155,7 +155,7 @@ void Player::update(Game *bomberman)
     }
     if (round(this->position.z * 10) < round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) < round(this->next_position.z * 10)) {
+        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
             this->draw(bomberman);
             std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.z += 0.1f;
@@ -164,7 +164,7 @@ void Player::update(Game *bomberman)
     }
     if (round(this->position.x * 10) > round(this->next_position.x * 10)) {
         this->past_position = this->position;
-        while (round(this->position.x * 10) > round(this->next_position.x * 10)) {
+        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
             this->draw(bomberman);
             std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.x -= 0.1f;
@@ -173,7 +173,7 @@ void Player::update(Game *bomberman)
     }
     if (round(this->position.z * 10) > round(this->next_position.z * 10)) {
         this->past_position = this->position;
-        while (round(this->position.z * 10) > round(this->next_position.z * 10)) {
+        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
             this->draw(bomberman);
             std::this_thread::sleep_for(std::chrono::milliseconds(6));
             this->position.z -= 0.1f;

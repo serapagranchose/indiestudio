@@ -82,10 +82,12 @@ void Game::draw()
     ClearBackground(RAYWHITE);
     if (this->status == 1) {
         DrawGrid(13, 1.0f);
-        for (int i = 0; i < this->players.size(); i++)
+        for (int i = 0; i < this->players.size(); i++) {
             this->players[i].draw(this);
-        for (int i = 0; i < this->map->getBlock().size(); i++)
+        }
+        for (int i = 0; i < this->map->getBlock().size(); i++) {
             this->map->getBlock()[i].draw();
+        }
     }
     EndMode3D();
     draw_text();
@@ -181,8 +183,9 @@ void Game::update()
     if (this->debug == true)
         SetCameraMode(this->camera, CAMERA_FREE);
     if (this->status == 1) {
-        for (int i = 0; i < this->players.size(); i++)
+        for (int i = 0; i < this->players.size(); i++) {
             this->players[i].update(this);
+        }
     }
 }
 
