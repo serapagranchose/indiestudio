@@ -86,7 +86,7 @@ void Game::draw()
             this->players[i].draw(this);
         }
         for (int i = 0; i < this->map->getBlock().size(); i++) {
-            this->map->getBlock()[i].draw_mousse();
+            this->map->getBlock()[i].draw_Block_wtexture();
         }
     }
     EndMode3D();

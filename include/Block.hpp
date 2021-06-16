@@ -29,8 +29,7 @@ class Block{
         ~Block();
 
         void draw();
-        void draw_holy_block();
-        void draw_mousse();
+        void draw_Block_wtexture();
         void load_mouse();
         void load_holy_block();
         void load_ground();
