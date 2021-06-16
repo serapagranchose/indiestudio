@@ -31,6 +31,7 @@ class Map {
         void random_map();
         void draw_map();
         void add_block(Game *bomberman);
+        void saveMap(Game *bomberman);
 
         std::vector<Block> getBlock() const;
 

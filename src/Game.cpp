@@ -14,11 +14,11 @@ Game::Game()
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
+    this->initPlayer();
     this->audio = new AllMusic();
     this->map = new Map();
     audio->init(this);
     this->initButton();
-    this->initPlayer();
 
     this->camera.position = Vector3 {0.0f, 15.0f, 10.0f};
     this->camera.target = Vector3 {0.0f, 0.0f, 0.0f};
@@ -192,6 +192,7 @@ void Game::game_loop()
         this->update();
         this->draw();
     }
+    this->map->saveMap(this);
     UnloadTexture(this->menu);
     audio->endMusic();
 }

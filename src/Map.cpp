@@ -38,6 +38,10 @@ void Map::add_block(Game *bomberman)
                 Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
                 this->blocks.push_back(mur);
             }
+            if (map[j][k] == 'P')
+                bomberman->getPlayer()[0].setPosition({z + i, 0.0f, x + L});
+            if (map[j][k] == 'M')
+                bomberman->getPlayer()[1].setPosition({z + i, 0.0f, x + L});
             i++;
         }
     }
@@ -77,6 +81,22 @@ void Map::random_map()
             }
         }
     }
+}
+
+void Map::saveMap(Game *bomberman)
+{
+    std::ofstream save;
+
+    save.open("../graphic/map/save.txt", std::ofstream::out | std::ofstream::trunc);
+    if (save) {
+        for (int i = 0; i < map.size(); i++) {
+            for (int j = 0; j < map[i].size(); j++)
+                save << map[i][j];
+            save << '\n';
+        }
+    }
+    else
+        std::cerr << "Error, impossible to open the file" << std::endl;
 }
 
 std::vector<Block> Map::getBlock() const
