@@ -11,6 +11,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <cstring>
+#include <string>
 #include <vector>
 #include <stdio.h>
 #include <math.h>
@@ -30,9 +31,13 @@ class Map {
         void random_map();
         void draw_map();
         void add_block(Game *bomberman);
+        void saveMap(Game *bomberman);
 
-        std::vector<std::string> map;
+        std::vector<Block> getBlock() const;
+
         std::vector<Block> blocks;
+    private:
+        std::vector<std::string> map;
 };
 
 #include "Block.hpp"

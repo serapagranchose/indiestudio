@@ -9,7 +9,6 @@
 
 Button::Button()
 {
-
 }
 
 Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
@@ -61,10 +60,10 @@ void Button::draw(Game *bomberman)
 void Button::start(Game *bomberman)
 {
     PlaySound(this->sound);
-    bomberman->status = 1;
-        if (bomberman->map_generated == 0) {
-            bomberman->map->random_map();
-            bomberman->map->add_block(bomberman);
+    bomberman->setStatus(1);
+        if (bomberman->getGenerated() == 0) {
+            bomberman->getMap()->random_map();
+            bomberman->getMap()->add_block(bomberman);
         }
 }
 
@@ -72,50 +71,49 @@ void Button::settings(Game *bomberman)
 {
     this->check = 1;
     PlaySound(this->sound);
-    bomberman->status = 2;
+    bomberman->setStatus(2);
 }
 
 void Button::quit(Game *bomberman)
 {
     PlaySound(this->sound);
-    bomberman->status = -1;
+    bomberman->setStatus(-1);
 }
 
 void Button::credits(Game *bomberman)
 {
     this->check = 1;
     PlaySound(this->sound);
-    bomberman->status = 3;
+    bomberman->setStatus(3);
 }
 
 void Button::home(Game *bomberman)
 {
     PlaySound(this->sound);
-    bomberman->status = 0;
+    bomberman->setStatus(0);
 }
 
 void Button::plus(Game *bomberman)
 {
-    if (bomberman->volume < 9) {
-        bomberman->volume += 1;
-        SetMasterVolume(bomberman->volume);
+    if (bomberman->getMusic()->getVolume() < 1) {
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
+        SetMasterVolume(bomberman->getMusic()->getVolume());
     }
-    std::cout << bomberman->volume << std::endl;
     PlaySound(this->sound);
 }
 
 void Button::minus(Game *bomberman)
 {
-    if (bomberman->volume > 0) {
-        bomberman->volume -= 1;
-        SetMasterVolume(bomberman->volume);
+    if (bomberman->getMusic()->getVolume() > 0) {
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
+        SetMasterVolume(bomberman->getMusic()->getVolume());
     }
     PlaySound(this->sound);
 }
 
 void Button::input(Game *bomberman, Vector2 mouse)
 {
-    if (bomberman->status == 0) {
+    if (bomberman->getStatus() == 0) {
         if (CheckCollisionPointRec(mouse, this->bounds)) {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
                 this->status = 2;
@@ -136,7 +134,7 @@ void Button::input(Game *bomberman, Vector2 mouse)
         this->action = false;
         this->size.y = this->status * (float)this->frameHeight;
     }
-    if (bomberman->status == 2 || bomberman->status == 3) {
+    if (bomberman->getStatus() == 2 || bomberman->getStatus() == 3) {
         if (CheckCollisionPointRec(mouse, this->bounds)) {
             if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
                 this->status = 2;
@@ -156,4 +154,9 @@ void Button::input(Game *bomberman, Vector2 mouse)
             this->size.y = this->status * (float)this->frameHeight;
         this->action = false;
     }
+}
+
+float Button::getFrameHeight() const
+{
+    return (this->frameHeight);
 }

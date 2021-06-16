@@ -9,92 +9,181 @@
 
 Player::Player()
 {
-
 }
 
-Player::Player(char *name, int key_right, int key_up, int key_left, int key_down)
+Player::Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position)
 {
-    this->name = name;
+    this->name = _name;
     this->right = key_right;
     this->up = key_up;
     this->left = key_left;
     this->down = key_down;
+    this->bomb = key_space;
+    this->position =  _position;
+    this->next_position = _position;
 }
 
 Player::~Player()
 {
-
 }
 
-void Player::draw(Game *bomberman)
+Vector3 Player::getPosition(void) const
 {
-    if (bomberman->status == this->place)
-        DrawCubeV(this->position, this->size, this->color);
+    return (this->position);
+}
+
+void Player::setPosition(const Vector3 position)
+{
+    this->position = position;
+}
+
+Vector3 Player::getPastPosition(void) const
+{
+    return (this->past_position);
+}
+
+void Player::setPastPosition(const Vector3 past_position)
+{
+    this->past_position = past_position;
+}
+
+Vector3 Player::getNextPosition(void) const
+{
+    return (this->next_position);
+}
+
+void Player::setNextPositionX(const float next_positionx)
+{
+    this->next_position.x = next_positionx;
+}
+
+void Player::setNextPositionZ(const float next_positionz)
+{
+    this->next_position.z = next_positionz;
+}
+
+Vector2 Player::getHeader(void) const
+{
+    return (this->header);
+}
+
+int Player::getPlace(void) const
+{
+    return (this->place);
+}
+
+void Player::setPlace(const int place)
+{
+    this->place = place;
+}
+
+int Player::getRight(void) const
+{
+    return (this->right);
+}
+
+int Player::getUp(void) const
+{
+    return (this->up);
+}
+
+int Player::getLeft(void) const
+{
+    return (this->left);
+}
+
+int Player::getDown(void) const
+{
+    return (this->down);
+}
+
+int Player::getBomb(void) const
+{
+    return (this->bomb);
+}
+
+int Player::getBombNB(void) const
+{
+    return (this->bomb_nb);
+}
+
+void Player::setBombNB(const int bomb_nb)
+{
+    this->bomb_nb = bomb_nb;
+}
+
+const char * Player::getName(void) const
+{
+    return (this->name);
+}
+
+int Player::getUpdate(void) const
+{
+    return (this->_update);
+}
+
+void Player::setUpdate(const int update)
+{
+    this->_update = update;
 }
 
 void Player::update(Game *bomberman)
 {
-    if (bomberman->status == this->place){
-        this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->camera);
-
-
-        for (int i = 0; i < bomberman->map->blocks.size(); i++)
-            if (CheckCollisionBoxes(
+    this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->getCamera());
+    this->past_position = this->position;
+    for (int i = 0; i < bomberman->getMap()->blocks.size(); i++) {
+        if (CheckCollisionBoxes(
                 BoundingBox{
                     Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
                     Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->map->blocks[i].position.x - bomberman->map->blocks[i].size.x / 2, bomberman->map->blocks[i].position.y - bomberman->map->blocks[i].size.y / 2, bomberman->map->blocks[i].position.z - bomberman->map->   blocks[i].size.z / 2 },
-                    Vector3{bomberman->map->blocks[i].position.x + bomberman->map->blocks[i].size.x / 2, bomberman->map->blocks[i].position.y + bomberman->map->blocks[i].size.y / 2, bomberman->map->blocks[i].position.z + bomberman->map->blocks[i].size.z / 2 }}
-                )
-            ){
-                this->position = this->past_position;
-                this->next_position = this->position;
-            }
-        /*
-        for (int i = 0; i < bomberman->players.size(); i++)
-            if (CheckCollisionBoxes(
-                BoundingBox{
-                    Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
-                    Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
-                BoundingBox{
-                    Vector3{bomberman->players[i].position.x - bomberman->players[i].size.x / 2, bomberman->players[i].position.y - bomberman->players[i].size.y / 2, bomberman->players[i].position.z - bomberman->players[i].size.z / 2 },
-                    Vector3{bomberman->players[i].position.x + bomberman->players[i].size.x / 2, bomberman->players[i].position.y + bomberman->players[i].size.y / 2, bomberman->players[i].position.z + bomberman->players[i].size.z / 2 }}
-                )
-            ){
-                this->position = this->past_position;
-                this->next_position = this->position;
-            }
-        */
-
-
-        if (round(this->position.x * 10) < round(this->next_position.x * 10)){
-            while(round(this->position.x * 10) != round(this->next_position.x * 10)){
-                this->past_position = this->position;
-                this->position.x += 0.1f;
-            }
-            this->next_position = this->position;
-        }
-        if (round(this->position.z * 10) < round(this->next_position.z * 10)){
-            while(round(this->position.z * 10) != round(this->next_position.z * 10)){
-                this->past_position = this->position;
-                this->position.z += 0.1f;
-            }
-            this->next_position = this->position;
-        }
-        if (round(this->position.x * 10) > round(this->next_position.x * 10)){
-            while(round(this->position.x * 10) != round(this->next_position.x * 10)){
-                this->past_position = this->position;
-                this->position.x -= 0.1f;
-            }
-            this->next_position = this->position;
-        }
-        if (round(this->position.z * 10) > round(this->next_position.z * 10)){
-            while(round(this->position.z * 10) != round(this->next_position.z * 10)){
-                this->past_position = this->position;
-                this->position.z -= 0.1f;
-            }
+                    Vector3{bomberman->getMap()->blocks[i].position.x - bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y - bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z - bomberman->getMap()->blocks[i].size.z / 2},
+                    Vector3{bomberman->getMap()->blocks[i].position.x + bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y + bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z + bomberman->getMap()->blocks[i].size.z / 2}}))
+        {
+            this->position = this->past_position;
             this->next_position = this->position;
         }
     }
+    if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
+        this->past_position = this->position;
+        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+            this->position.x += 0.1f;
+        }
+        this->next_position = this->position;
+    }
+    if (round(this->position.z * 10) < round(this->next_position.z * 10)) {
+        this->past_position = this->position;
+        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+            this->position.z += 0.1f;
+        }
+        this->next_position = this->position;
+    }
+    if (round(this->position.x * 10) > round(this->next_position.x * 10)) {
+        this->past_position = this->position;
+        while (round(this->position.x * 10) != round(this->next_position.x * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+            this->position.x -= 0.1f;
+        }
+        this->next_position = this->position;
+    }
+    if (round(this->position.z * 10) > round(this->next_position.z * 10)) {
+        this->past_position = this->position;
+        while (round(this->position.z * 10) != round(this->next_position.z * 10)) {
+            this->draw(bomberman);
+            std::this_thread::sleep_for(std::chrono::milliseconds(6));
+            this->position.z -= 0.1f;
+        }
+        this->next_position = this->position;
+    }
+    this->_update = 0;
+}
+
+void Player::draw(Game *bomberman)
+{
+    DrawCubeV(this->position, this->size, this->color);
 }

@@ -23,8 +23,8 @@ void Map::add_block(Game *bomberman)
 {    
     int i = 0;
     int L= 0;
-    float x = -8.0f;
-    float z = -7.0f;
+    float x = -7.0f;
+    float z = -6.0f;
 
     for (int j = 0; j < map.size(); j++) {
         L++;
@@ -32,15 +32,13 @@ void Map::add_block(Game *bomberman)
         for (int k = 0; k < map[j].size(); k++) {
             if (map[j][k] == 'H') {
                 Block mousse({z + i, 0.0f, x + L},1, BLACK);
+                mousse.load_mouse();
                 this->blocks.push_back(mousse);
             }
             if (map[j][k] == 'O') {
-                Block mur({z + i, 0.0f, x + L},0, DARKBLUE);
+                Block mur({z + i, 0.0f, x + L}, 0, DARKBLUE);
+                mur.load_holy_block();
                 this->blocks.push_back(mur);
-            }
-            if (map[j][k] == 'P') {
-                Player onch;
-                bomberman->players.push_back(onch);
             }
             i++;
         }
@@ -73,12 +71,33 @@ void Map::random_map()
     }
     map = str_to_word_array(getMap);
     for (unsigned int i = 0; i < map.size(); i++) {
-        for (unsigned int j = 0; j < 13; j++) {
+        for (unsigned int j = 0; j < map[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
-            if (map[i][j] == 'x' && (randomNumber % 2) == 0) {
+            if (map[i][j] == 'x' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0)) {
                 map[i][j] = 'H';
                 h_num++;
             }
         }
     }
+}
+
+void Map::saveMap(Game *bomberman)
+{
+    std::ofstream save;
+
+    save.open("../graphic/map/save.txt", std::ofstream::out | std::ofstream::trunc);
+    if (save) {
+        for (int i = 0; i < map.size(); i++) {
+            for (int j = 0; j < map[i].size(); j++)
+                save << map[i][j];
+            save << '\n';
+        }
+    }
+    else
+        std::cerr << "Error, impossible to open the file" << std::endl;
+}
+
+std::vector<Block> Map::getBlock() const
+{
+    return (this->blocks);
 }

@@ -37,7 +37,7 @@ int main(int ac, char **av)
     if (input_checker(ac, av) == 1)
         return (0);
     else if (input_checker(ac, av) == 2)
-        bomberman.debug = true;
+        bomberman.setDebug(true);
 
     bomberman.game_loop();
 
