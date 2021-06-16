@@ -95,8 +95,8 @@ void Button::home(Game *bomberman)
 
 void Button::plus(Game *bomberman)
 {
-    if (bomberman->getMusic()->getVolume() < 9) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 1);
+    if (bomberman->getMusic()->getVolume() < 1) {
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
         SetMasterVolume(bomberman->getMusic()->getVolume());
     }
     PlaySound(this->sound);
@@ -105,7 +105,7 @@ void Button::plus(Game *bomberman)
 void Button::minus(Game *bomberman)
 {
     if (bomberman->getMusic()->getVolume() > 0) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 1);
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
         SetMasterVolume(bomberman->getMusic()->getVolume());
     }
     PlaySound(this->sound);

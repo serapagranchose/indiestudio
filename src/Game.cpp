@@ -20,9 +20,9 @@ Game::Game()
     this->initButton();
     this->initPlayer();
 
-    this->camera.position = Vector3{0.0f, 15.0f, 10.0f};
-    this->camera.target = Vector3{0.0f, 0.0f, 0.0f};
-    this->camera.up = Vector3{0.0f, 1.0f, 0.0f};
+    this->camera.position = Vector3 {0.0f, 15.0f, 10.0f};
+    this->camera.target = Vector3 {0.0f, 0.0f, 0.0f};
+    this->camera.up = Vector3 {0.0f, 1.0f, 0.0f};
     this->camera.fovy = 45.0f;
     this->camera.projection = CAMERA_PERSPECTIVE;
 
@@ -164,7 +164,7 @@ void Game::update()
 {
     audio->update();
     this->framesCount++;
-    this->buttons[5].size.y = (audio->getVolume() - 1) * this->buttons[5].getFrameHeight();
+    this->buttons[5].size.y = ((audio->getVolume() - 0.1) * 10)* this->buttons[5].getFrameHeight();
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
         if (this->framesAnimCount >= framesAnim) 

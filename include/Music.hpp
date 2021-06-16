@@ -34,7 +34,7 @@ class AllMusic {
         float timePlayed = 0.0f;
         bool pause = false;
         Music track;
-        float volume = 5;
+        float volume = 0.5;
 };
 
 #include "Game.hpp"
