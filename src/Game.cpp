@@ -126,9 +126,12 @@ void Game::draw_text()
         for (int i = 0; i < this->players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->players[i].getName(), this->players[i].getPosition().x, this->players[i].getPosition().y, this->players[i].getPosition().z, this->players[i].getNextPosition().x, this->players[i].getNextPosition().y, this->players[i].getNextPosition().z, this->players[i].getBombNB()), 10, 230 + (i * 120), 20, GRAY);
     }
-    for (int i = 0; i < this->players.size(); i++)
-        if (this->status == this->players[i].getPlace())
-            DrawText(TextFormat("%s", this->players[i].getName()), (int)this->players[i].getHeader().x - MeasureText(TextFormat("%s", this->players[i].getName()), 20) / 2, (int)this->players[i].getHeader().y, 20, BLACK);
+    if (this->status == 1) {
+        for (int i = 0; i < this->players.size(); i++) {
+            if (this->status == this->players[i].getPlace())
+                DrawText(TextFormat("%s", this->players[i].getName()), (int)this->players[i].getHeader().x - MeasureText(TextFormat("%s", this->players[i].getName()), 20) / 2, (int)this->players[i].getHeader().y, 20, BLACK);
+        }
+    }
 }
 
 void Game::input()

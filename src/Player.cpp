@@ -131,7 +131,7 @@ void Player::update(Game *bomberman)
 {
     this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->getCamera());
     this->past_position = this->position;
-    for (int i = 0; i < bomberman->getMap()->blocks.size(); i++)
+    for (int i = 0; i < bomberman->getMap()->blocks.size(); i++) {
         if (CheckCollisionBoxes(
                 BoundingBox{
                     Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
@@ -143,6 +143,7 @@ void Player::update(Game *bomberman)
             this->position = this->past_position;
             this->next_position = this->position;
         }
+    }
     if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
         this->past_position = this->position;
         while (round(this->position.x * 10) < round(this->next_position.x * 10)) {
