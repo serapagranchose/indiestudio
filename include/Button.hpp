@@ -22,6 +22,7 @@ class Button{
         void settings(Game *bomberman);
         void start(Game *bomberman);
         void credits(Game *bomberman);
+        void load(Game *bomberman);
         void home(Game *bomberman);
         void plus(Game *bomberman);
         void minus(Game *bomberman);

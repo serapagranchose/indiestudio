@@ -15,11 +15,11 @@ Map::~Map()
 {
 }
 
-void Map::draw_map()
+void Map::drawMap()
 {
 }
 
-void Map::add_block(Game *bomberman)
+void Map::addBlock(Game *bomberman)
 {
     int i = 0;
     int l = 0;
@@ -40,15 +40,22 @@ void Map::add_block(Game *bomberman)
                 mur.loadHolyBlock();
                 this->blocks.push_back(mur);
             }
+            if (map[j][k] == '1')
+                bomberman->namePlayer.push_back("One");
+            if (map[j][k] == '2')
+                bomberman->namePlayer.push_back("Two");
+            if (map[j][k] == '3')
+                bomberman->namePlayer.push_back("Three");
+            if (map[j][k] == '4')
+                bomberman->namePlayer.push_back("Four");
             Block ground({z + i, -1.25f, x + l}, 0, BLUE);
             ground.loadGround();
             this->blocks.push_back(ground);
             i++;
         }
     }
+    bomberman->initPlayer();
 }
-
-// RENDRE PLUS CLEAN PARCE QUE LA MÊME MOI J'AI MAL ALORS QUE C'EST MOI QUI L'AI FAIT
 
 void Map::initStart()
 {
@@ -78,7 +85,7 @@ void Map::initStart()
         map[11][11] = ' ';
 }
 
-void Map::random_map()
+void Map::randomMap(Game *bomberman)
 {
     std::ifstream file("../graphic/map/map.txt");
     std::string str;
@@ -86,6 +93,10 @@ void Map::random_map()
     srand((unsigned) time(0));
     int randomNumber;
 
+    if (!file) {
+        bomberman->setStatus(0);
+        return;
+    }
     while (std::getline(file, str)) {
         getMap.append(str);
         getMap.append("\n");
@@ -112,9 +123,8 @@ void Map::saveMap(Game *bomberman)
             if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3' || map[i][j] == '4')
                 map[i][j] = ' ';
             for (int k = 0; k < bomberman->getPlayer().size(); k++) {
-                if (i == round(bomberman->getPlayer()[k].getPosition().x + 6) && j == round(bomberman->getPlayer()[k].getPosition().z + 6)) {
-                    map[i][j] = k;
-                }
+                if (i == round(bomberman->getPlayer()[k].getPosition().z + 6) && j == round(bomberman->getPlayer()[k].getPosition().x + 6))
+                    map[i][j] = std::to_string(k + 1).c_str()[0];
             }
         }               
     }
@@ -128,6 +138,36 @@ void Map::saveMap(Game *bomberman)
     }
     else
         std::cerr << "Error, impossible to open the file" << std::endl;
+}
+
+void Map::loadMap(Game *bomberman)
+{
+    std::ifstream file("../graphic/map/save.txt");
+    std::string str;
+    std::string getMap;
+    int player = 0;
+
+    while (std::getline(file, str)) {
+        getMap.append(str);
+        getMap.append("\n");
+    }
+    if (getMap[0] == '\0') {
+        bomberman->setStatus(0);
+        return;
+    }
+    map = str_to_word_array(getMap);
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3'|| map[i][j] == '4')
+                player++;
+        }
+    }
+    if (player <= 1) {
+        bomberman->setStatus(0);
+        return;
+    }
+    initStart();
+    addBlock(bomberman);
 }
 
 std::vector<Block> Map::getBlock() const

@@ -14,13 +14,13 @@ Game::Game()
     srand(time(NULL));
     InitWindow(this->window.screen_width, this->window.screen_height, "Anatoly Karpov!!!");
     SetTargetFPS(60);
-    this->initPlayer();
+    ToggleFullscreen();
     this->audio = new AllMusic();
     this->map = new Map();
     audio->init(this);
     this->initButton();
 
-    this->camera.position = Vector3 {0.0f, 15.0f, 10.0f};
+    this->camera.position = Vector3 {0.0f, 20.0f, 6.0f};
     this->camera.target = Vector3 {0.0f, 0.0f, 0.0f};
     this->camera.up = Vector3 {0.0f, 1.0f, 0.0f};
     this->camera.fovy = 45.0f;
@@ -46,9 +46,10 @@ Game::~Game()
 void Game::initButton()
 {
     Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "../graphic/button/play.png");
-    Button *settings = new Button(&this->window, 2.0f, 3.5f, "Settings", "../graphic/button/settings.png");
+    Button *settings = new Button(&this->window, 1.325f, 1.0f, "Settings", "../graphic/button/settings.png");
     Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "../graphic/button/quit.png");
-    Button *credits = new Button(&this->window, 1.5f, 3.5f, "Credits", "../graphic/button/credits.png");
+    Button *credits = new Button(&this->window, 1.7f, 3.5f, "Credits", "../graphic/button/credits.png");
+    Button *load = new Button(&this->window, 2.15f, 3.5f, "Continue", "../graphic/button/continue.png");
     Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "../graphic/button/home.png");
     Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "../graphic/button/sound.png");
     Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "../graphic/button/plus.png");
@@ -57,6 +58,7 @@ void Game::initButton()
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
     this->buttons.push_back(*credits);
+    this->buttons.push_back(*load);
     this->buttons.push_back(*home);
     this->buttons.push_back(*sound);
     this->buttons.push_back(*plus);
@@ -65,14 +67,24 @@ void Game::initButton()
 
 void Game::initPlayer()
 {
-    Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
-    Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
-    //Player *playerThree = new Player("Player 3" ,KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
-    //Player *playerFour = new Player("Player 4" ,KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
-    this->players.push_back(*playerOne);
-    this->players.push_back(*playerTwo);
-    //this->players.push_back(*playerThree);
-    //this->players.push_back(*playerFour);
+    for (int i = 0; i != namePlayer.size(); i++) {
+        if (namePlayer[i] == "One") {
+            Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+            this->players.push_back(*playerOne);
+        }
+        if (namePlayer[i] == "Two") {
+            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+            this->players.push_back(*playerTwo);
+        }
+        if (namePlayer[i] == "Three") {
+            Player *playerThree = new Player("Player 3" ,KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
+            this->players.push_back(*playerThree);
+        }
+        if (namePlayer[i] == "Four") {
+            Player *playerFour = new Player("Player 4" ,KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
+            this->players.push_back(*playerFour);
+        }
+    }
 }
 
 void Game::draw()
@@ -92,19 +104,19 @@ void Game::draw()
     if (this->status == 0) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText(TextSubtext("INDIE STUDIO", 0, this->framesCount/12), 100, 160, 100, DARKBLUE);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 2) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
-        for (int i = 4; i != 8; i++)
+        for (int i = 5; i < 9; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 3) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText("CREDITS", 170, 160, 100, DARKBLUE);
-        this->buttons[4].draw(this);
+        this->buttons[5].draw(this);
     }
     EndDrawing();
 }
@@ -167,7 +179,7 @@ void Game::update()
 {
     audio->update();
     this->framesCount++;
-    this->buttons[5].size.y = ((audio->getVolume() - 0.1) * 10)* this->buttons[5].getFrameHeight();
+    this->buttons[6].size.y = ((audio->getVolume() - 0.1) * 10) * this->buttons[6].getFrameHeight();
     if (GetTime() - this->lastGifTime >= this->gifFrameRate) {
         this->framesAnimCount++;
         if (this->framesAnimCount >= framesAnim)

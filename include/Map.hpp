@@ -28,11 +28,12 @@ class Map {
         Map();
         ~Map();
 
-        void random_map();
-        void draw_map();
-        void add_block(Game *bomberman);
+        void randomMap(Game *bomberman);
+        void drawMap();
+        void addBlock(Game *bomberman);
         void saveMap(Game *bomberman);
         void initStart();
+        void loadMap(Game *bomberman);
 
         std::vector<Block> getBlock() const;
 
