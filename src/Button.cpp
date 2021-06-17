@@ -65,8 +65,8 @@ void Button::start(Game *bomberman)
     } else if (bomberman->getStatus() == 4){
         bomberman->setStatus(1);
         if (bomberman->getGenerated() == 0) {
-            bomberman->getMap()->random_map();
-            bomberman->getMap()->add_block(bomberman);
+            bomberman->getMap()->randomMap(bomberman);
+            bomberman->getMap()->addBlock(bomberman);
         }
     }
 }
@@ -91,6 +91,13 @@ void Button::credits(Game *bomberman)
     bomberman->setStatus(3);
 }
 
+void Button::load(Game *bomberman)
+{
+    PlaySound(this->sound);
+    bomberman->setStatus(1);
+    bomberman->getMap()->loadMap(bomberman);
+}
+
 void Button::home(Game *bomberman)
 {
     PlaySound(this->sound);
@@ -108,6 +115,10 @@ void Button::plus(Game *bomberman)
         if (bomberman->getPlayers().size() < 4)
             bomberman->pushPlayer();
 
+    if (round(bomberman->getMusic()->getVolume() * 10) < 10) {
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
+        SetMasterVolume(bomberman->getMusic()->getVolume());
+    }
     PlaySound(this->sound);
 }
 
@@ -121,6 +132,10 @@ void Button::minus(Game *bomberman)
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() != 0)
             bomberman->popPlayer();
+    if (round(bomberman->getMusic()->getVolume() * 10) > 0) {
+        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
+        SetMasterVolume(bomberman->getMusic()->getVolume());
+    }
     PlaySound(this->sound);
 }
 
@@ -144,6 +159,8 @@ void Button::input(Game *bomberman, Vector2 mouse)
             settings(bomberman);
         else if (this->action && this->name == "Credits")
             credits(bomberman);
+        else if (this->action && this->name == "Continue")
+            load(bomberman);
         this->action = false;
         this->size.y = this->status * (float)this->frameHeight;
     }

@@ -62,7 +62,9 @@ class Game{
         Camera getCamera() const;
         int getGenerated() const;
         void setDebug(const bool);
+        void setNbPlayer(const int);
 
+        std::vector<std::string> namePlayer;
     private:
         Window window;
         Camera camera;
