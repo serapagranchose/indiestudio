@@ -30,6 +30,7 @@ class Button{
         float getFrameHeight(void) const;
 
         Rectangle size;
+        
     private:
         Texture2D texture;
         Rectangle bounds;

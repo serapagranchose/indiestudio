@@ -38,6 +38,7 @@ class Map {
         std::vector<Block> getBlock() const;
 
         std::vector<Block> blocks;
+        
     private:
         std::vector<std::string> map;
 };
