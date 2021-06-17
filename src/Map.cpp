@@ -40,14 +40,22 @@ void Map::addBlock(Game *bomberman)
                 mur.loadHolyBlock();
                 this->blocks.push_back(mur);
             }
-            if (map[j][k] == '1')
+            if (map[j][k] == '1') {
                 bomberman->namePlayer.push_back("One");
-            if (map[j][k] == '2')
+                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+            }
+            if (map[j][k] == '2') {
                 bomberman->namePlayer.push_back("Two");
-            if (map[j][k] == '3')
+                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+            }
+            if (map[j][k] == '3') {
                 bomberman->namePlayer.push_back("Three");
-            if (map[j][k] == '4')
+                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+            }
+            if (map[j][k] == '4') {
                 bomberman->namePlayer.push_back("Four");
+                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+            }
             Block ground({z + i, -1.25f, x + l}, 0, BLUE);
             ground.loadGround();
             this->blocks.push_back(ground);

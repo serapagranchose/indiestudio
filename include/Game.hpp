@@ -65,7 +65,7 @@ class Game{
         void setNbPlayer(const int);
 
         std::vector<std::string> namePlayer;
-        
+        std::vector<Vector3> coordPlayer;
     private:
         Window window;
         Camera camera;
