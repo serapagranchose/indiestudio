@@ -9,6 +9,9 @@
 #define PLAYER_HPP_
 
 #include "Game.hpp"
+#include "Bomb.hpp"
+
+class Bomb;
 
 class Player{
     public:
@@ -25,7 +28,6 @@ class Player{
         Vector3 getNextPosition(void) const;
         void setNextPositionX(const float next_positionx);
         void setNextPositionZ(const float next_positionz);
-
         Vector2 getHeader(void) const;
 
         int getPlace(void) const;
@@ -47,6 +49,11 @@ class Player{
 
         void update(Game *bomberman);
         void draw(Game *bomberman);
+        int can_I_plant(void) const;
+
+        std::vector<Bomb> getBomb_List(void) const;
+
+        void drop_bomb(void);
 
     private:
         Color color = RED;
@@ -61,9 +68,10 @@ class Player{
         int left;
         int down;
         int bomb;
-        int bomb_nb = 0;
+        int bomb_nb = 10;
         int _update = 0;
         const char * name;
+        std::vector<Bomb> _Bomb_list;
 };
 
 #endif
