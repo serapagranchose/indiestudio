@@ -9,5 +9,5 @@ O           O
 O O O O O O O
 O           O
 O O O O O O O
-O           O
+O3         4O
 OOOOOOOOOOOOO
