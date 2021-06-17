@@ -116,8 +116,11 @@ void Game::draw()
     ClearBackground(DARKGRAY);
     if (this->status == 1) {
         DrawGrid(13, 1.0f);
-        for (int i = 0; i < this->players.size(); i++)
+        for (int i = 0; i < this->players.size(); i++) {
             this->players[i].draw(this);
+            for (int y = 0; y < this->players[i].getBomb_List().size(); y++)
+                this->players[i].getBomb_List()[y].Draw();
+        }
         for (int i = 0; i < this->map->getBlock().size(); i++)
             this->map->getBlock()[i].drawBlockTexture();
     }
@@ -185,6 +188,12 @@ void Game::input()
 
     if (this->status == 1) {
         for (int i = 0; i < this->players.size(); i++) {
+            if (this->players[i].getBombNB() > 0 && IsKeyDown(this->players[i].getBomb())) {
+                if (this->players[i].can_I_plant() == 1) {
+                    this->players[i].drop_bomb();
+                    this->players[i].setBombNB(this->players[i].getBombNB() - 1);
+                }
+            }
             if (this->players[i].getNextPosition().x == this->players[i].getPosition().x) {
                 if (IsKeyDown(this->players[i].getRight())) {
                     this->players[i].setUpdate(1);
@@ -225,6 +234,8 @@ void Game::update()
     if (this->status == 1) {
         for (int i = 0; i < this->players.size(); i++) {
             this->players[i].update(this);
+            for (int y = 0; y < this->players[i].getBomb_List().size(); y++)
+                this->players[i].getBomb_List()[y].update();
         }
     }
 }

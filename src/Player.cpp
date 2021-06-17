@@ -127,6 +127,11 @@ void Player::setUpdate(const int update)
     this->_update = update;
 }
 
+std::vector<Bomb> Player::getBomb_List(void) const
+{
+    return (this->_Bomb_list);
+}
+
 void Player::update(Game *bomberman)
 {
     this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->getCamera());
@@ -174,4 +179,21 @@ void Player::update(Game *bomberman)
 void Player::draw(Game *bomberman)
 {
     DrawCubeV(this->position, this->size, this->color);
+}
+
+void Player::drop_bomb(void)
+{
+    Bomb bomb(this->position);
+
+    this->_Bomb_list.push_back(bomb);
+}
+
+int Player::can_I_plant(void) const
+{
+    for (int i = 0; i < this->_Bomb_list.size(); i++) {
+        if (round(this->position.x) == round(this->_Bomb_list[i].getPosition().x)
+        && round(this->position.z) == round(this->_Bomb_list[i].getPosition().z))
+            return (0);
+    }
+    return (1);
 }
