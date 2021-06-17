@@ -19,7 +19,7 @@ Button::Button(Window *window, float heightScreen, float heightButton, std::stri
         this->frameHeight = (float)this->texture.height / NUM_FRAMES;
         this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
         this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("../audio/button.wav");
+        this->sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Sound") {
         this->texture = LoadTexture(path);
@@ -27,7 +27,7 @@ Button::Button(Window *window, float heightScreen, float heightButton, std::stri
         this->frameHeight = (float)this->texture.height / NUM_SOUND;
         this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
         this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("../audio/button.wav");
+        this->sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Plus") {
         this->texture = LoadTexture(path);
@@ -35,7 +35,7 @@ Button::Button(Window *window, float heightScreen, float heightButton, std::stri
         this->frameHeight = (float)this->texture.height / NUM_FRAMES;
         this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
         this->bounds = {window->screen_width / 3.1f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("../audio/button.wav");
+        this->sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Minus") {
         this->texture = LoadTexture(path);
@@ -43,7 +43,7 @@ Button::Button(Window *window, float heightScreen, float heightButton, std::stri
         this->frameHeight = (float)this->texture.height / NUM_FRAMES;
         this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
         this->bounds = {window->screen_width / 8.4f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("../audio/button.wav");
+        this->sound = LoadSound("assets/audio/button.wav");
     }
 }
 

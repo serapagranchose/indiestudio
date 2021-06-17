@@ -27,7 +27,7 @@ Game::Game()
     this->camera.projection = CAMERA_PERSPECTIVE;
 
     this->framesAnim = 0;
-    this->imageAnim = LoadImageAnim("graphic/menu/menu.gif", &this->framesAnim);
+    this->imageAnim = LoadImageAnim("assets/graphic/background/menu.gif", &this->framesAnim);
     this->menu = LoadTextureFromImage(this->imageAnim);
 
     this->lastGifTime = GetTime();
@@ -45,15 +45,15 @@ Game::~Game()
 
 void Game::initButton()
 {
-    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "graphic/button/play.png");
-    Button *settings = new Button(&this->window, 1.325f, 1.0f, "Settings", "graphic/button/settings.png");
-    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "graphic/button/quit.png");
-    Button *credits = new Button(&this->window, 1.7f, 3.5f, "Credits", "graphic/button/credits.png");
-    Button *load = new Button(&this->window, 2.15f, 3.5f, "Continue", "graphic/button/continue.png");
-    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "graphic/button/home.png");
-    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "graphic/button/sound.png");
-    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "graphic/button/plus.png");
-    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "graphic/button/minus.png");
+    Button *play = new Button(&this->window, 3.0f, 4.5f, "Play", "assets/graphic/button/play.png");
+    Button *settings = new Button(&this->window, 1.325f, 1.0f, "Settings", "assets/graphic/button/settings.png");
+    Button *quit = new Button(&this->window, 1.15f, 1.0f, "Quit", "assets/graphic/button/quit.png");
+    Button *credits = new Button(&this->window, 1.7f, 3.5f, "Credits", "assets/graphic/button/credits.png");
+    Button *load = new Button(&this->window, 2.15f, 3.5f, "Continue", "assets/graphic/button/continue.png");
+    Button *home = new Button(&this->window, 1.15f, 1.0f, "Home", "assets/graphic/button/home.png");
+    Button *sound = new Button(&this->window, 1.5f, 3.5f, "Sound", "assets/graphic/button/sound.png");
+    Button *plus = new Button(&this->window, 1.62f, 3.5f, "Plus", "assets/graphic/button/plus.png");
+    Button *minus = new Button(&this->window, 1.62f, 3.5f, "Minus", "assets/graphic/button/minus.png");
     this->buttons.push_back(*play);
     this->buttons.push_back(*settings);
     this->buttons.push_back(*quit);
@@ -242,7 +242,7 @@ void Game::update()
 
 void Game::game_loop()
 {
-    audio->setMusic("audio/menu.mp3");
+    audio->setMusic("assets/audio/menu.mp3");
     audio->playMusic();
     while (!WindowShouldClose() && this->status != -1)
     {

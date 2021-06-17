@@ -87,7 +87,7 @@ void Map::initStart()
 
 void Map::randomMap(Game *bomberman)
 {
-    std::ifstream file("graphic/map/map.txt");
+    std::ifstream file("assets/map/map.txt");
     std::string str;
     std::string getMap;
     srand((unsigned) time(0));
@@ -128,7 +128,7 @@ void Map::saveMap(Game *bomberman)
             }
         }
     }
-    save.open("graphic/map/save.txt", std::ofstream::out | std::ofstream::trunc);
+    save.open("assets/map/save.txt", std::ofstream::out | std::ofstream::trunc);
     if (save) {
         for (int i = 0; i < map.size(); i++) {
             for (int j = 0; j < map[i].size(); j++)
@@ -142,7 +142,7 @@ void Map::saveMap(Game *bomberman)
 
 void Map::loadMap(Game *bomberman)
 {
-    std::ifstream file("graphic/map/save.txt");
+    std::ifstream file("assets/map/save.txt");
     std::string str;
     std::string getMap;
     int player = 0;

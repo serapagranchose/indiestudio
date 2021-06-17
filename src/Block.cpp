@@ -25,7 +25,7 @@ Block::~Block()
 
 void Block::loadMousse()
 {
-    Texture2D texture = LoadTexture("graphic/texture/Brick_Block.png");
+    Texture2D texture = LoadTexture("assets/graphic/texture/brick_block.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->one_model = LoadModelFromMesh(mesh);
     this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
@@ -33,7 +33,7 @@ void Block::loadMousse()
 
 void Block::loadHolyBlock()
 {
-    Texture2D texture = LoadTexture("graphic/texture/Bloc_vide.png");
+    Texture2D texture = LoadTexture("assets/graphic/texture/empty_block.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->one_model = LoadModelFromMesh(mesh);
     this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
@@ -41,7 +41,7 @@ void Block::loadHolyBlock()
 
 void Block::loadGround()
 {
-    Texture2D texture = LoadTexture("graphic/texture/grass.png");
+    Texture2D texture = LoadTexture("assets/graphic/texture/grass.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->one_model = LoadModelFromMesh(mesh);
     this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
