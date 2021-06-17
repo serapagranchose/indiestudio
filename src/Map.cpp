@@ -15,11 +15,11 @@ Map::~Map()
 {
 }
 
-void Map::draw_map()
+void Map::drawMap()
 {
 }
 
-void Map::add_block(Game *bomberman)
+void Map::addBlock(Game *bomberman)
 {
     int i = 0;
     int l = 0;
@@ -78,7 +78,7 @@ void Map::initStart()
         map[11][11] = ' ';
 }
 
-void Map::random_map()
+void Map::randomMap()
 {
     std::ifstream file("../graphic/map/map.txt");
     std::string str;
@@ -112,9 +112,8 @@ void Map::saveMap(Game *bomberman)
             if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3' || map[i][j] == '4')
                 map[i][j] = ' ';
             for (int k = 0; k < bomberman->getPlayer().size(); k++) {
-                if (i == round(bomberman->getPlayer()[k].getPosition().x + 6) && j == round(bomberman->getPlayer()[k].getPosition().z + 6)) {
-                    map[i][j] = k;
-                }
+                if (i == round(bomberman->getPlayer()[k].getPosition().z + 6) && j == round(bomberman->getPlayer()[k].getPosition().x + 6))
+                    map[i][j] = std::to_string(k + 1).c_str()[0];
             }
         }               
     }

@@ -62,8 +62,8 @@ void Button::start(Game *bomberman)
     PlaySound(this->sound);
     bomberman->setStatus(1);
         if (bomberman->getGenerated() == 0) {
-            bomberman->getMap()->random_map();
-            bomberman->getMap()->add_block(bomberman);
+            bomberman->getMap()->randomMap();
+            bomberman->getMap()->addBlock(bomberman);
         }
 }
 

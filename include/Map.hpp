@@ -28,9 +28,9 @@ class Map {
         Map();
         ~Map();
 
-        void random_map();
-        void draw_map();
-        void add_block(Game *bomberman);
+        void randomMap();
+        void drawMap();
+        void addBlock(Game *bomberman);
         void saveMap(Game *bomberman);
         void initStart();
 
