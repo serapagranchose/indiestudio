@@ -111,12 +111,12 @@ void Map::saveMap(Game *bomberman)
         for (int j = 0; j < map[i].size(); j++) {
             if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3' || map[i][j] == '4')
                 map[i][j] = ' ';
-            for (int k = 0; k < bomberman->getPlayer().size(); k++) {
-                if (i == round(bomberman->getPlayer()[k].getPosition().x + 6) && j == round(bomberman->getPlayer()[k].getPosition().z + 6)) {
+            for (int k = 0; k < bomberman->getPlayers().size(); k++) {
+                if (i == round(bomberman->getPlayers()[k].getPosition().x + 6) && j == round(bomberman->getPlayers()[k].getPosition().z + 6)) {
                     map[i][j] = k;
                 }
             }
-        }               
+        }
     }
     save.open("../graphic/map/save.txt", std::ofstream::out | std::ofstream::trunc);
     if (save) {

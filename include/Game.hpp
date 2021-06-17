@@ -51,12 +51,14 @@ class Game{
         void draw_text();
         void initButton();
         void initPlayer();
+        void pushPlayer();
+        void popPlayer();
 
         int getStatus() const;
         void setStatus(const int status);
         Map* getMap() const;
         AllMusic *getMusic() const;
-        std::vector<Player> getPlayer() const;
+        std::vector<Player> getPlayers() const;
         Camera getCamera() const;
         int getGenerated() const;
         void setDebug(const bool);

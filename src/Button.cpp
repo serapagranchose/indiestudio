@@ -60,11 +60,15 @@ void Button::draw(Game *bomberman)
 void Button::start(Game *bomberman)
 {
     PlaySound(this->sound);
-    bomberman->setStatus(1);
+    if (bomberman->getStatus() == 0){
+        bomberman->setStatus(4);
+    } else if (bomberman->getStatus() == 4){
+        bomberman->setStatus(1);
         if (bomberman->getGenerated() == 0) {
             bomberman->getMap()->random_map();
             bomberman->getMap()->add_block(bomberman);
         }
+    }
 }
 
 void Button::settings(Game *bomberman)
@@ -95,34 +99,43 @@ void Button::home(Game *bomberman)
 
 void Button::plus(Game *bomberman)
 {
-    if (bomberman->getMusic()->getVolume() < 1) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
-        SetMasterVolume(bomberman->getMusic()->getVolume());
-    }
+    if (bomberman->getStatus() == 2){
+        if (bomberman->getMusic()->getVolume() < 1) {
+            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
+            SetMasterVolume(bomberman->getMusic()->getVolume());
+        }
+    } else if (bomberman->getStatus() == 4)
+        if (bomberman->getPlayers().size() < 4)
+            bomberman->pushPlayer();
+
     PlaySound(this->sound);
 }
 
 void Button::minus(Game *bomberman)
 {
-    if (bomberman->getMusic()->getVolume() > 0) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
-        SetMasterVolume(bomberman->getMusic()->getVolume());
-    }
+    if (bomberman->getStatus() == 2){
+        if (bomberman->getMusic()->getVolume() > 0) {
+            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
+            SetMasterVolume(bomberman->getMusic()->getVolume());
+        }
+    } else if (bomberman->getStatus() == 4)
+        if (bomberman->getPlayers().size() != 0)
+            bomberman->popPlayer();
     PlaySound(this->sound);
 }
 
 void Button::input(Game *bomberman, Vector2 mouse)
 {
+    if (CheckCollisionPointRec(mouse, this->bounds)) {
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            this->status = 2;
+        else
+            this->status = 1;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            this->action = true;
+    } else
+        this->status = 0;
     if (bomberman->getStatus() == 0) {
-        if (CheckCollisionPointRec(mouse, this->bounds)) {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-                this->status = 2;
-            else
-                this->status = 1;
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-                this->action = true;
-        } else
-            this->status = 0;
         if (this->action && this->name == "Play")
             start(bomberman);
         else if (this->action && this->name == "Quit")
@@ -135,16 +148,20 @@ void Button::input(Game *bomberman, Vector2 mouse)
         this->size.y = this->status * (float)this->frameHeight;
     }
     if (bomberman->getStatus() == 2 || bomberman->getStatus() == 3) {
-        if (CheckCollisionPointRec(mouse, this->bounds)) {
-            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-                this->status = 2;
-            else
-                this->status = 1;
-            if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-                this->action = true;
-        } else
-            this->status = 0;
         if (this->action && this->name == "Home")
+            home(bomberman);
+        else if (this->action && this->name == "Plus")
+            plus(bomberman);
+        else if (this->action && this->name == "Minus")
+            minus(bomberman);
+        if (this->name != "Sound")
+            this->size.y = this->status * (float)this->frameHeight;
+        this->action = false;
+    }
+    if (bomberman->getStatus() == 4) {
+        if (this->action && this->name == "Play")
+            start(bomberman);
+        else if (this->action && this->name == "Home")
             home(bomberman);
         else if (this->action && this->name == "Plus")
             plus(bomberman);

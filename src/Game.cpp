@@ -75,6 +75,28 @@ void Game::initPlayer()
     //this->players.push_back(*playerFour);
 }
 
+void Game::pushPlayer()
+{
+    if (this->players.size() == 1){
+        Player *player = new Player("P1", KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+        this->players.push_back(*player);
+    } else if (this->players.size() == 2){
+        Player *player = new Player("P2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        this->players.push_back(*player);
+    } else if (this->players.size() == 3){
+        Player *player = new Player("P3", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        this->players.push_back(*player);
+    } else if (this->players.size() == 4){
+        Player *player = new Player("P4", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        this->players.push_back(*player);
+    }
+}
+
+void Game::popPlayer()
+{
+    this->players.pop_back();
+}
+
 void Game::draw()
 {
     BeginDrawing();
@@ -98,12 +120,21 @@ void Game::draw()
     if (this->status == 2) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
-        for (int i = 4; i != 8; i++)
+        for (int i = 4; i < 8; i++)
             this->buttons[i].draw(this);
     }
     if (this->status == 3) {
         DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
         DrawText("CREDITS", 170, 160, 100, DARKBLUE);
+        this->buttons[4].draw(this);
+    }
+    if (this->status == 4) {
+        //DrawTexture(this->menu, GetScreenWidth() / 2 - this->menu.width/2, GetScreenHeight()/2 - this->menu.height / 2, WHITE);
+        DrawText(TextSubtext("PLAYER SELECTION", 0, this->framesCount/12), 100, 160, 100, DARKBLUE);
+        DrawText(TextFormat("%d", this->players.size()), 420, 650, 75, PURPLE);
+        this->buttons[0].draw(this);
+        for (int i = 6; i < 8; i++)
+            this->buttons[i].draw(this);
         this->buttons[4].draw(this);
     }
     EndDrawing();
@@ -221,7 +252,7 @@ AllMusic* Game::getMusic() const
     return (this->audio);
 }
 
-std::vector<Player> Game::getPlayer() const
+std::vector<Player> Game::getPlayers() const
 {
     return (this->players);
 }
