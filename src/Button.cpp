@@ -62,12 +62,12 @@ void Button::start(Game *bomberman)
     PlaySound(this->sound);
     if (bomberman->getStatus() == 0){
         bomberman->setStatus(4);
-    } else if (bomberman->getStatus() == 4){
-        bomberman->setStatus(1);
         if (bomberman->getGenerated() == 0) {
             bomberman->getMap()->randomMap(bomberman);
             bomberman->getMap()->addBlock(bomberman);
         }
+    } else if (bomberman->getStatus() == 4){
+        bomberman->setStatus(1);
     }
 }
 
@@ -111,14 +111,13 @@ void Button::plus(Game *bomberman)
             bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
             SetMasterVolume(bomberman->getMusic()->getVolume());
         }
+        if (round(bomberman->getMusic()->getVolume() * 10) < 10) {
+            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
+            SetMasterVolume(bomberman->getMusic()->getVolume());
+        }
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() < 4)
             bomberman->pushPlayer();
-
-    if (round(bomberman->getMusic()->getVolume() * 10) < 10) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
-        SetMasterVolume(bomberman->getMusic()->getVolume());
-    }
     PlaySound(this->sound);
 }
 
@@ -129,13 +128,13 @@ void Button::minus(Game *bomberman)
             bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
             SetMasterVolume(bomberman->getMusic()->getVolume());
         }
+        if (round(bomberman->getMusic()->getVolume() * 10) > 0) {
+            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
+            SetMasterVolume(bomberman->getMusic()->getVolume());
+        }
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() != 0)
             bomberman->popPlayer();
-    if (round(bomberman->getMusic()->getVolume() * 10) > 0) {
-        bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
-        SetMasterVolume(bomberman->getMusic()->getVolume());
-    }
     PlaySound(this->sound);
 }
 
