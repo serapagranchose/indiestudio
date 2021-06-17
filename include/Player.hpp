@@ -47,6 +47,9 @@ class Player{
         int getUpdate() const;
         void setUpdate(const int);
 
+        int getStatus(void) const;
+        void setStatus(const int status);
+
         void update(Game *bomberman);
         void draw(Game *bomberman);
         int can_I_plant(void) const;
@@ -70,6 +73,7 @@ class Player{
         int bomb;
         int bomb_nb = 10;
         int _update = 0;
+        int _Status = 1;
         const char * name;
         std::vector<Bomb> _Bomb_list;
 };

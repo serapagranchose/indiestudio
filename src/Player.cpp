@@ -132,6 +132,16 @@ std::vector<Bomb> Player::getBomb_List(void) const
     return (this->_Bomb_list);
 }
 
+int Player::getStatus(void) const
+{
+    return (this->_Status);
+}
+
+void Player::setStatus(const int status)
+{
+    this->_Status = status;
+}
+
 void Player::update(Game *bomberman)
 {
     this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->getCamera());
@@ -142,8 +152,8 @@ void Player::update(Game *bomberman)
                     Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
                     Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->getMap()->blocks[i].position.x - bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y - bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z - bomberman->getMap()->blocks[i].size.z / 2},
-                    Vector3{bomberman->getMap()->blocks[i].position.x + bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y + bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z + bomberman->getMap()->blocks[i].size.z / 2}}))
+                    Vector3{bomberman->getMap()->blocks[i].getPosition().x - bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y - bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z - bomberman->getMap()->blocks[i].getSize().z / 2},
+                    Vector3{bomberman->getMap()->blocks[i].getPosition().x + bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y + bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z + bomberman->getMap()->blocks[i].getSize().z / 2}}))
         {
             this->position = this->past_position;
             this->next_position = this->position;
