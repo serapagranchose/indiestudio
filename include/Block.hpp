@@ -8,14 +8,6 @@
 #ifndef BLOCK_HPP_
 #define BLOCK_HPP_
 
-//#include <iostream>
-//#include <typeinfo>
-//#include <cstring>
-//#include <vector>
-//#include <stdio.h>
-//#include <math.h>
-//#include <time.h>
-
 #include "Game.hpp"
 
 class Block{

@@ -9,8 +9,11 @@
 #define BUTTON_HPP_
 
 #include "Game.hpp"
+#include "Audio.hpp"
+#include "Button.hpp"
 
 class Window;
+class Audio;
 
 class Button{
     public:
