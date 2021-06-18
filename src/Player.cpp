@@ -134,7 +134,7 @@ void Player::setAlive(const bool alive)
 
 void Player::update(Game *bomberman)
 {
-    std::chrono::_V2::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     double elapsed_time_ns;
 
     this->_Header = GetWorldToScreen(Vector3{this->_Position.x, this->_Position.y + 1.5f, this->_Position.z}, bomberman->getCamera());

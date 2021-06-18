@@ -19,7 +19,7 @@ class Bomb {
 
         bool getExploding(void) const;
 
-        std::chrono::_V2::steady_clock::time_point getTimer(void) const;
+        std::chrono::steady_clock::time_point getTimer(void) const;
 
         void update(Game *bomberman);
         void Draw(void) const;
@@ -30,7 +30,7 @@ class Bomb {
         Color _Color = BLACK;
         Vector3 _Position;
         Vector3 _Size = {0.5f, 0.5f, 0.5f};
-        std::chrono::_V2::steady_clock::time_point _Timer;
+        std::chrono::steady_clock::time_point _Timer;
         std::vector<Vector3> _Explosions_Positions;
         bool _Exploding = false;
         int _Tick = 0;
