@@ -10,7 +10,6 @@
 
 #include "Game.hpp"
 #include "Audio.hpp"
-#include "Button.hpp"
 
 class Window;
 class Audio;
