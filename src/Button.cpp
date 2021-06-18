@@ -13,7 +13,7 @@ Button::Button()
 
 Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
 {
-    if (name == "Resume") {
+    if (name == "Resume" || name == "homePause" || name == "Save") {
         this->_Texture = LoadTexture(path);
         this->_Name = name;
         this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
@@ -75,9 +75,8 @@ void Button::start(Game *bomberman)
             bomberman->getMap()->randomMap(bomberman);
             bomberman->getMap()->addBlock(bomberman);
         }
-    } else if (bomberman->getStatus() == 4){
+    } else if (bomberman->getStatus() == 4)
         bomberman->setStatus(1);
-    }
 }
 
 void Button::settings(Game *bomberman)
@@ -153,6 +152,13 @@ void Button::resume(Game *bomberman)
     bomberman->setStatus(1);
 }
 
+void Button::save(Game *bomberman)
+{
+    PlaySound(this->_Sound);
+    bomberman->getMap()->saveMap(bomberman);
+    bomberman->setStatus(0);
+}
+
 void Button::input(Game *bomberman, Vector2 mouse)
 {
     if (CheckCollisionPointRec(mouse, this->_Bounds)) {
@@ -181,6 +187,10 @@ void Button::input(Game *bomberman, Vector2 mouse)
     if (bomberman->getStatus() == 5) {
         if (this->_Action && this->_Name == "Resume")
             resume(bomberman);
+        else if (this->_Action && this->_Name == "Save")
+            save(bomberman);
+        else if (this->_Action && this->_Name == "homePause")
+            home(bomberman);
         this->_Size.y = this->_Status * (float)this->_FrameHeight;
         this->_Action = false;
     }

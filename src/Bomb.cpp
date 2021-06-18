@@ -75,7 +75,7 @@ int is_there_a_wall(Game *bomberman, Vector3 position)
             if (bomberman->getMap()->getBlocks()[i].getDestructible() == false)
                 return (1);
             else if (bomberman->getMap()->getBlocks()[i].getDestructible() == true) {
-                bomberman->_Map->_TxtMap[position.x + 6][position.z + 6] = ' ';
+                bomberman->_Map->_TxtMap[position.z + 6][position.x + 6] = ' ';
                 bomberman->_Map->_Blocks.erase(bomberman->_Map->_Blocks.begin() + i);
             }
         }
