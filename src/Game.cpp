@@ -75,19 +75,19 @@ void Game::initPlayer()
 {
     for (int i = 0; i != namePlayer.size(); i++) {
         if (namePlayer[i] == "One") {
-            Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, coordPlayer[i]);
+            Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerOne);
         }
         if (namePlayer[i] == "Two") {
-            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_COMMA, coordPlayer[i]);
+            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerTwo);
         }
         if (namePlayer[i] == "Three") {
-            Player *playerThree = new Player("Player 3" ,KEY_J, KEY_Y, KEY_G, KEY_H, KEY_N, coordPlayer[i]);
+            Player *playerThree = new Player("Player 3" ,KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {-5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerThree);
         }
         if (namePlayer[i] == "Four") {
-            Player *playerFour = new Player("Player 4" ,KEY_B, KEY_F, KEY_C, KEY_V, KEY_H, coordPlayer[i]);
+            Player *playerFour = new Player("Player 4" ,KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerFour);
         }
     }
@@ -99,13 +99,13 @@ void Game::pushPlayer()
         Player *player = new Player("Player 1", KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 1){
-        Player *player = new Player("Player 2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_COMMA, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 2){
-        Player *player = new Player("Player 3", KEY_J, KEY_Y, KEY_G, KEY_H, KEY_N, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 3", KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 3){
-        Player *player = new Player("Player 4", KEY_M, KEY_O, KEY_K, KEY_L, KEY_H, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 4", KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     }
 }
