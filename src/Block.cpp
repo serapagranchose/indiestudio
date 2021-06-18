@@ -59,3 +59,18 @@ void Block::draw()
 {
     DrawCubeV(this->_Position, this->_Size, this->_Color);
 }
+
+Vector3 Block::getPosition(void) const
+{
+    return (this->position);
+}
+
+bool Block::getDestructible(void) const
+{
+    return (this->destructible);
+}
+
+Vector3 Block::getSize(void) const
+{
+    return (this->size);
+}

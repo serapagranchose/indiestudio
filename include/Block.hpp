@@ -30,9 +30,16 @@ class Block{
         void loadHolyBlock();
         void loadGround();
 
-        Vector3 _Position = {-1.0f, 0.0f, -1.0f};
-        Model _Model;
-        Vector3 _Size = {1.0f, 1.0f, 1.0f};
+        Vector3 getPosition(void) const;
+
+        bool getDestructible(void) const;
+
+        Vector3 getSize(void) const;
+    private:
+        int place = 1;
+        Vector3 position = {-1.0f, 0.0f, -1.0f};
+        Model one_model;
+        Vector3 size = {1.0f, 1.0f, 1.0f};
 
         Color _Color = GREEN;
         bool _Destructible = false;

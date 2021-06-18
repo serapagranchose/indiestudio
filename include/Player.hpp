@@ -45,6 +45,9 @@ class Player{
         void setUpdate(const int);
         std::vector<Bomb> getBombs(void) const;
 
+        int getStatus(void) const;
+        void setStatus(const int status);
+
         void update(Game *bomberman);
         void draw(Game *bomberman);
         int can_I_plant(void) const;

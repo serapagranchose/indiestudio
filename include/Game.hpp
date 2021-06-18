@@ -69,7 +69,7 @@ class Game{
         void popPlayer();
 
         std::vector<std::string> namePlayer;
-
+        std::vector<Vector3> coordPlayer;
     private:
         Window _Window;
         Camera _Camera;

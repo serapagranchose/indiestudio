@@ -122,6 +122,16 @@ std::vector<Bomb> Player::getBombs(void) const
     return (this->_Bombs);
 }
 
+int Player::getStatus(void) const
+{
+    return (this->_Status);
+}
+
+void Player::setStatus(const int status)
+{
+    this->_Status = status;
+}
+
 void Player::update(Game *bomberman)
 {
     this->_Header = GetWorldToScreen(Vector3{this->_Position.x, this->_Position.y + 1.5f, this->_Position.z}, bomberman->getCamera());
@@ -132,8 +142,8 @@ void Player::update(Game *bomberman)
                     Vector3{this->_NextPosition.x - this->_Size.x / 2, this->_NextPosition.y - this->_Size.y / 2, this->_NextPosition.z - this->_Size.z / 2},
                     Vector3{this->_NextPosition.x + this->_Size.x / 2, this->_NextPosition.y + this->_Size.y / 2, this->_NextPosition.z + this->_Size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->getMap()->_Blocks[i]._Position.x - bomberman->getMap()->_Blocks[i]._Size.x / 2, bomberman->getMap()->_Blocks[i]._Position.y - bomberman->getMap()->_Blocks[i]._Size.y / 2, bomberman->getMap()->_Blocks[i]._Position.z - bomberman->getMap()->_Blocks[i]._Size.z / 2},
-                    Vector3{bomberman->getMap()->_Blocks[i]._Position.x + bomberman->getMap()->_Blocks[i]._Size.x / 2, bomberman->getMap()->_Blocks[i]._Position.y + bomberman->getMap()->_Blocks[i]._Size.y / 2, bomberman->getMap()->_Blocks[i]._Position.z + bomberman->getMap()->_Blocks[i]._Size.z / 2}}))
+                    Vector3{bomberman->getMap()->blocks[i].getPosition().x - bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y - bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z - bomberman->getMap()->blocks[i].getSize().z / 2},
+                    Vector3{bomberman->getMap()->blocks[i].getPosition().x + bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y + bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z + bomberman->getMap()->blocks[i].getSize().z / 2}}))
         {
             this->_Position = this->_PastPosition;
             this->_NextPosition = this->_Position;
