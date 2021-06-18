@@ -122,6 +122,16 @@ std::vector<Bomb> Player::getBombs(void) const
     return (this->_Bombs);
 }
 
+bool Player::getAlive(void) const
+{
+    return (this->_Alive);
+}
+
+void Player::setAlive(const bool alive)
+{
+    this->_Alive = alive;
+}
+
 void Player::update(Game *bomberman)
 {
     std::chrono::_V2::steady_clock::time_point end = std::chrono::steady_clock::now();

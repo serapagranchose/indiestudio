@@ -45,8 +45,8 @@ class Player{
         void setUpdate(const int);
         std::vector<Bomb> getBombs(void) const;
 
-        int getStatus(void) const;
-        void setStatus(const int status);
+        bool getAlive(void) const;
+        void setAlive(const bool alive);
 
         void update(Game *bomberman);
         void draw(Game *bomberman);
@@ -68,6 +68,7 @@ class Player{
         int _BombNumber = 10;
         int _Update = 0; //whut
         const char * _Name;
+        bool _Alive = true;
         std::vector<Bomb> _Bombs;
 };
 
