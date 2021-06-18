@@ -243,11 +243,8 @@ void Game::update()
     if (this->_Debug == true)
         SetCameraMode(this->_Camera, CAMERA_FREE);
     if (this->_Status == 1) {
-        for (int i = 0; i < this->_Players.size(); i++) {
+        for (int i = 0; i < this->_Players.size(); i++)
             this->_Players[i].update(this);
-            for (int y = 0; y < this->_Players[i].getBombs().size(); y++)
-                this->_Players[i].getBombs()[y].update();
-        }
     }
 }
 

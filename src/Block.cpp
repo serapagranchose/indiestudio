@@ -29,7 +29,6 @@ void Block::loadMousse()
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->_Model = LoadModelFromMesh(mesh);
     this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    printf("SUCE\n");
 }
 
 void Block::loadHolyBlock()
@@ -38,7 +37,6 @@ void Block::loadHolyBlock()
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->_Model = LoadModelFromMesh(mesh);
     this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    printf("SUCE\n");
 }
 
 void Block::loadGround()
@@ -47,7 +45,6 @@ void Block::loadGround()
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
     this->_Model = LoadModelFromMesh(mesh);
     this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    printf("SUCE\n");
 }
 
 void Block::drawBlockTexture()

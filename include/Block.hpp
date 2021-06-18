@@ -33,7 +33,7 @@ class Block{
         Vector3 _Size = {1.0f, 1.0f, 1.0f};
 
         Color _Color = GREEN;
-        bool _Destructible = false;
+        bool _Destructible;
 };
 
 #endif
