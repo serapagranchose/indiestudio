@@ -13,7 +13,16 @@ Button::Button()
 
 Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
 {
-    if (name != "Sound" && name != "Plus" && name != "Minus") {
+    if (name == "Resume") {
+        this->_Texture = LoadTexture(path);
+        this->_Name = name;
+        this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
+        this->_Size = {0, 0, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Bounds = {window->_ScreenWidth / 2.0f - this->_Texture.width / 2.0f, window->_ScreenHeight / heightScreen - this->_Texture.height/NUM_FRAMES/heightButton, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Sound = LoadSound("assets/audio/button.wav");
+        return;
+    }
+    else if (name != "Sound" && name != "Plus" && name != "Minus") {
         this->_Texture = LoadTexture(path);
         this->_Name = name;
         this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
@@ -54,7 +63,7 @@ Button::~Button()
 
 void Button::draw(Game *bomberman)
 {
-    DrawTextureRec(this->_Texture, this->_Size, Vector2{this->_Bounds.x, this->_Bounds.y}, WHITE);
+    DrawTextureRec(this->_Texture, this->_Size, Vector2 {this->_Bounds.x, this->_Bounds.y}, WHITE);
 }
 
 void Button::start(Game *bomberman)
@@ -106,7 +115,7 @@ void Button::home(Game *bomberman)
 
 void Button::plus(Game *bomberman)
 {
-    if (bomberman->getStatus() == 2){
+    if (bomberman->getStatus() == 2) {
         if (bomberman->getAudio()->getVolume() < 1) {
             bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() + 0.1);
             SetMasterVolume(bomberman->getAudio()->getVolume());
@@ -138,6 +147,12 @@ void Button::minus(Game *bomberman)
     PlaySound(this->_Sound);
 }
 
+void Button::resume(Game *bomberman)
+{
+    PlaySound(this->_Sound);
+    bomberman->setStatus(1);
+}
+
 void Button::input(Game *bomberman, Vector2 mouse)
 {
     if (CheckCollisionPointRec(mouse, this->_Bounds)) {
@@ -163,6 +178,12 @@ void Button::input(Game *bomberman, Vector2 mouse)
         this->_Action = false;
         this->_Size.y = this->_Status * (float)this->_FrameHeight;
     }
+    if (bomberman->getStatus() == 5) {
+        if (this->_Action && this->_Name == "Resume")
+            resume(bomberman);
+        this->_Size.y = this->_Status * (float)this->_FrameHeight;
+        this->_Action = false;
+    }
     if (bomberman->getStatus() == 2 || bomberman->getStatus() == 3) {
         if (this->_Action && this->_Name == "Home")
             home(bomberman);
@@ -183,8 +204,7 @@ void Button::input(Game *bomberman, Vector2 mouse)
             plus(bomberman);
         else if (this->_Action && this->_Name == "Minus")
             minus(bomberman);
-        if (this->_Name != "Sound")
-            this->_Size.y = this->_Status * (float)this->_FrameHeight;
+        this->_Size.y = this->_Status * (float)this->_FrameHeight;
         this->_Action = false;
     }
 }

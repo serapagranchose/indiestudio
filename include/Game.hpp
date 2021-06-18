@@ -78,6 +78,7 @@ class Game{
         Map *_Map;
         std::vector<Player> _Players;
         Texture2D _Menu;
+        int _Escape = KEY_ESCAPE;
         bool _Debug = false;
         int _Status = 0;
         int _MapGenerated = 0;

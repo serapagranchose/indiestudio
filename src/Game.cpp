@@ -54,6 +54,7 @@ void Game::initButton()
     Button *sound = new Button(&this->_Window, 1.5f, 3.5f, "Sound", "assets/graphic/button/sound.png");
     Button *plus = new Button(&this->_Window, 1.62f, 3.5f, "Plus", "assets/graphic/button/plus.png");
     Button *minus = new Button(&this->_Window, 1.62f, 3.5f, "Minus", "assets/graphic/button/minus.png");
+    Button *resume = new Button(&this->_Window, 2.15f, 3.5f, "Resume", "assets/graphic/button/resume.png");
     this->_Buttons.push_back(*play);
     this->_Buttons.push_back(*settings);
     this->_Buttons.push_back(*quit);
@@ -63,6 +64,7 @@ void Game::initButton()
     this->_Buttons.push_back(*sound);
     this->_Buttons.push_back(*plus);
     this->_Buttons.push_back(*minus);
+    this->_Buttons.push_back(*resume);
 }
 
 void Game::initPlayer()
@@ -114,8 +116,7 @@ void Game::draw()
     BeginDrawing();
     BeginMode3D(this->_Camera);
     ClearBackground(DARKGRAY);
-    if (this->_Status == 1) {
-        DrawGrid(13, 1.0f);
+    if (this->_Status == 1 || this->_Status == 5) {
         for (int i = 0; i < this->_Players.size(); i++) {
             this->_Players[i].draw(this);
             for (int y = 0; y < this->_Players[i].getBombs().size(); y++)
@@ -132,6 +133,8 @@ void Game::draw()
         for (int i = 0; i < 5; i++)
             this->_Buttons[i].draw(this);
     }
+    if (this->_Status == 5)
+        this->_Buttons[9].draw(this);
     if (this->_Status == 2) {
         DrawTexture(this->_Menu, GetScreenWidth() / 2 - this->_Menu.width/2, GetScreenHeight()/2 - this->_Menu.height / 2, WHITE);
         DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
@@ -182,7 +185,6 @@ void Game::input()
 
     for (int i = 0; i < this->_Buttons.size(); i++)
         this->_Buttons[i].input(this, mouse);
-
     if (this->_Status == 1) {
         for (int i = 0; i < this->_Players.size(); i++) {
             if (this->_Players[i].getBombNumber() > 0 && IsKeyDown(this->_Players[i].getKeyBomb())) {
@@ -213,6 +215,18 @@ void Game::input()
 
 void Game::update()
 {
+    if (this->_Status == 0) {
+        if (WindowShouldClose())
+            this->_Status = -1;
+    }
+    if (this->_Status == 4 || this->_Status == 5) {
+        if (WindowShouldClose())
+            this->_Status = 0;
+    }
+    if (this->_Status == 1 && WindowShouldClose())
+        this->_Status = 5;
+    if (this->_Status == 5 && WindowShouldClose())
+        this->_Status = -1;
     this->_Audio->update();
     this->_FramesCount++;
     this->_Buttons[6]._Size.y = ((this->_Audio->getVolume() - 0.1) * 10) * (this->_Buttons[6].getFrameHeight());
@@ -241,7 +255,7 @@ void Game::game_loop()
 {
     this->_Audio->setMusic("assets/audio/menu.mp3");
     this->_Audio->playMusic();
-    while (!WindowShouldClose() && this->_Status != -1)
+    while (this->_Status != -1)
     {
         this->update();
         this->draw();
