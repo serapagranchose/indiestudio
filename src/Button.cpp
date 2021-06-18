@@ -14,36 +14,36 @@ Button::Button()
 Button::Button(Window *window, float heightScreen, float heightButton, std::string name, const char *path)
 {
     if (name != "Sound" && name != "Plus" && name != "Minus") {
-        this->texture = LoadTexture(path);
-        this->name = name;
-        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
-        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
-        this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("assets/audio/button.wav");
+        this->_Texture = LoadTexture(path);
+        this->_Name = name;
+        this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
+        this->_Size = {0, 0, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Bounds = {window->_ScreenWidth / 4.5f - this->_Texture.width / 2.0f, window->_ScreenHeight / heightScreen - this->_Texture.height/NUM_FRAMES/heightButton, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Sound") {
-        this->texture = LoadTexture(path);
-        this->name = name;
-        this->frameHeight = (float)this->texture.height / NUM_SOUND;
-        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
-        this->bounds = {window->screen_width / 4.5f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("assets/audio/button.wav");
+        this->_Texture = LoadTexture(path);
+        this->_Name = name;
+        this->_FrameHeight = (float)this->_Texture.height / NUM_SOUND;
+        this->_Size = {0, 0, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Bounds = {window->_ScreenWidth / 4.5f - this->_Texture.width / 2.0f, window->_ScreenHeight / heightScreen - this->_Texture.height/NUM_FRAMES/heightButton, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Plus") {
-        this->texture = LoadTexture(path);
-        this->name = name;
-        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
-        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
-        this->bounds = {window->screen_width / 3.1f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("assets/audio/button.wav");
+        this->_Texture = LoadTexture(path);
+        this->_Name = name;
+        this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
+        this->_Size = {0, 0, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Bounds = {window->_ScreenWidth / 3.1f - this->_Texture.width / 2.0f, window->_ScreenHeight / heightScreen - this->_Texture.height/NUM_FRAMES/heightButton, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Sound = LoadSound("assets/audio/button.wav");
     }
     else if (name == "Minus") {
-        this->texture = LoadTexture(path);
-        this->name = name;
-        this->frameHeight = (float)this->texture.height / NUM_FRAMES;
-        this->size = {0, 0, (float)this->texture.width, (float)this->frameHeight};
-        this->bounds = {window->screen_width / 8.4f - this->texture.width / 2.0f, window->screen_height / heightScreen - this->texture.height/NUM_FRAMES/heightButton, (float)this->texture.width, (float)this->frameHeight};
-        this->sound = LoadSound("assets/audio/button.wav");
+        this->_Texture = LoadTexture(path);
+        this->_Name = name;
+        this->_FrameHeight = (float)this->_Texture.height / NUM_FRAMES;
+        this->_Size = {0, 0, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Bounds = {window->_ScreenWidth / 8.4f - this->_Texture.width / 2.0f, window->_ScreenHeight / heightScreen - this->_Texture.height/NUM_FRAMES/heightButton, (float)this->_Texture.width, (float)this->_FrameHeight};
+        this->_Sound = LoadSound("assets/audio/button.wav");
     }
 }
 
@@ -54,12 +54,12 @@ Button::~Button()
 
 void Button::draw(Game *bomberman)
 {
-    DrawTextureRec(this->texture, this->size, Vector2{this->bounds.x, this->bounds.y}, WHITE);
+    DrawTextureRec(this->_Texture, this->_Size, Vector2{this->_Bounds.x, this->_Bounds.y}, WHITE);
 }
 
 void Button::start(Game *bomberman)
 {
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
     if (bomberman->getStatus() == 0){
         bomberman->setStatus(4);
         if (bomberman->getGenerated() == 0) {
@@ -73,123 +73,123 @@ void Button::start(Game *bomberman)
 
 void Button::settings(Game *bomberman)
 {
-    this->check = 1;
-    PlaySound(this->sound);
+    this->_Check = 1;
+    PlaySound(this->_Sound);
     bomberman->setStatus(2);
 }
 
 void Button::quit(Game *bomberman)
 {
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
     bomberman->setStatus(-1);
 }
 
 void Button::credits(Game *bomberman)
 {
-    this->check = 1;
-    PlaySound(this->sound);
+    this->_Check = 1;
+    PlaySound(this->_Sound);
     bomberman->setStatus(3);
 }
 
 void Button::load(Game *bomberman)
 {
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
     bomberman->setStatus(1);
     bomberman->getMap()->loadMap(bomberman);
 }
 
 void Button::home(Game *bomberman)
 {
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
     bomberman->setStatus(0);
 }
 
 void Button::plus(Game *bomberman)
 {
     if (bomberman->getStatus() == 2){
-        if (bomberman->getMusic()->getVolume() < 1) {
-            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
-            SetMasterVolume(bomberman->getMusic()->getVolume());
+        if (bomberman->getAudio()->getVolume() < 1) {
+            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() + 0.1);
+            SetMasterVolume(bomberman->getAudio()->getVolume());
         }
-        if (round(bomberman->getMusic()->getVolume() * 10) < 10) {
-            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() + 0.1);
-            SetMasterVolume(bomberman->getMusic()->getVolume());
+        if (round(bomberman->getAudio()->getVolume() * 10) < 10) {
+            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() + 0.1);
+            SetMasterVolume(bomberman->getAudio()->getVolume());
         }
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() < 4)
             bomberman->pushPlayer();
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
 }
 
 void Button::minus(Game *bomberman)
 {
     if (bomberman->getStatus() == 2){
-        if (bomberman->getMusic()->getVolume() > 0) {
-            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
-            SetMasterVolume(bomberman->getMusic()->getVolume());
+        if (bomberman->getAudio()->getVolume() > 0) {
+            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() - 0.1);
+            SetMasterVolume(bomberman->getAudio()->getVolume());
         }
-        if (round(bomberman->getMusic()->getVolume() * 10) > 0) {
-            bomberman->getMusic()->setVolume(bomberman->getMusic()->getVolume() - 0.1);
-            SetMasterVolume(bomberman->getMusic()->getVolume());
+        if (round(bomberman->getAudio()->getVolume() * 10) > 0) {
+            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() - 0.1);
+            SetMasterVolume(bomberman->getAudio()->getVolume());
         }
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() != 0)
             bomberman->popPlayer();
-    PlaySound(this->sound);
+    PlaySound(this->_Sound);
 }
 
 void Button::input(Game *bomberman, Vector2 mouse)
 {
-    if (CheckCollisionPointRec(mouse, this->bounds)) {
+    if (CheckCollisionPointRec(mouse, this->_Bounds)) {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            this->status = 2;
+            this->_Status = 2;
         else
-            this->status = 1;
+            this->_Status = 1;
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-            this->action = true;
+            this->_Action = true;
     } else
-        this->status = 0;
+        this->_Status = 0;
     if (bomberman->getStatus() == 0) {
-        if (this->action && this->name == "Play")
+        if (this->_Action && this->_Name == "Play")
             start(bomberman);
-        else if (this->action && this->name == "Quit")
+        else if (this->_Action && this->_Name == "Quit")
             quit(bomberman);
-        else if (this->action && this->name == "Settings")
+        else if (this->_Action && this->_Name == "Settings")
             settings(bomberman);
-        else if (this->action && this->name == "Credits")
+        else if (this->_Action && this->_Name == "Credits")
             credits(bomberman);
-        else if (this->action && this->name == "Continue")
+        else if (this->_Action && this->_Name == "Continue")
             load(bomberman);
-        this->action = false;
-        this->size.y = this->status * (float)this->frameHeight;
+        this->_Action = false;
+        this->_Size.y = this->_Status * (float)this->_FrameHeight;
     }
     if (bomberman->getStatus() == 2 || bomberman->getStatus() == 3) {
-        if (this->action && this->name == "Home")
+        if (this->_Action && this->_Name == "Home")
             home(bomberman);
-        else if (this->action && this->name == "Plus")
+        else if (this->_Action && this->_Name == "Plus")
             plus(bomberman);
-        else if (this->action && this->name == "Minus")
+        else if (this->_Action && this->_Name == "Minus")
             minus(bomberman);
-        if (this->name != "Sound")
-            this->size.y = this->status * (float)this->frameHeight;
-        this->action = false;
+        if (this->_Name != "Sound")
+            this->_Size.y = this->_Status * (float)this->_FrameHeight;
+        this->_Action = false;
     }
     if (bomberman->getStatus() == 4) {
-        if (this->action && this->name == "Play")
+        if (this->_Action && this->_Name == "Play")
             start(bomberman);
-        else if (this->action && this->name == "Home")
+        else if (this->_Action && this->_Name == "Home")
             home(bomberman);
-        else if (this->action && this->name == "Plus")
+        else if (this->_Action && this->_Name == "Plus")
             plus(bomberman);
-        else if (this->action && this->name == "Minus")
+        else if (this->_Action && this->_Name == "Minus")
             minus(bomberman);
-        if (this->name != "Sound")
-            this->size.y = this->status * (float)this->frameHeight;
-        this->action = false;
+        if (this->_Name != "Sound")
+            this->_Size.y = this->_Status * (float)this->_FrameHeight;
+        this->_Action = false;
     }
 }
 
-float Button::getFrameHeight() const
+float Button::getFrameHeight(void) const
 {
-    return (this->frameHeight);
+    return (this->_FrameHeight);
 }

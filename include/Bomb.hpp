@@ -24,7 +24,7 @@ class Bomb {
         Vector3 _Position;
         Vector3 _Size = {0.5f, 0.5f, 0.5f};
         std::chrono::_V2::steady_clock::time_point _Timer;
-        int _Tick = 0;
+        int _Tick;
 };
 
 #endif /* !BOMB_HPP_ */

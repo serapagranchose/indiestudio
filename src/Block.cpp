@@ -11,11 +11,11 @@ Block::Block()
 {
 }
 
-Block::Block(Vector3 position, bool destructible, Color couleur)
+Block::Block(Vector3 position, bool destructible, Color color)
 {
-    this->color = couleur;
-    this->position = position;
-    this->destructible = destructible;
+    this->_Color = color;
+    this->_Position = position;
+    this->_Destructible = destructible;
 }
 
 Block::~Block()
@@ -27,32 +27,35 @@ void Block::loadMousse()
 {
     Texture2D texture = LoadTexture("assets/graphic/texture/brick_block.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
-    this->one_model = LoadModelFromMesh(mesh);
-    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    this->_Model = LoadModelFromMesh(mesh);
+    this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    printf("SUCE\n");
 }
 
 void Block::loadHolyBlock()
 {
     Texture2D texture = LoadTexture("assets/graphic/texture/empty_block.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
-    this->one_model = LoadModelFromMesh(mesh);
-    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    this->_Model = LoadModelFromMesh(mesh);
+    this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    printf("SUCE\n");
 }
 
 void Block::loadGround()
 {
     Texture2D texture = LoadTexture("assets/graphic/texture/grass.png");
     Mesh mesh = GenMeshCube(1.0, 1.0, 1.0);
-    this->one_model = LoadModelFromMesh(mesh);
-    this->one_model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    this->_Model = LoadModelFromMesh(mesh);
+    this->_Model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    printf("SUCE\n");
 }
 
 void Block::drawBlockTexture()
 {
-    DrawModel(this->one_model, position, 1.0f, WHITE);
+    DrawModel(this->_Model, this->_Position, 1.0f, WHITE);
 }
 
 void Block::draw()
 {
-    DrawCubeV(this->position, this->size, this->color);
+    DrawCubeV(this->_Position, this->_Size, this->_Color);
 }

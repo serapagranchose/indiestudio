@@ -26,31 +26,31 @@ void Map::addBlock(Game *bomberman)
     float x = -7.0f;
     float z = -6.0f;
 
-    for (int j = 0; j < map.size(); j++) {
+    for (int j = 0; j < this->_TxtMap.size(); j++) {
         l++;
         i = 0;
-        for (int k = 0; k < map[j].size(); k++) {
-            if (map[j][k] == 'H') {
+        for (int k = 0; k < this->_TxtMap[j].size(); k++) {
+            if (this->_TxtMap[j][k] == 'H') {
                 Block mousse({z + i, 0.0f, x + l},1, BLACK);
                 mousse.loadMousse();
-                this->blocks.push_back(mousse);
+                this->_Blocks.push_back(mousse);
             }
-            if (map[j][k] == 'O') {
+            if (this->_TxtMap[j][k] == 'O') {
                 Block mur({z + i, 0.0f, x + l}, 0, DARKBLUE);
                 mur.loadHolyBlock();
-                this->blocks.push_back(mur);
+                this->_Blocks.push_back(mur);
             }
-            if (map[j][k] == '1')
+            if (this->_TxtMap[j][k] == '1')
                 bomberman->namePlayer.push_back("One");
-            if (map[j][k] == '2')
+            if (this->_TxtMap[j][k] == '2')
                 bomberman->namePlayer.push_back("Two");
-            if (map[j][k] == '3')
+            if (this->_TxtMap[j][k] == '3')
                 bomberman->namePlayer.push_back("Three");
-            if (map[j][k] == '4')
+            if (this->_TxtMap[j][k] == '4')
                 bomberman->namePlayer.push_back("Four");
             Block ground({z + i, -1.25f, x + l}, 0, BLUE);
             ground.loadGround();
-            this->blocks.push_back(ground);
+            this->_Blocks.push_back(ground);
             i++;
         }
     }
@@ -59,30 +59,30 @@ void Map::addBlock(Game *bomberman)
 
 void Map::initStart()
 {
-    if (map[1][2] == 'H')
-        map[1][2] = ' ';
-    if (map[2][1] == 'H')
-        map[2][1] = ' ';
-    if (map[1][10] == 'H')
-        map[1][10] = ' ';
-    if (map[2][11] == 'H')
-        map[2][11] = ' ';
-    if (map[10][1] == 'H')
-        map[10][1] = ' ';
-    if (map[11][2] == 'H')
-        map[11][2] = ' ';
-    if (map[10][11] == 'H')
-        map[10][11] = ' ';
-    if (map[11][10] == 'H')
-        map[11][10] = ' ';
-    if (map[1][1] == 'H')
-        map[1][1] = ' ';
-    if (map[1][11] == 'H')
-        map[1][11] = ' ';
-    if (map[11][1] == 'H')
-        map[11][1] = ' ';
-    if (map[11][11] == 'H')
-        map[11][11] = ' ';
+    if (this->_TxtMap[1][2] == 'H')
+        this->_TxtMap[1][2] = ' ';
+    if (this->_TxtMap[2][1] == 'H')
+        this->_TxtMap[2][1] = ' ';
+    if (this->_TxtMap[1][10] == 'H')
+        this->_TxtMap[1][10] = ' ';
+    if (this->_TxtMap[2][11] == 'H')
+        this->_TxtMap[2][11] = ' ';
+    if (this->_TxtMap[10][1] == 'H')
+        this->_TxtMap[10][1] = ' ';
+    if (this->_TxtMap[11][2] == 'H')
+        this->_TxtMap[11][2] = ' ';
+    if (this->_TxtMap[10][11] == 'H')
+        this->_TxtMap[10][11] = ' ';
+    if (this->_TxtMap[11][10] == 'H')
+        this->_TxtMap[11][10] = ' ';
+    if (this->_TxtMap[1][1] == 'H')
+        this->_TxtMap[1][1] = ' ';
+    if (this->_TxtMap[1][11] == 'H')
+        this->_TxtMap[1][11] = ' ';
+    if (this->_TxtMap[11][1] == 'H')
+        this->_TxtMap[11][1] = ' ';
+    if (this->_TxtMap[11][11] == 'H')
+        this->_TxtMap[11][11] = ' ';
 }
 
 void Map::randomMap(Game *bomberman)
@@ -101,12 +101,12 @@ void Map::randomMap(Game *bomberman)
         getMap.append(str);
         getMap.append("\n");
     }
-    map = str_to_word_array(getMap);
-    for (unsigned int i = 0; i < map.size(); i++) {
-        for (unsigned int j = 0; j < map[i].size(); j++) {
+    this->_TxtMap = str_to_word_array(getMap);
+    for (unsigned int i = 0; i < this->_TxtMap.size(); i++) {
+        for (unsigned int j = 0; j < this->_TxtMap[i].size(); j++) {
             randomNumber = (rand() % 100) + 1;
-            if (map[i][j] == ' ' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0))
-                map[i][j] = 'H';
+            if (this->_TxtMap[i][j] == ' ' && ((randomNumber % 2) == 0 || (randomNumber % 3) == 0))
+                this->_TxtMap[i][j] = 'H';
         }
     }
     initStart();
@@ -118,21 +118,21 @@ void Map::saveMap(Game *bomberman)
     int x = 0;
     int z = 0;
 
-    for (int i = 0; i < map.size(); i++) {
-        for (int j = 0; j < map[i].size(); j++) {
-            if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3' || map[i][j] == '4')
-                map[i][j] = ' ';
+    for (int i = 0; i < this->_TxtMap.size(); i++) {
+        for (int j = 0; j < this->_TxtMap[i].size(); j++) {
+            if (this->_TxtMap[i][j] == '1' || this->_TxtMap[i][j] == '2' || this->_TxtMap[i][j] == '3' || this->_TxtMap[i][j] == '4')
+                this->_TxtMap[i][j] = ' ';
             for (int k = 0; k < bomberman->getPlayers().size(); k++) {
                 if (i == round(bomberman->getPlayers()[k].getPosition().z + 6) && j == round(bomberman->getPlayers()[k].getPosition().x + 6))
-                    map[i][j] = std::to_string(k + 1).c_str()[0];
+                    this->_TxtMap[i][j] = std::to_string(k + 1).c_str()[0];
             }
         }
     }
     save.open("assets/map/save.txt", std::ofstream::out | std::ofstream::trunc);
     if (save) {
-        for (int i = 0; i < map.size(); i++) {
-            for (int j = 0; j < map[i].size(); j++)
-                save << map[i][j];
+        for (int i = 0; i < this->_TxtMap.size(); i++) {
+            for (int j = 0; j < this->_TxtMap[i].size(); j++)
+                save << this->_TxtMap[i][j];
             save << '\n';
         }
     }
@@ -155,10 +155,10 @@ void Map::loadMap(Game *bomberman)
         bomberman->setStatus(0);
         return;
     }
-    map = str_to_word_array(getMap);
-    for (int i = 0; i < map.size(); i++) {
-        for (int j = 0; j < map[i].size(); j++) {
-            if (map[i][j] == '1' || map[i][j] == '2' || map[i][j] == '3'|| map[i][j] == '4')
+    this->_TxtMap = str_to_word_array(getMap);
+    for (int i = 0; i < this->_TxtMap.size(); i++) {
+        for (int j = 0; j < this->_TxtMap[i].size(); j++) {
+            if (this->_TxtMap[i][j] == '1' || this->_TxtMap[i][j] == '2' || this->_TxtMap[i][j] == '3'|| this->_TxtMap[i][j] == '4')
                 player++;
         }
     }
@@ -170,7 +170,7 @@ void Map::loadMap(Game *bomberman)
     addBlock(bomberman);
 }
 
-std::vector<Block> Map::getBlock() const
+std::vector<Block> Map::getBlocks() const
 {
-    return (this->blocks);
+    return (this->_Blocks);
 }

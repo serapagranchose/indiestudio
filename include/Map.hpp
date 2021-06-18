@@ -20,6 +20,8 @@
 #include <random>
 #include <ctime>
 
+#include "Game.hpp"
+
 class Block;
 class Game;
 
@@ -28,6 +30,8 @@ class Map {
         Map();
         ~Map();
 
+        std::vector<Block> getBlocks() const;
+
         void randomMap(Game *bomberman);
         void drawMap();
         void addBlock(Game *bomberman);
@@ -35,14 +39,10 @@ class Map {
         void initStart();
         void loadMap(Game *bomberman);
 
-        std::vector<Block> getBlock() const;
+        std::vector<Block> _Blocks;
 
-        std::vector<Block> blocks;
-        
     private:
-        std::vector<std::string> map;
+        std::vector<std::string> _TxtMap;
 };
-
-#include "Block.hpp"
 
 #endif

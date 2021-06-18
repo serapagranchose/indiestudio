@@ -21,57 +21,51 @@ class Player{
 
         Vector3 getPosition(void) const;
         void setPosition(const Vector3 position);
-
         Vector3 getPastPosition(void) const;
-        void setPastPosition(const Vector3 past_position);
-
+        void setPastPosition(const Vector3 position);
         Vector3 getNextPosition(void) const;
-        void setNextPositionX(const float next_positionx);
-        void setNextPositionZ(const float next_positionz);
+        void setNextPositionX(const float x);
+        void setNextPositionZ(const float z);
         Vector2 getHeader(void) const;
-
-        int getPlace(void) const;
-        void setPlace(const int place);
-
-        int getRight(void) const;
-        int getUp(void) const;
-        int getLeft(void) const;
-        int getDown(void) const;
-        int getBomb(void) const;
-
-        int getBombNB(void) const;
-        void setBombNB(const int bomb_nb);
-
-        const char * getName(void) const;
-
+        int getKeyRight(void) const;
+        void setKeyRight(const int key_right);
+        int getKeyUp(void) const;
+        void setKeyUp(const int key_up);
+        int getKeyLeft(void) const;
+        void setKeyLeft(const int key_left);
+        int getKeyDown(void) const;
+        void setKeyDown(const int key_down);
+        int getKeyBomb(void) const;
+        void setKeyBomb(const int key_bomb);
+        int getBombNumber(void) const;
+        void setBombNumber(const int bomb_number);
+        const char *getName(void) const;
+        void setName(const char *name);
         int getUpdate() const;
         void setUpdate(const int);
+        std::vector<Bomb> getBombs(void) const;
 
         void update(Game *bomberman);
         void draw(Game *bomberman);
         int can_I_plant(void) const;
-
-        std::vector<Bomb> getBomb_List(void) const;
-
         void drop_bomb(void);
 
     private:
-        Color color = RED;
-        Vector3 position;
-        Vector3 past_position;
-        Vector3 next_position;
-        Vector3 size = {0.5f, 0.8f, 0.5f};
-        Vector2 header = {0.0f, 0.0f};
-        int place = 1;
-        int right;
-        int up;
-        int left;
-        int down;
-        int bomb;
-        int bomb_nb = 10;
-        int _update = 0;
-        const char * name;
-        std::vector<Bomb> _Bomb_list;
+        Color _Color = RED;
+        Vector3 _Position;
+        Vector3 _PastPosition;
+        Vector3 _NextPosition;
+        Vector3 _Size = {0.5f, 0.8f, 0.5f};
+        Vector2 _Header = {0.0f, 0.0f};
+        int _KeyRight;
+        int _KeyUp;
+        int _KeyLeft;
+        int _KeyDown;
+        int _KeyBomb;
+        int _BombNumber = 10;
+        int _Update = 0; //whut
+        const char * _Name;
+        std::vector<Bomb> _Bombs;
 };
 
 #endif

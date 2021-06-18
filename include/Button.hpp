@@ -10,11 +10,15 @@
 
 #include "Game.hpp"
 
+class Window;
+
 class Button{
     public:
         Button();
         Button(Window *window, float heightScreen, float heightButton,std::string name, const char* path);
         ~Button();
+
+        float getFrameHeight(void) const;
 
         void draw(Game *bomberman);
         void input(Game *bomberman, Vector2 mouse);
@@ -27,20 +31,18 @@ class Button{
         void plus(Game *bomberman);
         void minus(Game *bomberman);
 
-        float getFrameHeight(void) const;
 
-        Rectangle size;
-        
+        Rectangle _Size;
     private:
-        Texture2D texture;
-        Rectangle bounds;
-        int status = 0;
-        bool action = false;
-        int i = 0;
-        std::string name;
-        float frameHeight;
-        Sound sound;
-        int check = 0;
+        Texture2D _Texture;
+        Rectangle _Bounds;
+        int _Status = 0;
+        bool _Action = false;
+        int _I = 0;
+        std::string _Name;
+        float _FrameHeight;
+        Sound _Sound;
+        int _Check = 0;
 };
 
 #endif

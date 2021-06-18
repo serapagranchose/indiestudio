@@ -11,16 +11,16 @@ Player::Player()
 {
 }
 
-Player::Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position)
+Player::Player(const char *name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 position)
 {
-    this->name = _name;
-    this->right = key_right;
-    this->up = key_up;
-    this->left = key_left;
-    this->down = key_down;
-    this->bomb = key_space;
-    this->position = _position;
-    this->next_position = _position;
+    this->_Name = name;
+    this->_KeyRight = key_right;
+    this->_KeyUp = key_up;
+    this->_KeyLeft = key_left;
+    this->_KeyDown = key_down;
+    this->_KeyBomb = key_space;
+    this->_Position = position;
+    this->_NextPosition = position;
 }
 
 Player::~Player()
@@ -29,170 +29,160 @@ Player::~Player()
 
 Vector3 Player::getPosition(void) const
 {
-    return (this->position);
+    return (this->_Position);
 }
 
-void Player::setPosition(const Vector3 _position)
+void Player::setPosition(const Vector3 position)
 {
-    this->position = _position;
+    this->_Position = position;
 }
 
 Vector3 Player::getPastPosition(void) const
 {
-    return (this->past_position);
+    return (this->_PastPosition);
 }
 
-void Player::setPastPosition(const Vector3 _past_position)
+void Player::setPastPosition(const Vector3 position)
 {
-    this->past_position = _past_position;
+    this->_PastPosition = position;
 }
 
 Vector3 Player::getNextPosition(void) const
 {
-    return (this->next_position);
+    return (this->_NextPosition);
 }
 
-void Player::setNextPositionX(const float next_positionx)
+void Player::setNextPositionX(const float x)
 {
-    this->next_position.x = next_positionx;
+    this->_NextPosition.x = x;
 }
 
-void Player::setNextPositionZ(const float next_positionz)
+void Player::setNextPositionZ(const float z)
 {
-    this->next_position.z = next_positionz;
+    this->_NextPosition.z = z;
 }
 
 Vector2 Player::getHeader(void) const
 {
-    return (this->header);
+    return (this->_Header);
 }
 
-int Player::getPlace(void) const
+int Player::getKeyRight(void) const
 {
-    return (this->place);
+    return (this->_KeyRight);
 }
 
-void Player::setPlace(const int place)
+int Player::getKeyUp(void) const
 {
-    this->place = place;
+    return (this->_KeyUp);
 }
 
-int Player::getRight(void) const
+int Player::getKeyLeft(void) const
 {
-    return (this->right);
+    return (this->_KeyLeft);
 }
 
-int Player::getUp(void) const
+int Player::getKeyDown(void) const
 {
-    return (this->up);
+    return (this->_KeyDown);
 }
 
-int Player::getLeft(void) const
+int Player::getKeyBomb(void) const
 {
-    return (this->left);
+    return (this->_KeyBomb);
 }
 
-int Player::getDown(void) const
+int Player::getBombNumber(void) const
 {
-    return (this->down);
+    return (this->_BombNumber);
 }
 
-int Player::getBomb(void) const
+void Player::setBombNumber(const int bomb_number)
 {
-    return (this->bomb);
-}
-
-int Player::getBombNB(void) const
-{
-    return (this->bomb_nb);
-}
-
-void Player::setBombNB(const int bomb_nb)
-{
-    this->bomb_nb = bomb_nb;
+    this->_BombNumber = bomb_number;
 }
 
 const char * Player::getName(void) const
 {
-    return (this->name);
+    return (this->_Name);
 }
 
 int Player::getUpdate(void) const
 {
-    return (this->_update);
+    return (this->_Update);
 }
 
 void Player::setUpdate(const int update)
 {
-    this->_update = update;
+    this->_Update = update;
 }
 
-std::vector<Bomb> Player::getBomb_List(void) const
+std::vector<Bomb> Player::getBombs(void) const
 {
-    return (this->_Bomb_list);
+    return (this->_Bombs);
 }
 
 void Player::update(Game *bomberman)
 {
-    this->header = GetWorldToScreen(Vector3{this->position.x, this->position.y + 1.5f, this->position.z}, bomberman->getCamera());
-    this->past_position = this->position;
-    for (int i = 0; i < bomberman->getMap()->blocks.size(); i++) {
+    this->_Header = GetWorldToScreen(Vector3{this->_Position.x, this->_Position.y + 1.5f, this->_Position.z}, bomberman->getCamera());
+    this->_PastPosition = this->_Position;
+    for (int i = 0; i < bomberman->getMap()->_Blocks.size(); i++) {
         if (CheckCollisionBoxes(
                 BoundingBox{
-                    Vector3{this->next_position.x - this->size.x / 2, this->next_position.y - this->size.y / 2, this->next_position.z - this->size.z / 2},
-                    Vector3{this->next_position.x + this->size.x / 2, this->next_position.y + this->size.y / 2, this->next_position.z + this->size.z / 2}},
+                    Vector3{this->_NextPosition.x - this->_Size.x / 2, this->_NextPosition.y - this->_Size.y / 2, this->_NextPosition.z - this->_Size.z / 2},
+                    Vector3{this->_NextPosition.x + this->_Size.x / 2, this->_NextPosition.y + this->_Size.y / 2, this->_NextPosition.z + this->_Size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->getMap()->blocks[i].position.x - bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y - bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z - bomberman->getMap()->blocks[i].size.z / 2},
-                    Vector3{bomberman->getMap()->blocks[i].position.x + bomberman->getMap()->blocks[i].size.x / 2, bomberman->getMap()->blocks[i].position.y + bomberman->getMap()->blocks[i].size.y / 2, bomberman->getMap()->blocks[i].position.z + bomberman->getMap()->blocks[i].size.z / 2}}))
+                    Vector3{bomberman->getMap()->_Blocks[i]._Position.x - bomberman->getMap()->_Blocks[i]._Size.x / 2, bomberman->getMap()->_Blocks[i]._Position.y - bomberman->getMap()->_Blocks[i]._Size.y / 2, bomberman->getMap()->_Blocks[i]._Position.z - bomberman->getMap()->_Blocks[i]._Size.z / 2},
+                    Vector3{bomberman->getMap()->_Blocks[i]._Position.x + bomberman->getMap()->_Blocks[i]._Size.x / 2, bomberman->getMap()->_Blocks[i]._Position.y + bomberman->getMap()->_Blocks[i]._Size.y / 2, bomberman->getMap()->_Blocks[i]._Position.z + bomberman->getMap()->_Blocks[i]._Size.z / 2}}))
         {
-            this->position = this->past_position;
-            this->next_position = this->position;
+            this->_Position = this->_PastPosition;
+            this->_NextPosition = this->_Position;
         }
     }
-    if (round(this->position.x * 10) < round(this->next_position.x * 10)) {
-        this->past_position = this->position;
-        while (round(this->position.x * 10) < round(this->next_position.x * 10))
-            this->position.x += 0.1f;
-        this->next_position = this->position;
+    if (round(this->_Position.x * 10) < round(this->_NextPosition.x * 10)) {
+        this->_PastPosition = this->_Position;
+        while (round(this->_Position.x * 10) < round(this->_NextPosition.x * 10))
+            this->_Position.x += 0.1f;
+        this->_NextPosition = this->_Position;
     }
-    if (round(this->position.z * 10) < round(this->next_position.z * 10)) {
-        this->past_position = this->position;
-        while (round(this->position.z * 10) < round(this->next_position.z * 10))
-            this->position.z += 0.1f;
-        this->next_position = this->position;
+    if (round(this->_Position.z * 10) < round(this->_NextPosition.z * 10)) {
+        this->_PastPosition = this->_Position;
+        while (round(this->_Position.z * 10) < round(this->_NextPosition.z * 10))
+            this->_Position.z += 0.1f;
+        this->_NextPosition = this->_Position;
     }
-    if (round(this->position.x * 10) > round(this->next_position.x * 10)) {
-        this->past_position = this->position;
-        while (round(this->position.x * 10) > round(this->next_position.x * 10))
-            this->position.x -= 0.1;
-        this->next_position = this->position;
+    if (round(this->_Position.x * 10) > round(this->_NextPosition.x * 10)) {
+        this->_PastPosition = this->_Position;
+        while (round(this->_Position.x * 10) > round(this->_NextPosition.x * 10))
+            this->_Position.x -= 0.1;
+        this->_NextPosition = this->_Position;
     }
-    if (round(this->position.z * 10) > round(this->next_position.z * 10)) {
-        this->past_position = this->position;
-        while (round(this->position.z * 10) > round(this->next_position.z * 10))
-            this->position.z -= 0.1;
-        this->next_position = this->position;
+    if (round(this->_Position.z * 10) > round(this->_NextPosition.z * 10)) {
+        this->_PastPosition = this->_Position;
+        while (round(this->_Position.z * 10) > round(this->_NextPosition.z * 10))
+            this->_Position.z -= 0.1;
+        this->_NextPosition = this->_Position;
     }
-    this->_update = 0;
+    this->_Update = 0;
 }
 
 void Player::draw(Game *bomberman)
 {
-    DrawCubeV(this->position, this->size, this->color);
+    DrawCubeV(this->_Position, this->_Size, this->_Color);
 }
 
 void Player::drop_bomb(void)
 {
-    Bomb bomb(this->position);
+    Bomb bomb(this->_Position);
 
-    this->_Bomb_list.push_back(bomb);
+    this->_Bombs.push_back(bomb);
 }
 
 int Player::can_I_plant(void) const
 {
-    for (int i = 0; i < this->_Bomb_list.size(); i++) {
-        if (round(this->position.x) == round(this->_Bomb_list[i].getPosition().x)
-        && round(this->position.z) == round(this->_Bomb_list[i].getPosition().z))
+    for (int i = 0; i < this->_Bombs.size(); i++) {
+        if (round(this->_Position.x) == round(this->_Bombs[i].getPosition().x)
+        && round(this->_Position.z) == round(this->_Bombs[i].getPosition().z))
             return (0);
     }
     return (1);
