@@ -142,8 +142,8 @@ void Player::update(Game *bomberman)
                     Vector3{this->_NextPosition.x - this->_Size.x / 2, this->_NextPosition.y - this->_Size.y / 2, this->_NextPosition.z - this->_Size.z / 2},
                     Vector3{this->_NextPosition.x + this->_Size.x / 2, this->_NextPosition.y + this->_Size.y / 2, this->_NextPosition.z + this->_Size.z / 2}},
                 BoundingBox{
-                    Vector3{bomberman->getMap()->blocks[i].getPosition().x - bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y - bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z - bomberman->getMap()->blocks[i].getSize().z / 2},
-                    Vector3{bomberman->getMap()->blocks[i].getPosition().x + bomberman->getMap()->blocks[i].getSize().x / 2, bomberman->getMap()->blocks[i].getPosition().y + bomberman->getMap()->blocks[i].getSize().y / 2, bomberman->getMap()->blocks[i].getPosition().z + bomberman->getMap()->blocks[i].getSize().z / 2}}))
+                    Vector3{bomberman->getMap()->_Blocks[i].getPosition().x - bomberman->getMap()->_Blocks[i].getSize().x / 2, bomberman->getMap()->_Blocks[i].getPosition().y - bomberman->getMap()->_Blocks[i].getSize().y / 2, bomberman->getMap()->_Blocks[i].getPosition().z - bomberman->getMap()->_Blocks[i].getSize().z / 2},
+                    Vector3{bomberman->getMap()->_Blocks[i].getPosition().x + bomberman->getMap()->_Blocks[i].getSize().x / 2, bomberman->getMap()->_Blocks[i].getPosition().y + bomberman->getMap()->_Blocks[i].getSize().y / 2, bomberman->getMap()->_Blocks[i].getPosition().z + bomberman->getMap()->_Blocks[i].getSize().z / 2}}))
         {
             this->_Position = this->_PastPosition;
             this->_NextPosition = this->_Position;

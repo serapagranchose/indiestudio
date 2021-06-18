@@ -40,19 +40,19 @@ void Map::addBlock(Game *bomberman)
                 mur.loadHolyBlock();
                 this->_Blocks.push_back(mur);
             }
-            if (map[j][k] == '1') {
+            if (this->_TxtMap[j][k] == '1') {
                 bomberman->namePlayer.push_back("One");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }
-            if (map[j][k] == '2') {
+            if (this->_TxtMap[j][k] == '2') {
                 bomberman->namePlayer.push_back("Two");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }
-            if (map[j][k] == '3') {
+            if (this->_TxtMap[j][k] == '3') {
                 bomberman->namePlayer.push_back("Three");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }
-            if (map[j][k] == '4') {
+            if (this->_TxtMap[j][k] == '4') {
                 bomberman->namePlayer.push_back("Four");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }

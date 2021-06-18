@@ -55,10 +55,10 @@ void Bomb::Draw(void) const
 
 int is_there_a_wall(Game *bomberman, Vector3 position)
 {
-    for (int i = 0; bomberman->getMap()->getBlock().size() > i; i++) {
-        if (round(bomberman->getMap()->getBlock()[i].getPosition().x) == round(position.x)
-        && round(bomberman->getMap()->getBlock()[i].getPosition().z) == round(position.z)) {
-            if (bomberman->getMap()->getBlock()[i].getDestructible() == false)
+    for (int i = 0; bomberman->getMap()->getBlocks().size() > i; i++) {
+        if (round(bomberman->getMap()->getBlocks()[i].getPosition().x) == round(position.x)
+        && round(bomberman->getMap()->getBlocks()[i].getPosition().z) == round(position.z)) {
+            if (bomberman->getMap()->getBlocks()[i].getDestructible() == false)
                 return (1);
         }
     }

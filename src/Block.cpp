@@ -62,15 +62,15 @@ void Block::draw()
 
 Vector3 Block::getPosition(void) const
 {
-    return (this->position);
+    return (this->_Position);
 }
 
 bool Block::getDestructible(void) const
 {
-    return (this->destructible);
+    return (this->_Destructible);
 }
 
 Vector3 Block::getSize(void) const
 {
-    return (this->size);
+    return (this->_Size);
 }
