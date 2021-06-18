@@ -70,13 +70,14 @@ class Game{
 
         std::vector<std::string> namePlayer;
         std::vector<Vector3> coordPlayer;
+        std::vector<Player> _Players;
+        Map *_Map;
+
     private:
         Window _Window;
         Camera _Camera;
         Audio *_Audio;
         std::vector<Button> _Buttons;
-        Map *_Map;
-        std::vector<Player> _Players;
         Texture2D _Menu;
         bool _Debug = false;
         int _Status = 0;

@@ -67,7 +67,6 @@ class Player{
         int _KeyBomb;
         int _BombNumber = 10;
         int _Update = 0; //whut
-        int _Status = 1;
         const char * _Name;
         std::vector<Bomb> _Bombs;
 };

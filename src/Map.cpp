@@ -31,12 +31,12 @@ void Map::addBlock(Game *bomberman)
         i = 0;
         for (int k = 0; k < this->_TxtMap[j].size(); k++) {
             if (this->_TxtMap[j][k] == 'H') {
-                Block mousse({z + i, 0.0f, x + l},1, BLACK);
+                Block mousse({z + i, 0.0f, x + l},true, BLACK);
                 mousse.loadMousse();
                 this->_Blocks.push_back(mousse);
             }
             if (this->_TxtMap[j][k] == 'O') {
-                Block mur({z + i, 0.0f, x + l}, 0, DARKBLUE);
+                Block mur({z + i, 0.0f, x + l}, false, DARKBLUE);
                 mur.loadHolyBlock();
                 this->_Blocks.push_back(mur);
             }
@@ -56,7 +56,7 @@ void Map::addBlock(Game *bomberman)
                 bomberman->namePlayer.push_back("Four");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }
-            Block ground({z + i, -1.25f, x + l}, 0, BLUE);
+            Block ground({z + i, -1.25f, x + l}, false, BLUE);
             ground.loadGround();
             this->_Blocks.push_back(ground);
             i++;

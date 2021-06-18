@@ -10,7 +10,6 @@
 
 #include "Game.hpp"
 #include "Audio.hpp"
-#include "Button.hpp"
 
 class Window;
 class Audio;
@@ -33,7 +32,6 @@ class Button{
         void home(Game *bomberman);
         void plus(Game *bomberman);
         void minus(Game *bomberman);
-
 
         Rectangle _Size;
     private:
