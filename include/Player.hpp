@@ -67,11 +67,9 @@ class Player{
         int _KeyBomb;
         int _BombNumber = 500;
         int _Update = 0; //whut
-<<<<<<< HEAD
         int _Status = 1;
         bool _ArtificialIntelligence = false;
-=======
->>>>>>> master
+
         const char * _Name;
         bool _Alive = true;
         std::vector<Bomb> _Bombs;
