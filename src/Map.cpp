@@ -41,20 +41,20 @@ void Map::addBlock(Game *bomberman)
                 this->_Blocks.push_back(mur);
             }
             if (this->_TxtMap[j][k] == '1') {
-                bomberman->namePlayer.push_back("One");
-                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+                bomberman->_NamePlayer.push_back("One");
+                bomberman->_CoordPlayer.push_back({z + i, 0.0f, x +l});
             }
             if (this->_TxtMap[j][k] == '2') {
-                bomberman->namePlayer.push_back("Two");
-                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+                bomberman->_NamePlayer.push_back("Two");
+                bomberman->_CoordPlayer.push_back({z + i, 0.0f, x +l});
             }
             if (this->_TxtMap[j][k] == '3') {
-                bomberman->namePlayer.push_back("Three");
-                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+                bomberman->_NamePlayer.push_back("Three");
+                bomberman->_CoordPlayer.push_back({z + i, 0.0f, x +l});
             }
             if (this->_TxtMap[j][k] == '4') {
-                bomberman->namePlayer.push_back("Four");
-                bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
+                bomberman->_NamePlayer.push_back("Four");
+                bomberman->_CoordPlayer.push_back({z + i, 0.0f, x +l});
             }
             Block ground({z + i, -1.25f, x + l}, false, BLUE);
             ground.loadGround();
@@ -154,6 +154,8 @@ void Map::saveMap(Game *bomberman)
     }
     else
         std::cerr << "Error, impossible to open the file" << std::endl;
+    bomberman->_NamePlayer.clear();
+    bomberman->_CoordPlayer.clear();
     bomberman->_Players.clear();
 }
 

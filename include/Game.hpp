@@ -70,8 +70,8 @@ class Game{
 
         void win_or_lose();
 
-        std::vector<std::string> namePlayer;
-        std::vector<Vector3> coordPlayer;
+        std::vector<std::string> _NamePlayer;
+        std::vector<Vector3> _CoordPlayer;
         std::vector<Player> _Players;
         Map *_Map;
 

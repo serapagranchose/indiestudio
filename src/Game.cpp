@@ -73,21 +73,23 @@ void Game::initButton()
 
 void Game::initPlayer()
 {
-    for (int i = 0; i != namePlayer.size(); i++) {
-        if (namePlayer[i] == "One") {
-            Player *playerOne = new Player("Player 1", false, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+    std::cout << this->_Players.size() << std::endl;
+    for (int i = 0; i != _NamePlayer.size(); i++) {
+        std::cout << this->_Players.size() << std::endl;
+        if (_NamePlayer[i] == "One") {
+            Player *playerOne = new Player("Player 1", false, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, this->_CoordPlayer[i]);
             this->_Players.push_back(*playerOne);
         }
-        if (namePlayer[i] == "Two") {
-            Player *playerTwo = new Player("Player 2", false, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
+        if (_NamePlayer[i] == "Two") {
+            Player *playerTwo = new Player("Player 2", false, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, this->_CoordPlayer[i]);
             this->_Players.push_back(*playerTwo);
         }
-        if (namePlayer[i] == "Three") {
-            Player *playerThree = new Player("Player 3", false, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {-5.0f, 0.0f, 5.0f});
+        if (_NamePlayer[i] == "Three") {
+            Player *playerThree = new Player("Player 3", false, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, this->_CoordPlayer[i]);
             this->_Players.push_back(*playerThree);
         }
-        if (namePlayer[i] == "Four") {
-            Player *playerFour = new Player("Player 4", false, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, 5.0f});
+        if (_NamePlayer[i] == "Four") {
+            Player *playerFour = new Player("Player 4", false, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, this->_CoordPlayer[i]);
             this->_Players.push_back(*playerFour);
         }
     }
@@ -100,7 +102,7 @@ void Game::pushPlayer(char *opt)
     if (strcmp(opt, "ai") == 0)
         artificial_intelligence = true;
 
-    if (this->_Players.size() == 0){
+    if (this->_Players.size() == 0) {
         Player *player = new Player("Player 1", artificial_intelligence, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 1){
@@ -197,7 +199,6 @@ void Game::draw_text()
     }
     if (this->_Status == 1 || this->_Status == 5)
         for (int i = 0; i < this->_Players.size(); i++){
-            printf("%s %d", this->_Players[i].getName(), this->_Players[i].getArtificialIntelligence());
             if (this->_Players[i].getArtificialIntelligence() == false)
                 DrawText(TextFormat("%s", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
             else

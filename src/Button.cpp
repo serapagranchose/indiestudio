@@ -79,7 +79,6 @@ void Button::start(Game *bomberman)
         while (bomberman->getPlayers().size() != 4)
             bomberman->pushPlayer("ai");
         bomberman->setStatus(1);
-        printf("size %d\n", bomberman->getPlayers().size());
     }
 }
 
