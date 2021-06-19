@@ -112,8 +112,7 @@ void Button::load(Game *bomberman)
 void Button::home(Game *bomberman)
 {
     PlaySound(this->_Sound);
-    if (bomberman->getStatus() == 5 || bomberman->getStatus() == 4) {
-        std::cout << "Yo" << std::endl;
+    if (bomberman->getStatus() == 5 || bomberman->getStatus() == 4 || bomberman->getStatus() == 6) {
         bomberman->_Players.clear();
         bomberman->_NamePlayer.clear();
         bomberman->_CoordPlayer.clear();

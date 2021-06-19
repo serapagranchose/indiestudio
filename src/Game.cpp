@@ -244,7 +244,7 @@ void Game::update()
         if (WindowShouldClose())
             this->_Status = -1;
     }
-    if (this->_Status == 4 || this->_Status == 5) {
+    if (this->_Status == 4 || this->_Status == 5 || this->_Status == 6) {
         if (WindowShouldClose()) {
             this->_Players.clear();
             this->_CoordPlayer.clear();
