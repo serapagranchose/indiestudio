@@ -68,6 +68,8 @@ class Game{
         void pushPlayer();
         void popPlayer();
 
+        void win_or_lose();
+
         std::vector<std::string> namePlayer;
         std::vector<Vector3> coordPlayer;
         std::vector<Player> _Players;

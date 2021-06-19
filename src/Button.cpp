@@ -217,6 +217,12 @@ void Button::input(Game *bomberman, Vector2 mouse)
         this->_Size.y = this->_Status * (float)this->_FrameHeight;
         this->_Action = false;
     }
+    if (bomberman->getStatus() == 6) {
+        if (this->_Action && this->_Name == "homePause")
+            home(bomberman);
+        this->_Size.y = this->_Status * (float)this->_FrameHeight;
+        this->_Action = false;
+    }
 }
 
 float Button::getFrameHeight(void) const

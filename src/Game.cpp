@@ -161,6 +161,15 @@ void Game::draw()
         this->_Buttons[7].draw(this);
         this->_Buttons[8].draw(this);
     }
+    if (this->_Status == 6) {
+        if (this->_Players.size() == 1) {
+            DrawText(TextSubtext("You Win!", 0, this->_FramesCount/12), 790, 80, 100, DARKBLUE);
+        }
+        if (this->_Players.size() == 0) {
+            DrawText(TextSubtext("You Lose", 0, this->_FramesCount/12), 790, 80, 100, DARKBLUE);
+        }
+        this->_Buttons[10].draw(this);
+    }
     EndDrawing();
 }
 
@@ -267,6 +276,8 @@ void Game::game_loop()
     {
         this->update();
         this->draw();
+        if (this->_Status == 1)
+            this->win_or_lose();
     }
     UnloadTexture(this->_Menu);
     this->_Audio->endMusic();
@@ -310,4 +321,11 @@ int Game::getGenerated() const
 void Game::setDebug(const bool _bool)
 {
     this->_Debug = _bool;
+}
+
+void Game::win_or_lose(void)
+{
+    if (this->_Players.size() <= 1) {
+        this->_Status = 6;
+    }
 }
