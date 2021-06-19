@@ -188,7 +188,6 @@ void Game::draw_text()
     }
     if (this->_Status == 1 || this->_Status == 5)
         for (int i = 0; i < this->_Players.size(); i++){
-            printf("%s %d", this->_Players[i].getName(), this->_Players[i].getArtificialIntelligence());
             if (this->_Players[i].getArtificialIntelligence() == false)
                 DrawText(TextFormat("%s", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
             else
