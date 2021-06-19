@@ -73,9 +73,7 @@ void Game::initButton()
 
 void Game::initPlayer()
 {
-    std::cout << this->_Players.size() << std::endl;
     for (int i = 0; i != _NamePlayer.size(); i++) {
-        std::cout << this->_Players.size() << std::endl;
         if (_NamePlayer[i] == "One") {
             Player *playerOne = new Player("Player 1", false, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, this->_CoordPlayer[i]);
             this->_Players.push_back(*playerOne);
