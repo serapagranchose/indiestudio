@@ -90,12 +90,7 @@ int is_there_a_player(Game *bomberman, Vector3 position, Bomb bomb)
         && round(bomberman->getPlayers()[i].getPosition().x) == round(position.x))
         || (round(bomberman->getPlayers()[i].getPosition().z) == round(bomb.getPosition().z)
         && round(bomberman->getPlayers()[i].getPosition().x) == round(bomb.getPosition().x))) {
-            for (int y = 0; y < bomberman->getPlayers()[i].getBombs().size(); y++)
-                if (bomberman->getPlayers()[i].getBombs()[y] == bomb) {
-                    bomberman->_Players[i].setAlive(false);
-                    return (1);
-                }
-            bomberman->_Players.erase(bomberman->_Players.begin() + i);
+            bomberman->_Players[i].setAlive(false);
             return (1);
         }
     }
