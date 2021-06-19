@@ -54,7 +54,9 @@ void Game::initButton()
     Button *sound = new Button(&this->_Window, 1.5f, 3.5f, "Sound", "assets/graphic/button/sound.png");
     Button *plus = new Button(&this->_Window, 1.62f, 3.5f, "Plus", "assets/graphic/button/plus.png");
     Button *minus = new Button(&this->_Window, 1.62f, 3.5f, "Minus", "assets/graphic/button/minus.png");
-    Button *resume = new Button(&this->_Window, 2.15f, 3.5f, "Resume", "assets/graphic/button/resume.png");
+    Button *resume = new Button(&this->_Window, 3.0f, 4.5f, "Resume", "assets/graphic/button/resume.png");
+    Button *homePause = new Button(&this->_Window, 2.15f, 3.5f, "homePause", "assets/graphic/button/home.png");
+    Button *save = new Button(&this->_Window, 1.6f, 1.0f, "Save", "assets/graphic/button/save.png");
     this->_Buttons.push_back(*play);
     this->_Buttons.push_back(*settings);
     this->_Buttons.push_back(*quit);
@@ -65,25 +67,27 @@ void Game::initButton()
     this->_Buttons.push_back(*plus);
     this->_Buttons.push_back(*minus);
     this->_Buttons.push_back(*resume);
+    this->_Buttons.push_back(*homePause);
+    this->_Buttons.push_back(*save);
 }
 
 void Game::initPlayer()
 {
     for (int i = 0; i != namePlayer.size(); i++) {
         if (namePlayer[i] == "One") {
-            Player *playerOne = new Player("Player 1" ,KEY_Z, KEY_Q, KEY_S, KEY_D, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+            Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerOne);
         }
         if (namePlayer[i] == "Two") {
-            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_COMMA, {5.0f, 0.0f, -5.0f});
+            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerTwo);
         }
         if (namePlayer[i] == "Three") {
-            Player *playerThree = new Player("Player 3" ,KEY_J, KEY_Y, KEY_G, KEY_H, KEY_N, {-5.0f, 0.0f, 5.0f});
+            Player *playerThree = new Player("Player 3" ,KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {-5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerThree);
         }
         if (namePlayer[i] == "Four") {
-            Player *playerFour = new Player("Player 4" ,KEY_B, KEY_F, KEY_C, KEY_V, KEY_W, {5.0f, 0.0f, 5.0f});
+            Player *playerFour = new Player("Player 4" ,KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerFour);
         }
     }
@@ -92,16 +96,16 @@ void Game::initPlayer()
 void Game::pushPlayer()
 {
     if (this->_Players.size() == 0){
-        Player *player = new Player("P1", KEY_Z, KEY_Q, KEY_S, KEY_D, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 1", KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 1){
-        Player *player = new Player("P2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_COMMA, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 2){
-        Player *player = new Player("P3", KEY_J, KEY_Y, KEY_G, KEY_H, KEY_N, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 3", KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 3){
-        Player *player = new Player("P4", KEY_M, KEY_O, KEY_K, KEY_L, KEY_P, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 4", KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     }
 }
@@ -133,8 +137,11 @@ void Game::draw()
         for (int i = 0; i < 5; i++)
             this->_Buttons[i].draw(this);
     }
-    if (this->_Status == 5)
-        this->_Buttons[9].draw(this);
+    if (this->_Status == 5) {
+        DrawText(TextSubtext("PAUSE", 0, this->_FramesCount/12), 790, 80, 100, DARKBLUE);
+        for (int i = 9; i != 12; i++)
+            this->_Buttons[i].draw(this);
+    }
     if (this->_Status == 2) {
         DrawTexture(this->_Menu, GetScreenWidth() / 2 - this->_Menu.width/2, GetScreenHeight()/2 - this->_Menu.height / 2, WHITE);
         DrawText("SETTINGS", 160, 160, 100, DARKBLUE);
@@ -174,7 +181,7 @@ void Game::draw_text()
         for (int i = 0; i < this->_Players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->_Players[i].getName(), this->_Players[i].getPosition().x, this->_Players[i].getPosition().y, this->_Players[i].getPosition().z, this->_Players[i].getNextPosition().x, this->_Players[i].getNextPosition().y, this->_Players[i].getNextPosition().z, this->_Players[i].getBombNumber()), 10, 230 + (i * 120), 20, GRAY);
     }
-    if (this->_Status == 1)
+    if (this->_Status == 1 || this->_Status == 5)
         for (int i = 0; i < this->_Players.size(); i++)
                 DrawText(TextFormat("%s", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
 }
@@ -261,7 +268,6 @@ void Game::game_loop()
         this->update();
         this->draw();
     }
-    this->_Map->saveMap(this);
     UnloadTexture(this->_Menu);
     this->_Audio->endMusic();
 }

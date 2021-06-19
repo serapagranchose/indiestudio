@@ -65,7 +65,7 @@ class Player{
         int _KeyLeft;
         int _KeyDown;
         int _KeyBomb;
-        int _BombNumber = 10;
+        int _BombNumber = 500;
         int _Update = 0; //whut
         const char * _Name;
         bool _Alive = true;

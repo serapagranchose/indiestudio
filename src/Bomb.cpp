@@ -30,7 +30,7 @@ bool Bomb::getExploding(void) const
     return (this->_Exploding);
 }
 
-std::chrono::_V2::steady_clock::time_point Bomb::getTimer(void) const
+std::chrono::steady_clock::time_point Bomb::getTimer(void) const
 {
     return (this->_Timer);
 }
@@ -42,7 +42,7 @@ bool Bomb::operator==(const Bomb &bomb)
 
 void Bomb::update(Game *bomberman)
 {
-    std::chrono::_V2::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     double elapsed_time_ns = double(std::chrono::duration_cast <std::chrono::milliseconds> (end - this->_Timer).count());
 
     if (_Tick > 25)
@@ -75,7 +75,7 @@ int is_there_a_wall(Game *bomberman, Vector3 position)
             if (bomberman->getMap()->getBlocks()[i].getDestructible() == false)
                 return (1);
             else if (bomberman->getMap()->getBlocks()[i].getDestructible() == true) {
-                bomberman->_Map->_TxtMap[position.x + 6][position.z + 6] = ' ';
+                bomberman->_Map->_TxtMap[position.z + 6][position.x + 6] = ' ';
                 bomberman->_Map->_Blocks.erase(bomberman->_Map->_Blocks.begin() + i);
             }
         }
