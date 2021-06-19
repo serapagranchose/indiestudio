@@ -247,13 +247,15 @@ void Game::update()
             this->_Status = -1;
     }
     if (this->_Status == 4 || this->_Status == 5) {
-        if (WindowShouldClose())
+        if (WindowShouldClose()) {
+            this->_Players.clear();
+            this->_CoordPlayer.clear();
+            this->_NamePlayer.clear();
             this->_Status = 0;
+        }
     }
     if (this->_Status == 1 && WindowShouldClose())
         this->_Status = 5;
-    if (this->_Status == 5 && WindowShouldClose())
-        this->_Status = -1;
     this->_Audio->update();
     this->_FramesCount++;
     this->_Buttons[6]._Size.y = ((this->_Audio->getVolume() - 0.1) * 10) * (this->_Buttons[6].getFrameHeight());
