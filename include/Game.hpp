@@ -65,13 +65,13 @@ class Game{
         void draw_text();
         void initButton();
         void initPlayer();
-        void pushPlayer(char *opt);
+        void pushPlayer(const char *opt);
         void popPlayer();
 
         void win_or_lose();
 
-        std::vector<std::string> namePlayer;
-        std::vector<Vector3> coordPlayer;
+        std::vector<std::string> _NamePlayer;
+        std::vector<Vector3> _CoordPlayer;
         std::vector<Player> _Players;
         Map *_Map;
 

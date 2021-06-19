@@ -79,7 +79,6 @@ void Button::start(Game *bomberman)
         while (bomberman->getPlayers().size() != 4)
             bomberman->pushPlayer("ai");
         bomberman->setStatus(1);
-        printf("size %d\n", bomberman->getPlayers().size());
     }
 }
 
@@ -113,6 +112,12 @@ void Button::load(Game *bomberman)
 void Button::home(Game *bomberman)
 {
     PlaySound(this->_Sound);
+    if (bomberman->getStatus() == 5 || bomberman->getStatus() == 4) {
+        std::cout << "Yo" << std::endl;
+        bomberman->_Players.clear();
+        bomberman->_NamePlayer.clear();
+        bomberman->_CoordPlayer.clear();
+    }
     bomberman->setStatus(0);
 }
 
