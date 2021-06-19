@@ -93,7 +93,7 @@ void Game::initPlayer()
     }
 }
 
-void Game::pushPlayer(char *opt)
+void Game::pushPlayer(const char *opt)
 {
     bool artificial_intelligence = false;
 

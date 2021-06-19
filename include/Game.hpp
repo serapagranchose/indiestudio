@@ -65,7 +65,7 @@ class Game{
         void draw_text();
         void initButton();
         void initPlayer();
-        void pushPlayer(char *opt);
+        void pushPlayer(const char *opt);
         void popPlayer();
 
         void win_or_lose();
