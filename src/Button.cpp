@@ -67,7 +67,10 @@ void Button::start(Game *bomberman)
             bomberman->getMap()->addBlock(bomberman);
         }
     } else if (bomberman->getStatus() == 4){
+        while (bomberman->getPlayers().size() != 4)
+            bomberman->pushPlayer("ai");
         bomberman->setStatus(1);
+        printf("size %d\n", bomberman->getPlayers().size());
     }
 }
 
@@ -117,7 +120,8 @@ void Button::plus(Game *bomberman)
         }
     } else if (bomberman->getStatus() == 4)
         if (bomberman->getPlayers().size() < 4)
-            bomberman->pushPlayer();
+            bomberman->pushPlayer("non-ai");
+
     PlaySound(this->_Sound);
 }
 

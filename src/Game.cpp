@@ -69,37 +69,46 @@ void Game::initPlayer()
 {
     for (int i = 0; i != namePlayer.size(); i++) {
         if (namePlayer[i] == "One") {
-            Player *playerOne = new Player("Player 1" ,KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+            Player *playerOne = new Player("Player 1", false, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerOne);
         }
         if (namePlayer[i] == "Two") {
-            Player *playerTwo = new Player("Player 2" ,KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+            Player *playerTwo = new Player("Player 2", false, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerTwo);
         }
         if (namePlayer[i] == "Three") {
-            Player *playerThree = new Player("Player 3" ,KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
+            Player *playerThree = new Player("Player 3", false, KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerThree);
         }
         if (namePlayer[i] == "Four") {
-            Player *playerFour = new Player("Player 4" ,KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
+            Player *playerFour = new Player("Player 4", false, KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerFour);
         }
     }
 }
 
-void Game::pushPlayer()
+void Game::pushPlayer(char *opt)
 {
+    bool artificial_intelligence = false;
+
+    if (strcmp(opt, "ai") == 0)
+        artificial_intelligence = true;
+
     if (this->_Players.size() == 0){
-        Player *player = new Player("P1", KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+        printf("push player one (bot? %d)\n", artificial_intelligence);
+        Player *player = new Player("P1", artificial_intelligence, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 1){
-        Player *player = new Player("P2", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        printf("push player two (bot? %d)\n", artificial_intelligence);
+        Player *player = new Player("P2", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 2){
-        Player *player = new Player("P3", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        printf("push player three (bot? %d)\n", artificial_intelligence);
+        Player *player = new Player("P3", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 3){
-        Player *player = new Player("P4", KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        printf("push player four (bot? %d)\n", artificial_intelligence);
+        Player *player = new Player("P4", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     }
 }

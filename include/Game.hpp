@@ -65,7 +65,7 @@ class Game{
         void draw_text();
         void initButton();
         void initPlayer();
-        void pushPlayer();
+        void pushPlayer(char *opt);
         void popPlayer();
 
         std::vector<std::string> namePlayer;

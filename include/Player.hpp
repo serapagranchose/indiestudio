@@ -16,7 +16,7 @@ class Bomb;
 class Player{
     public:
         Player();
-        Player(const char * _name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position);
+        Player(const char * _name, bool artificial_intelligence, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 _position);
         ~Player();
 
         Vector3 getPosition(void) const;
@@ -68,6 +68,7 @@ class Player{
         int _BombNumber = 10;
         int _Update = 0; //whut
         int _Status = 1;
+        bool _ArtificialIntelligence = false;
         const char * _Name;
         std::vector<Bomb> _Bombs;
 };

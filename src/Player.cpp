@@ -11,7 +11,7 @@ Player::Player()
 {
 }
 
-Player::Player(const char *name, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 position)
+Player::Player(const char *name, bool artificial_intelligence, int key_right, int key_up, int key_left, int key_down, int key_space, Vector3 position)
 {
     this->_Name = name;
     this->_KeyRight = key_right;
@@ -21,6 +21,7 @@ Player::Player(const char *name, int key_right, int key_up, int key_left, int ke
     this->_KeyBomb = key_space;
     this->_Position = position;
     this->_NextPosition = position;
+    this->_ArtificialIntelligence = artificial_intelligence;
 }
 
 Player::~Player()
