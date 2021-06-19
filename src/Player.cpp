@@ -133,6 +133,16 @@ void Player::setAlive(const bool alive)
     this->_Alive = alive;
 }
 
+bool Player::getArtificialIntelligence(void) const
+{
+    return (this->_ArtificialIntelligence);
+}
+
+void Player::setArtificialIntelligence(const bool artificial_intelligence)
+{
+    this->_ArtificialIntelligence = artificial_intelligence;
+}
+
 void Player::update(Game *bomberman)
 {
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

@@ -39,6 +39,8 @@ class Player{
         void setKeyBomb(const int key_bomb);
         int getBombNumber(void) const;
         void setBombNumber(const int bomb_number);
+        bool getArtificialIntelligence(void) const;
+        void setArtificialIntelligence(const bool artificial_intelligence);
         const char *getName(void) const;
         void setName(const char *name);
         int getUpdate() const;

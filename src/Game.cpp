@@ -107,10 +107,10 @@ void Game::pushPlayer(char *opt)
         Player *player = new Player("Player 2", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 2){
-        Player *player = new Player("Player 3", artificial_intelligence, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 3", artificial_intelligence, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {-5.0f, 0.0f, 5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 3){
-        Player *player = new Player("Player 4", artificial_intelligence, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 4", artificial_intelligence, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, 5.0f});
         this->_Players.push_back(*player);
     }
 }
@@ -187,8 +187,13 @@ void Game::draw_text()
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->_Players[i].getName(), this->_Players[i].getPosition().x, this->_Players[i].getPosition().y, this->_Players[i].getPosition().z, this->_Players[i].getNextPosition().x, this->_Players[i].getNextPosition().y, this->_Players[i].getNextPosition().z, this->_Players[i].getBombNumber()), 10, 230 + (i * 120), 20, GRAY);
     }
     if (this->_Status == 1 || this->_Status == 5)
-        for (int i = 0; i < this->_Players.size(); i++)
+        for (int i = 0; i < this->_Players.size(); i++){
+            printf("%s %d", this->_Players[i].getName(), this->_Players[i].getArtificialIntelligence());
+            if (this->_Players[i].getArtificialIntelligence() == false)
                 DrawText(TextFormat("%s", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
+            else
+                DrawText(TextFormat("%s (AI)", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s (AI)", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
+        }
 }
 
 void Game::input()
