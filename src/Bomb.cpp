@@ -13,7 +13,7 @@ Bomb::Bomb(Vector3 position)
     this->_Position.x = round(this->_Position.x);
     this->_Position.z = round(this->_Position.z);
     this->_Timer = std::chrono::steady_clock::now();
-    std::cout <<  "Just created" << std::endl;
+
 }
 
 Bomb::~Bomb()
@@ -25,25 +25,37 @@ Vector3 Bomb::getPosition(void) const
     return (this->_Position);
 }
 
-void Bomb::update(void)
+bool Bomb::getExploding(void) const
 {
-    std::chrono::_V2::steady_clock::time_point end = std::chrono::steady_clock::now();
-    double elapsed_time_ns = double(std::chrono::duration_cast <std::chrono::milliseconds> (end - this->_Timer).count());
-    printf("update at %f\n", elapsed_time_ns);
+    return (this->_Exploding);
+}
 
+std::chrono::steady_clock::time_point Bomb::getTimer(void) const
+{
+    return (this->_Timer);
+}
+
+bool Bomb::operator==(const Bomb &bomb)
+{
+    return (this->_Position.x == bomb.getPosition().x && this->_Position.z == bomb.getPosition().z);
+}
+
+void Bomb::update(Game *bomberman)
+{
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    double elapsed_time_ns = double(std::chrono::duration_cast <std::chrono::milliseconds> (end - this->_Timer).count());
+
+    if (_Tick > 25)
+        this->explode(bomberman);
     if (elapsed_time_ns >= 77) {
-        std::cout << "Tick tack" << std::endl;
-        _Tick -= -1;
+        _Tick++;
         this->_Timer = end;
     }
-    std::cout << _Tick << std::endl;
     if (_Tick % 5 == 0 && _Tick != 0) {
-        std::cout << "bomb is growing" << std::endl;
-        this->_Size.x += 0.1;
-        this->_Size.y += 0.1;
-        this->_Size.z += 0.1;
+        this->_Size.x += 0.01;
+        this->_Size.y += 0.01;
+        this->_Size.z += 0.01;
     }
-    std::cout << "this is the size " << this->_Size.x << std::endl;
 }
 
 void Bomb::Draw(void) const
@@ -55,22 +67,35 @@ void Bomb::Draw(void) const
 
 int is_there_a_wall(Game *bomberman, Vector3 position)
 {
+
     for (int i = 0; bomberman->getMap()->getBlocks().size() > i; i++) {
         if (round(bomberman->getMap()->getBlocks()[i].getPosition().x) == round(position.x)
-        && round(bomberman->getMap()->getBlocks()[i].getPosition().z) == round(position.z)) {
+        && round(bomberman->getMap()->getBlocks()[i].getPosition().z) == round(position.z)
+        && round(bomberman->getMap()->getBlocks()[i].getPosition().y) == round(position.y)) {
             if (bomberman->getMap()->getBlocks()[i].getDestructible() == false)
                 return (1);
+            else if (bomberman->getMap()->getBlocks()[i].getDestructible() == true) {
+                bomberman->_Map->_TxtMap[position.z + 6][position.x + 6] = ' ';
+                bomberman->_Map->_Blocks.erase(bomberman->_Map->_Blocks.begin() + i);
+            }
         }
     }
     return (0);
 }
 
-int is_there_a_player(Game *bomberman, Vector3 position)
+int is_there_a_player(Game *bomberman, Vector3 position, Bomb bomb)
 {
     for (int i = 0; bomberman->getPlayers().size() > i; i++) {
-        if (round(bomberman->getPlayers()[i].getPosition().z) == round(position.z)
-        && round(bomberman->getPlayers()[i].getPosition().x) == round(position.x)) {
-            bomberman->getPlayers()[i].setStatus(0);
+        if ((round(bomberman->getPlayers()[i].getPosition().z) == round(position.z)
+        && round(bomberman->getPlayers()[i].getPosition().x) == round(position.x))
+        || (round(bomberman->getPlayers()[i].getPosition().z) == round(bomb.getPosition().z)
+        && round(bomberman->getPlayers()[i].getPosition().x) == round(bomb.getPosition().x))) {
+            for (int y = 0; y < bomberman->getPlayers()[i].getBombs().size(); y++)
+                if (bomberman->getPlayers()[i].getBombs()[y] == bomb) {
+                    bomberman->_Players[i].setAlive(false);
+                    return (1);
+                }
+            bomberman->_Players.erase(bomberman->_Players.begin() + i);
             return (1);
         }
     }
@@ -81,35 +106,38 @@ void Bomb::explode(Game *bomberman)
 {
     Vector3 position = this->_Position;
 
+    if (this->_Exploding == true)
+        return;
+    this->_Exploding = true;
     this->_Color = RED;
     position.z++;
-    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 3; position.z++) {
+    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 1; position.z++) {
         this->_Explosions_Positions.push_back(position);
-        if (is_there_a_player(bomberman, position) == 1)
+        if (is_there_a_player(bomberman, position, *this) == 1)
             break;
         i++;
     }
     position = this->_Position;
     position.z--;
-    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 3; position.z--) {
+    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 1; position.z--) {
         this->_Explosions_Positions.push_back(position);
-        if (is_there_a_player(bomberman, position) == 1)
+        if (is_there_a_player(bomberman, position, *this) == 1)
             break;
         i++;
     }
     position = this->_Position;
     position.x++;
-    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 3; position.x++) {
+    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 1; position.x) {
         this->_Explosions_Positions.push_back(position);
-        if (is_there_a_player(bomberman, position) == 1)
+        if (is_there_a_player(bomberman, position, *this) == 1)
             break;
         i++;
     }
     position = this->_Position;
     position.x--;
-    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 3; position.x--) {
+    for (int i = 0; is_there_a_wall(bomberman, position) == 0 && i < 1; position.x--) {
         this->_Explosions_Positions.push_back(position);
-        if (is_there_a_player(bomberman, position) == 1)
+        if (is_there_a_player(bomberman, position, *this) == 1)
             break;
         i++;
     }

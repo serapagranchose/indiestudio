@@ -32,7 +32,8 @@ class Button{
         void home(Game *bomberman);
         void plus(Game *bomberman);
         void minus(Game *bomberman);
-
+        void resume(Game *bomberman);
+        void save(Game *bomberman);
 
         Rectangle _Size;
     private:

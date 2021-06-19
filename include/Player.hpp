@@ -45,8 +45,8 @@ class Player{
         void setUpdate(const int);
         std::vector<Bomb> getBombs(void) const;
 
-        int getStatus(void) const;
-        void setStatus(const int status);
+        bool getAlive(void) const;
+        void setAlive(const bool alive);
 
         void update(Game *bomberman);
         void draw(Game *bomberman);
@@ -65,11 +65,15 @@ class Player{
         int _KeyLeft;
         int _KeyDown;
         int _KeyBomb;
-        int _BombNumber = 10;
+        int _BombNumber = 500;
         int _Update = 0; //whut
+<<<<<<< HEAD
         int _Status = 1;
         bool _ArtificialIntelligence = false;
+=======
+>>>>>>> master
         const char * _Name;
+        bool _Alive = true;
         std::vector<Bomb> _Bombs;
 };
 

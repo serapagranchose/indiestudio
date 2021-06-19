@@ -40,8 +40,6 @@ class Map {
         void loadMap(Game *bomberman);
 
         std::vector<Block> _Blocks;
-
-    private:
         std::vector<std::string> _TxtMap;
 };
 

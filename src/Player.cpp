@@ -123,18 +123,21 @@ std::vector<Bomb> Player::getBombs(void) const
     return (this->_Bombs);
 }
 
-int Player::getStatus(void) const
+bool Player::getAlive(void) const
 {
-    return (this->_Status);
+    return (this->_Alive);
 }
 
-void Player::setStatus(const int status)
+void Player::setAlive(const bool alive)
 {
-    this->_Status = status;
+    this->_Alive = alive;
 }
 
 void Player::update(Game *bomberman)
 {
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    double elapsed_time_ns;
+
     this->_Header = GetWorldToScreen(Vector3{this->_Position.x, this->_Position.y + 1.5f, this->_Position.z}, bomberman->getCamera());
     this->_PastPosition = this->_Position;
     for (int i = 0; i < bomberman->getMap()->_Blocks.size(); i++) {
@@ -173,6 +176,12 @@ void Player::update(Game *bomberman)
         while (round(this->_Position.z * 10) > round(this->_NextPosition.z * 10))
             this->_Position.z -= 0.1;
         this->_NextPosition = this->_Position;
+    }
+    for (int i = 0; i < this->_Bombs.size(); i++) {
+        this->_Bombs[i].update(bomberman);
+        elapsed_time_ns = double(std::chrono::duration_cast <std::chrono::milliseconds> (end - this->_Bombs[i].getTimer()).count());
+        if (this->_Bombs[i].getExploding() == true && elapsed_time_ns >= 60)
+            this->_Bombs.erase(this->_Bombs.begin() + i);
     }
     this->_Update = 0;
 }

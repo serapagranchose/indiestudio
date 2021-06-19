@@ -54,6 +54,9 @@ void Game::initButton()
     Button *sound = new Button(&this->_Window, 1.5f, 3.5f, "Sound", "assets/graphic/button/sound.png");
     Button *plus = new Button(&this->_Window, 1.62f, 3.5f, "Plus", "assets/graphic/button/plus.png");
     Button *minus = new Button(&this->_Window, 1.62f, 3.5f, "Minus", "assets/graphic/button/minus.png");
+    Button *resume = new Button(&this->_Window, 3.0f, 4.5f, "Resume", "assets/graphic/button/resume.png");
+    Button *homePause = new Button(&this->_Window, 2.15f, 3.5f, "homePause", "assets/graphic/button/home.png");
+    Button *save = new Button(&this->_Window, 1.6f, 1.0f, "Save", "assets/graphic/button/save.png");
     this->_Buttons.push_back(*play);
     this->_Buttons.push_back(*settings);
     this->_Buttons.push_back(*quit);
@@ -63,6 +66,9 @@ void Game::initButton()
     this->_Buttons.push_back(*sound);
     this->_Buttons.push_back(*plus);
     this->_Buttons.push_back(*minus);
+    this->_Buttons.push_back(*resume);
+    this->_Buttons.push_back(*homePause);
+    this->_Buttons.push_back(*save);
 }
 
 void Game::initPlayer()
@@ -73,15 +79,15 @@ void Game::initPlayer()
             this->_Players.push_back(*playerOne);
         }
         if (namePlayer[i] == "Two") {
-            Player *playerTwo = new Player("Player 2", false, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+            Player *playerTwo = new Player("Player 2", false, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
             this->_Players.push_back(*playerTwo);
         }
         if (namePlayer[i] == "Three") {
-            Player *playerThree = new Player("Player 3", false, KEY_Y, KEY_G, KEY_H, KEY_J, KEY_B, {-5.0f, 0.0f, 5.0f});
+            Player *playerThree = new Player("Player 3", false, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {-5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerThree);
         }
         if (namePlayer[i] == "Four") {
-            Player *playerFour = new Player("Player 4", false, KEY_M, KEY_K, KEY_L, KEY_O, KEY_PERIOD, {5.0f, 0.0f, 5.0f});
+            Player *playerFour = new Player("Player 4", false, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, 5.0f});
             this->_Players.push_back(*playerFour);
         }
     }
@@ -95,20 +101,16 @@ void Game::pushPlayer(char *opt)
         artificial_intelligence = true;
 
     if (this->_Players.size() == 0){
-        printf("push player one (bot? %d)\n", artificial_intelligence);
-        Player *player = new Player("P1", artificial_intelligence, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 1", artificial_intelligence, KEY_D, KEY_W, KEY_A, KEY_S, KEY_SPACE, {-5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 1){
-        printf("push player two (bot? %d)\n", artificial_intelligence);
-        Player *player = new Player("P2", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 2", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_ENTER, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 2){
-        printf("push player three (bot? %d)\n", artificial_intelligence);
-        Player *player = new Player("P3", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 3", artificial_intelligence, KEY_J, KEY_Y, KEY_G, KEY_H, KEY_K, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     } else if (this->_Players.size() == 3){
-        printf("push player four (bot? %d)\n", artificial_intelligence);
-        Player *player = new Player("P4", artificial_intelligence, KEY_RIGHT, KEY_UP, KEY_LEFT, KEY_DOWN, KEY_M, {5.0f, 0.0f, -5.0f});
+        Player *player = new Player("Player 4", artificial_intelligence, KEY_B, KEY_F, KEY_C, KEY_V, KEY_X, {5.0f, 0.0f, -5.0f});
         this->_Players.push_back(*player);
     }
 }
@@ -123,8 +125,7 @@ void Game::draw()
     BeginDrawing();
     BeginMode3D(this->_Camera);
     ClearBackground(DARKGRAY);
-    if (this->_Status == 1) {
-        DrawGrid(13, 1.0f);
+    if (this->_Status == 1 || this->_Status == 5) {
         for (int i = 0; i < this->_Players.size(); i++) {
             this->_Players[i].draw(this);
             for (int y = 0; y < this->_Players[i].getBombs().size(); y++)
@@ -139,6 +140,11 @@ void Game::draw()
         DrawTexture(this->_Menu, GetScreenWidth() / 2 - this->_Menu.width/2, GetScreenHeight()/2 - this->_Menu.height / 2, WHITE);
         DrawText(TextSubtext("INDIE STUDIO", 0, this->_FramesCount/12), 100, 160, 100, DARKBLUE);
         for (int i = 0; i < 5; i++)
+            this->_Buttons[i].draw(this);
+    }
+    if (this->_Status == 5) {
+        DrawText(TextSubtext("PAUSE", 0, this->_FramesCount/12), 790, 80, 100, DARKBLUE);
+        for (int i = 9; i != 12; i++)
             this->_Buttons[i].draw(this);
     }
     if (this->_Status == 2) {
@@ -180,7 +186,7 @@ void Game::draw_text()
         for (int i = 0; i < this->_Players.size(); i++)
             DrawText(TextFormat("%s:\npos = x:%0.2f y:%0.2f z:%0.2f\nnext_pos = x:%0.2f y:%0.2f z:%0.2f\nbomb_nb = %d", this->_Players[i].getName(), this->_Players[i].getPosition().x, this->_Players[i].getPosition().y, this->_Players[i].getPosition().z, this->_Players[i].getNextPosition().x, this->_Players[i].getNextPosition().y, this->_Players[i].getNextPosition().z, this->_Players[i].getBombNumber()), 10, 230 + (i * 120), 20, GRAY);
     }
-    if (this->_Status == 1)
+    if (this->_Status == 1 || this->_Status == 5)
         for (int i = 0; i < this->_Players.size(); i++)
                 DrawText(TextFormat("%s", this->_Players[i].getName()), (int)this->_Players[i].getHeader().x - MeasureText(TextFormat("%s", this->_Players[i].getName()), 20) / 2, (int)this->_Players[i].getHeader().y, 20, BLACK);
 }
@@ -191,7 +197,6 @@ void Game::input()
 
     for (int i = 0; i < this->_Buttons.size(); i++)
         this->_Buttons[i].input(this, mouse);
-
     if (this->_Status == 1) {
         for (int i = 0; i < this->_Players.size(); i++) {
             if (this->_Players[i].getBombNumber() > 0 && IsKeyDown(this->_Players[i].getKeyBomb())) {
@@ -222,6 +227,18 @@ void Game::input()
 
 void Game::update()
 {
+    if (this->_Status == 0) {
+        if (WindowShouldClose())
+            this->_Status = -1;
+    }
+    if (this->_Status == 4 || this->_Status == 5) {
+        if (WindowShouldClose())
+            this->_Status = 0;
+    }
+    if (this->_Status == 1 && WindowShouldClose())
+        this->_Status = 5;
+    if (this->_Status == 5 && WindowShouldClose())
+        this->_Status = -1;
     this->_Audio->update();
     this->_FramesCount++;
     this->_Buttons[6]._Size.y = ((this->_Audio->getVolume() - 0.1) * 10) * (this->_Buttons[6].getFrameHeight());
@@ -239,9 +256,10 @@ void Game::update()
         SetCameraMode(this->_Camera, CAMERA_FREE);
     if (this->_Status == 1) {
         for (int i = 0; i < this->_Players.size(); i++) {
-            this->_Players[i].update(this);
-            for (int y = 0; y < this->_Players[i].getBombs().size(); y++)
-                this->_Players[i].getBombs()[y].update();
+            if (this->_Players[i].getAlive() == false)
+                this->_Players.erase(this->_Players.begin() + i);
+            else
+                this->_Players[i].update(this);
         }
     }
 }
@@ -250,12 +268,11 @@ void Game::game_loop()
 {
     this->_Audio->setMusic("assets/audio/menu.mp3");
     this->_Audio->playMusic();
-    while (!WindowShouldClose() && this->_Status != -1)
+    while (this->_Status != -1)
     {
         this->update();
         this->draw();
     }
-    this->_Map->saveMap(this);
     UnloadTexture(this->_Menu);
     this->_Audio->endMusic();
 }

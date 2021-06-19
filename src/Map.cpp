@@ -31,12 +31,12 @@ void Map::addBlock(Game *bomberman)
         i = 0;
         for (int k = 0; k < this->_TxtMap[j].size(); k++) {
             if (this->_TxtMap[j][k] == 'H') {
-                Block mousse({z + i, 0.0f, x + l},1, BLACK);
+                Block mousse({z + i, 0.0f, x + l},true, BLACK);
                 mousse.loadMousse();
                 this->_Blocks.push_back(mousse);
             }
             if (this->_TxtMap[j][k] == 'O') {
-                Block mur({z + i, 0.0f, x + l}, 0, DARKBLUE);
+                Block mur({z + i, 0.0f, x + l}, false, DARKBLUE);
                 mur.loadHolyBlock();
                 this->_Blocks.push_back(mur);
             }
@@ -56,7 +56,7 @@ void Map::addBlock(Game *bomberman)
                 bomberman->namePlayer.push_back("Four");
                 bomberman->coordPlayer.push_back({z + i, 0.0f, x +l});
             }
-            Block ground({z + i, -1.25f, x + l}, 0, BLUE);
+            Block ground({z + i, -1.25f, x + l}, false, BLUE);
             ground.loadGround();
             this->_Blocks.push_back(ground);
             i++;
@@ -131,8 +131,16 @@ void Map::saveMap(Game *bomberman)
             if (this->_TxtMap[i][j] == '1' || this->_TxtMap[i][j] == '2' || this->_TxtMap[i][j] == '3' || this->_TxtMap[i][j] == '4')
                 this->_TxtMap[i][j] = ' ';
             for (int k = 0; k < bomberman->getPlayers().size(); k++) {
-                if (i == round(bomberman->getPlayers()[k].getPosition().z + 6) && j == round(bomberman->getPlayers()[k].getPosition().x + 6))
-                    this->_TxtMap[i][j] = std::to_string(k + 1).c_str()[0];
+                if (i == round(bomberman->getPlayers()[k].getPosition().z + 6) && j == round(bomberman->getPlayers()[k].getPosition().x + 6)) {
+                    if (bomberman->getPlayers()[k].getName() == "Player 1")
+                        this->_TxtMap[i][j] = '1';
+                    if (bomberman->getPlayers()[k].getName() == "Player 2")
+                        this->_TxtMap[i][j] = '2';
+                    if (bomberman->getPlayers()[k].getName() == "Player 3")
+                        this->_TxtMap[i][j] = '3';
+                    if (bomberman->getPlayers()[k].getName() == "Player 4")
+                        this->_TxtMap[i][j] = '4';
+                }
             }
         }
     }
@@ -146,6 +154,7 @@ void Map::saveMap(Game *bomberman)
     }
     else
         std::cerr << "Error, impossible to open the file" << std::endl;
+    bomberman->_Players.clear();
 }
 
 void Map::loadMap(Game *bomberman)
