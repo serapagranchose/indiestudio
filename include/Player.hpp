@@ -46,6 +46,7 @@ class Player{
         int getUpdate() const;
         void setUpdate(const int);
         std::vector<Bomb> getBombs(void) const;
+        void load_player();
 
         bool getAlive(void) const;
         void setAlive(const bool alive);
@@ -62,6 +63,7 @@ class Player{
         Vector3 _NextPosition;
         Vector3 _Size = {0.5f, 0.8f, 0.5f};
         Vector2 _Header = {0.0f, 0.0f};
+        Model Model_player;
         int _KeyRight;
         int _KeyUp;
         int _KeyLeft;

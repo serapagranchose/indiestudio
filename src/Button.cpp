@@ -123,11 +123,7 @@ void Button::home(Game *bomberman)
 void Button::plus(Game *bomberman)
 {
     if (bomberman->getStatus() == 2) {
-        if (bomberman->getAudio()->getVolume() < 1) {
-            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() + 0.1);
-            SetMasterVolume(bomberman->getAudio()->getVolume());
-        }
-        if (round(bomberman->getAudio()->getVolume() * 10) < 10) {
+        if (bomberman->getAudio()->getVolume() < 0.9) {
             bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() + 0.1);
             SetMasterVolume(bomberman->getAudio()->getVolume());
         }
@@ -142,10 +138,6 @@ void Button::minus(Game *bomberman)
 {
     if (bomberman->getStatus() == 2){
         if (bomberman->getAudio()->getVolume() > 0) {
-            bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() - 0.1);
-            SetMasterVolume(bomberman->getAudio()->getVolume());
-        }
-        if (round(bomberman->getAudio()->getVolume() * 10) > 0) {
             bomberman->getAudio()->setVolume(bomberman->getAudio()->getVolume() - 0.1);
             SetMasterVolume(bomberman->getAudio()->getVolume());
         }

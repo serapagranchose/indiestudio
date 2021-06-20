@@ -51,7 +51,7 @@ void Game::initButton()
     Button *credits = new Button(&this->_Window, 1.7f, 3.5f, "Credits", "assets/graphic/button/credits.png");
     Button *load = new Button(&this->_Window, 2.15f, 3.5f, "Continue", "assets/graphic/button/continue.png");
     Button *home = new Button(&this->_Window, 1.15f, 1.0f, "Home", "assets/graphic/button/home.png");
-    Button *sound = new Button(&this->_Window, 1.5f, 3.5f, "Sound", "assets/graphic/button/sound.png");
+    Button *sound = new Button(&this->_Window, 1.5f, 3.5f, "Sound", "assets/graphic/button/volume.png");
     Button *plus = new Button(&this->_Window, 1.62f, 3.5f, "Plus", "assets/graphic/button/plus.png");
     Button *minus = new Button(&this->_Window, 1.62f, 3.5f, "Minus", "assets/graphic/button/minus.png");
     Button *resume = new Button(&this->_Window, 3.0f, 4.5f, "Resume", "assets/graphic/button/resume.png");
@@ -244,7 +244,7 @@ void Game::update()
         if (WindowShouldClose())
             this->_Status = -1;
     }
-    if (this->_Status == 4 || this->_Status == 5 || this->_Status == 6) {
+    if (this->_Status == 4 || this->_Status == 5 || this->_Status == 6 || this->_Status == 2) {
         if (WindowShouldClose()) {
             this->_Players.clear();
             this->_CoordPlayer.clear();
@@ -256,7 +256,7 @@ void Game::update()
         this->_Status = 5;
     this->_Audio->update();
     this->_FramesCount++;
-    this->_Buttons[6]._Size.y = ((this->_Audio->getVolume() - 0.1) * 10) * (this->_Buttons[6].getFrameHeight());
+    this->_Buttons[6]._Size.y = round((this->_Audio->getVolume() + 0.1f) * 10) * (this->_Buttons[6].getFrameHeight());
     if (GetTime() - this->_LastGifTime >= this->_GifFrameRate) {
         this->_FramesAnimCount++;
         if (this->_FramesAnimCount >= this->_FramesAnim)
