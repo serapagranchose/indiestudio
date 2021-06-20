@@ -112,11 +112,13 @@ void Button::load(Game *bomberman)
 void Button::home(Game *bomberman)
 {
     PlaySound(this->_Sound);
-    if (bomberman->getStatus() == 5 || bomberman->getStatus() == 4 || bomberman->getStatus() == 6) {
+    if (bomberman->getStatus() == 5 || bomberman->getStatus() == 4) {
         bomberman->_Players.clear();
         bomberman->_NamePlayer.clear();
         bomberman->_CoordPlayer.clear();
     }
+    else if (bomberman->getStatus() == 6)
+        bomberman->getMap()->saveMap(bomberman);
     bomberman->setStatus(0);
 }
 

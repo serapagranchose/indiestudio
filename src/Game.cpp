@@ -244,13 +244,17 @@ void Game::update()
         if (WindowShouldClose())
             this->_Status = -1;
     }
-    if (this->_Status == 4 || this->_Status == 5 || this->_Status == 6 || this->_Status == 2) {
+    if (this->_Status == 4 || this->_Status == 5 || this->_Status == 2) {
         if (WindowShouldClose()) {
             this->_Players.clear();
             this->_CoordPlayer.clear();
             this->_NamePlayer.clear();
             this->_Status = 0;
         }
+    }
+    if (this->_Status == 6 && WindowShouldClose()) {
+        this->_Map->saveMap(this);
+        this->_Status = 0;
     }
     if (this->_Status == 1 && WindowShouldClose())
         this->_Status = 5;
